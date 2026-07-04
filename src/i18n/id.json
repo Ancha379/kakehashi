@@ -1,0 +1,240 @@
+{
+  "common": {
+    "appName": "Kakehashi",
+    "byAnc": "by ANC Japan",
+    "login": "Masuk",
+    "register": "Daftar",
+    "registerFree": "Daftar Gratis",
+    "viewCompanies": "Lihat Perusahaan",
+    "next": "Lanjut",
+    "back": "Kembali",
+    "submit": "Kirim",
+    "optional": "opsional"
+  },
+  "nav": {
+    "services": "Layanan",
+    "how": "Cara Kerja",
+    "features": "Keunggulan",
+    "pricing": "Biaya",
+    "faq": "FAQ",
+    "contact": "Kontak"
+  },
+  "hero": {
+    "badge": "Platform business matching B2B Indonesia ⇔ Jepang",
+    "title1": "Indonesia ⇔ Jepang,",
+    "title2": "satu jembatan bisnis",
+    "subtitle": "Kakehashi mempertemukan perusahaan tervalidasi dari Indonesia dan Jepang. Dengan AI translation, AI matching, dan pendampingan koordinator ANC Japan — dari perkenalan pertama hingga deal.",
+    "trust1": "Hanya perusahaan tervalidasi",
+    "trust2": "AI Translation JP⇔ID",
+    "trust3": "Didampingi konsultan"
+  },
+  "pain": {
+    "title": "Tantangan yang sering kami dengar",
+    "subtitle": "Ekspansi lintas negara itu sulit — apalagi tanpa jaringan dan bahasa yang sama."
+  },
+  "stats": {
+    "title": "Potensi pasar yang saling melengkapi",
+    "subtitle": "Indonesia dan Jepang punya kebutuhan yang saling menjawab.",
+    "indonesiaTitle": "🇮🇩 Potensi Indonesia",
+    "japanTitle": "🇯🇵 Kebutuhan Jepang"
+  },
+  "service": {
+    "title": "Apa itu Kakehashi?",
+    "subtitle": "Platform matching B2B yang dioperasikan ANC Japan: teknologi AI + pendampingan konsultan berpengalaman Indonesia–Jepang.",
+    "diagramJp": "Perusahaan Jepang",
+    "diagramJpDesc": "Cari supplier, partner, talenta, ekspansi ASEAN",
+    "diagramId": "Perusahaan Indonesia",
+    "diagramIdDesc": "Cari akses pasar Jepang, buyer, teknologi, investasi",
+    "diagramPlatform": "Kakehashi",
+    "diagramPlatformDesc": "Screening / AI Matching / AI Translation / Koordinator"
+  },
+  "how": {
+    "title": "Cara kerja",
+    "subtitle": "Dari profil sampai deal — setiap langkah didampingi koordinator ANC Japan.",
+    "coordinatorTitle": "Peran koordinator ANC Japan",
+    "coordinatorNote": "Koordinator dwibahasa memverifikasi perusahaan, menjembatani perbedaan budaya bisnis, mendampingi negosiasi, dan memastikan kesepakatan berjalan aman bagi kedua pihak."
+  },
+  "features": {
+    "title": "Keunggulan Kakehashi",
+    "subtitle": "Empat pilar yang membuat matching lintas negara jadi aman dan mudah."
+  },
+  "why": {
+    "title": "Alasan Kakehashi dipilih",
+    "subtitle": "Bukan sekadar direktori perusahaan — kami hadir sampai deal terwujud."
+  },
+  "flow": {
+    "title": "Alur layanan",
+    "subtitle": "Empat langkah sederhana menuju partner bisnis Anda berikutnya.",
+    "stepLabel": "STEP"
+  },
+  "pricing": {
+    "title": "Biaya",
+    "subtitle": "Model success-fee: mulai gratis, bayar hanya saat ada hasil.",
+    "thItem": "Item",
+    "thFee": "Biaya",
+    "thNote": "Keterangan",
+    "note": "Besaran success fee ditentukan berdasarkan kesepakatan sebelum negosiasi dimulai. Tidak ada biaya tersembunyi."
+  },
+  "faq": {
+    "title": "Pertanyaan yang sering diajukan",
+    "subtitle": "Tidak menemukan jawaban? Hubungi kami lewat form di bawah."
+  },
+  "contact": {
+    "title": "Hubungi kami",
+    "subtitle": "Konsultasi awal gratis — tim kami akan menghubungi Anda dalam 1–2 hari kerja.",
+    "email": "Alamat email",
+    "emailPlaceholder": "nama@perusahaan.co.id",
+    "company": "Nama perusahaan",
+    "companyPlaceholder": "PT Contoh Sejahtera",
+    "message": "Pesan",
+    "messagePlaceholder": "Ceritakan kebutuhan bisnis Anda…",
+    "submit": "Kirim Pesan",
+    "toast": "Terima kasih! Pesan Anda sudah kami terima."
+  },
+  "footer": {
+    "tagline": "Jembatan bisnis Indonesia ⇔ Jepang yang bisa Anda percaya.",
+    "menu": "Menu",
+    "legal": "Legal",
+    "privacy": "Kebijakan Privasi",
+    "terms": "Syarat & Ketentuan",
+    "operated": "Operated by ANC Japan / 株式会社ANCジャパン — Nagoya, Japan",
+    "rights": "Hak cipta dilindungi."
+  },
+  "app": {
+    "dashboard": "Dashboard",
+    "companies": "Direktori Perusahaan",
+    "matching": "AI Matching",
+    "chat": "Chat",
+    "register": "Registrasi",
+    "backToSite": "Ke Landing Page",
+    "demoCompany": "PT Nusantara Coffee Sejahtera",
+    "demoBadge": "Mode demo — data contoh"
+  },
+  "companies": {
+    "title": "Direktori Perusahaan",
+    "subtitle": "Semua perusahaan telah melewati screening ANC Japan.",
+    "searchPlaceholder": "Cari nama perusahaan atau kata kunci…",
+    "filters": "Filter",
+    "country": "Negara",
+    "industry": "Industri",
+    "purpose": "Tujuan",
+    "size": "Skala perusahaan",
+    "clearFilters": "Hapus semua filter",
+    "results": "{{count}} perusahaan ditemukan",
+    "aiMatch": "AI Match",
+    "verified": "Tervalidasi",
+    "noResults": "Tidak ada perusahaan yang cocok dengan filter Anda."
+  },
+  "company": {
+    "notFound": "Perusahaan tidak ditemukan.",
+    "back": "Kembali ke direktori",
+    "about": "Tentang perusahaan",
+    "original": "原文 (Bahasa asli)",
+    "translated": "Terjemahan",
+    "aiTranslated": "Diterjemahkan otomatis oleh AI",
+    "offering": "Yang ditawarkan",
+    "seeking": "Yang dicari",
+    "pic": "Kontak / PIC",
+    "purposeTitle": "Tujuan di platform",
+    "proposeMeeting": "Ajukan Meeting (商談)",
+    "meetingToast": "Permintaan meeting terkirim! Koordinator ANC Japan akan menghubungi Anda.",
+    "founded": "Tahun berdiri",
+    "location": "Lokasi",
+    "website": "Website",
+    "industryLabel": "Industri",
+    "sizeLabel": "Skala"
+  },
+  "matching": {
+    "title": "Rekomendasi untuk Anda",
+    "subtitle": "AI kami menganalisis profil, kebutuhan, dan tujuan Anda untuk menemukan partner paling cocok.",
+    "reasonLabel": "Kenapa cocok",
+    "viewProfile": "Lihat Profil",
+    "propose": "Ajukan Meeting",
+    "matchLabel": "Kecocokan"
+  },
+  "chat": {
+    "title": "Chat",
+    "showTranslation": "Tampilkan terjemahan",
+    "aiBadge": "AI翻訳",
+    "inputPlaceholder": "Tulis pesan dalam bahasa Anda…",
+    "send": "Kirim",
+    "selectThread": "Pilih percakapan untuk mulai chat.",
+    "demoTranslation": "(Terjemahan AI akan muncul di sini — demo)",
+    "translationNote": "Pesan diterjemahkan otomatis JP⇔ID"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Selamat datang kembali,",
+    "profileStatus": "Status profil",
+    "profileComplete": "{{percent}}% lengkap",
+    "completeProfile": "Lengkapi profil",
+    "profileHint": "Profil lengkap meningkatkan akurasi AI matching.",
+    "matchRequests": "Permintaan match masuk",
+    "accept": "Terima",
+    "decline": "Tolak",
+    "acceptedToast": "Permintaan diterima! Percakapan baru dibuka.",
+    "declinedToast": "Permintaan ditolak.",
+    "activeDeals": "商談 aktif",
+    "stageNegotiation": "Negosiasi",
+    "stageSample": "Pengiriman sampel",
+    "stageContract": "Persiapan kontrak",
+    "notifications": "Notifikasi",
+    "statViews": "Dilihat perusahaan lain",
+    "statMatches": "Match baru bulan ini",
+    "statMessages": "Pesan belum dibaca",
+    "statMeetings": "商談 berjalan"
+  },
+  "register": {
+    "title": "Registrasi Perusahaan",
+    "subtitle": "Gratis. Tim ANC Japan akan memverifikasi data Anda dalam 2–3 hari kerja.",
+    "step1": "Info Perusahaan",
+    "step2": "Industri & Tujuan",
+    "step3": "Kebutuhan",
+    "step4": "Review",
+    "companyName": "Nama perusahaan",
+    "companyNamePlaceholder": "PT Contoh Sejahtera / 株式会社サンプル",
+    "country": "Negara",
+    "website": "Website",
+    "websitePlaceholder": "https://…",
+    "size": "Skala perusahaan",
+    "founded": "Tahun berdiri",
+    "industry": "Industri utama",
+    "purposes": "Tujuan bergabung (boleh lebih dari satu)",
+    "offering": "Yang perusahaan Anda tawarkan",
+    "offeringPlaceholder": "Contoh: kopi specialty grade 1, kapasitas ekspor 200 ton/tahun…",
+    "seeking": "Yang perusahaan Anda cari",
+    "seekingPlaceholder": "Contoh: buyer di Jepang, partner distribusi, transfer teknologi…",
+    "notes": "Catatan tambahan",
+    "notesPlaceholder": "Hal lain yang perlu kami ketahui…",
+    "reviewTitle": "Periksa kembali data Anda",
+    "reviewHint": "Pastikan semua data benar sebelum dikirim. Tim kami akan menghubungi Anda via email.",
+    "submit": "Kirim Pendaftaran",
+    "successTitle": "Pendaftaran terkirim!",
+    "successBody": "Terima kasih. Tim ANC Japan akan memverifikasi perusahaan Anda dan mengirimkan hasil screening via email dalam 2–3 hari kerja.",
+    "goDashboard": "Ke Dashboard",
+    "notFilled": "Belum diisi"
+  },
+  "meta": {
+    "countries": { "JP": "Jepang", "ID": "Indonesia" },
+    "industries": {
+      "manufacturing": "Manufaktur",
+      "it": "IT & Engineering",
+      "fnb": "F&B & Agri",
+      "textile": "Tekstil & Garmen",
+      "logistics": "Logistik",
+      "automotive": "Otomotif"
+    },
+    "purposes": {
+      "sales": "Ekspansi pasar",
+      "sourcing": "Pengadaan / Supplier",
+      "partnership": "Kolaborasi",
+      "investment": "Investasi",
+      "talent": "Talenta / SDM"
+    },
+    "sizes": {
+      "small": "≤ 50 karyawan",
+      "medium": "51–300 karyawan",
+      "large": "300+ karyawan"
+    }
+  }
+}

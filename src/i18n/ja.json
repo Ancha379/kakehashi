@@ -1,0 +1,240 @@
+{
+  "common": {
+    "appName": "Kakehashi",
+    "byAnc": "by ANC Japan",
+    "login": "ログイン",
+    "register": "新規登録",
+    "registerFree": "無料で登録",
+    "viewCompanies": "企業を見る",
+    "next": "次へ",
+    "back": "戻る",
+    "submit": "送信",
+    "optional": "任意"
+  },
+  "nav": {
+    "services": "サービス",
+    "how": "仕組み",
+    "features": "特徴",
+    "pricing": "料金",
+    "faq": "よくある質問",
+    "contact": "お問い合わせ"
+  },
+  "hero": {
+    "badge": "インドネシア ⇔ 日本 B2Bビジネスマッチング",
+    "title1": "インドネシアと日本をつなぐ",
+    "title2": "ビジネスの架け橋",
+    "subtitle": "Kakehashiは、審査済みのインドネシア企業と日本企業をつなぐプラットフォームです。AI翻訳・AIマッチング、そしてANCジャパンのコーディネーターが、出会いから成約まで伴走します。",
+    "trust1": "審査済み企業のみ",
+    "trust2": "AI翻訳 日⇔尼",
+    "trust3": "コンサルタントが伴走"
+  },
+  "pain": {
+    "title": "よくいただく課題",
+    "subtitle": "海外展開は簡単ではありません。ネットワークも言語も異なるなら、なおさらです。"
+  },
+  "stats": {
+    "title": "補完し合う市場ポテンシャル",
+    "subtitle": "インドネシアと日本は、互いのニーズに応え合える関係です。",
+    "indonesiaTitle": "🇮🇩 インドネシアの可能性",
+    "japanTitle": "🇯🇵 日本のニーズ"
+  },
+  "service": {
+    "title": "Kakehashiとは？",
+    "subtitle": "ANCジャパンが運営するB2Bマッチングプラットフォーム。AIテクノロジーと、日尼ビジネスに精通したコンサルタントの伴走支援を組み合わせています。",
+    "diagramJp": "日本企業",
+    "diagramJpDesc": "サプライヤー・パートナー・人材・ASEAN展開を探す",
+    "diagramId": "インドネシア企業",
+    "diagramIdDesc": "日本市場・バイヤー・技術・投資を探す",
+    "diagramPlatform": "Kakehashi",
+    "diagramPlatformDesc": "審査 / AIマッチング / AI翻訳 / コーディネーター"
+  },
+  "how": {
+    "title": "仕組み",
+    "subtitle": "プロフィール作成から成約まで、ANCジャパンのコーディネーターが各ステップを支援します。",
+    "coordinatorTitle": "ANCジャパン コーディネーターの役割",
+    "coordinatorNote": "バイリンガルのコーディネーターが企業審査を行い、商習慣の違いを橋渡しし、交渉に同席。双方にとって安全な取引をサポートします。"
+  },
+  "features": {
+    "title": "Kakehashiの特徴",
+    "subtitle": "国境を越えるマッチングを、安全かつ簡単にする4つの柱。"
+  },
+  "why": {
+    "title": "選ばれる理由",
+    "subtitle": "単なる企業リストではありません。成約までお付き合いします。"
+  },
+  "flow": {
+    "title": "ご利用の流れ",
+    "subtitle": "次のビジネスパートナーまで、シンプルな4ステップ。",
+    "stepLabel": "STEP"
+  },
+  "pricing": {
+    "title": "料金",
+    "subtitle": "成功報酬型：初期費用0円、成果が出たときだけお支払い。",
+    "thItem": "項目",
+    "thFee": "料金",
+    "thNote": "備考",
+    "note": "成功報酬の料率は、交渉開始前に双方合意のうえ決定します。隠れた費用はありません。"
+  },
+  "faq": {
+    "title": "よくある質問",
+    "subtitle": "解決しない場合は、下のフォームからお気軽にお問い合わせください。"
+  },
+  "contact": {
+    "title": "お問い合わせ",
+    "subtitle": "初回相談は無料です。1〜2営業日以内にご連絡いたします。",
+    "email": "メールアドレス",
+    "emailPlaceholder": "name@company.co.jp",
+    "company": "会社名",
+    "companyPlaceholder": "株式会社サンプル",
+    "message": "お問い合わせ内容",
+    "messagePlaceholder": "ビジネスのご要望をお聞かせください…",
+    "submit": "送信する",
+    "toast": "ありがとうございます。メッセージを受け付けました。"
+  },
+  "footer": {
+    "tagline": "信頼できる、インドネシア⇔日本のビジネスの架け橋。",
+    "menu": "メニュー",
+    "legal": "規約",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "operated": "運営：株式会社ANCジャパン（名古屋）/ Operated by ANC Japan",
+    "rights": "All rights reserved."
+  },
+  "app": {
+    "dashboard": "ダッシュボード",
+    "companies": "企業ディレクトリ",
+    "matching": "AIマッチング",
+    "chat": "チャット",
+    "register": "新規登録",
+    "backToSite": "サイトトップへ",
+    "demoCompany": "PT Nusantara Coffee Sejahtera",
+    "demoBadge": "デモモード — サンプルデータ"
+  },
+  "companies": {
+    "title": "企業ディレクトリ",
+    "subtitle": "掲載企業はすべてANCジャパンの審査を通過しています。",
+    "searchPlaceholder": "企業名・キーワードで検索…",
+    "filters": "絞り込み",
+    "country": "国",
+    "industry": "業種",
+    "purpose": "目的",
+    "size": "企業規模",
+    "clearFilters": "フィルターをクリア",
+    "results": "{{count}}社が見つかりました",
+    "aiMatch": "AI Match",
+    "verified": "審査済み",
+    "noResults": "条件に合う企業が見つかりませんでした。"
+  },
+  "company": {
+    "notFound": "企業が見つかりません。",
+    "back": "ディレクトリへ戻る",
+    "about": "企業情報",
+    "original": "原文",
+    "translated": "翻訳",
+    "aiTranslated": "AIによる自動翻訳",
+    "offering": "提供できること",
+    "seeking": "探していること",
+    "pic": "担当者",
+    "purposeTitle": "登録目的",
+    "proposeMeeting": "商談を申し込む",
+    "meetingToast": "商談リクエストを送信しました。ANCジャパンのコーディネーターよりご連絡します。",
+    "founded": "設立",
+    "location": "所在地",
+    "website": "ウェブサイト",
+    "industryLabel": "業種",
+    "sizeLabel": "規模"
+  },
+  "matching": {
+    "title": "あなたへのおすすめ",
+    "subtitle": "AIが貴社のプロフィール・ニーズ・目的を分析し、最適なパートナー候補をご提案します。",
+    "reasonLabel": "マッチ理由",
+    "viewProfile": "プロフィールを見る",
+    "propose": "商談を申し込む",
+    "matchLabel": "マッチ度"
+  },
+  "chat": {
+    "title": "チャット",
+    "showTranslation": "翻訳を表示",
+    "aiBadge": "AI翻訳",
+    "inputPlaceholder": "自分の言語でメッセージを入力…",
+    "send": "送信",
+    "selectThread": "会話を選択してチャットを開始してください。",
+    "demoTranslation": "（AI翻訳がここに表示されます — デモ）",
+    "translationNote": "メッセージは日⇔尼で自動翻訳されます"
+  },
+  "dashboard": {
+    "title": "ダッシュボード",
+    "welcome": "おかえりなさい、",
+    "profileStatus": "プロフィール状況",
+    "profileComplete": "{{percent}}% 完了",
+    "completeProfile": "プロフィールを完成させる",
+    "profileHint": "プロフィールが充実するほど、AIマッチングの精度が上がります。",
+    "matchRequests": "受信したマッチリクエスト",
+    "accept": "承認",
+    "decline": "見送る",
+    "acceptedToast": "リクエストを承認しました。新しい会話が開始されます。",
+    "declinedToast": "リクエストを見送りました。",
+    "activeDeals": "進行中の商談",
+    "stageNegotiation": "交渉中",
+    "stageSample": "サンプル送付",
+    "stageContract": "契約準備",
+    "notifications": "通知",
+    "statViews": "プロフィール閲覧数",
+    "statMatches": "今月の新規マッチ",
+    "statMessages": "未読メッセージ",
+    "statMeetings": "進行中の商談"
+  },
+  "register": {
+    "title": "企業登録",
+    "subtitle": "登録は無料。ANCジャパンが2〜3営業日以内に審査します。",
+    "step1": "会社情報",
+    "step2": "業種と目的",
+    "step3": "ニーズ",
+    "step4": "確認",
+    "companyName": "会社名",
+    "companyNamePlaceholder": "株式会社サンプル / PT Contoh Sejahtera",
+    "country": "国",
+    "website": "ウェブサイト",
+    "websitePlaceholder": "https://…",
+    "size": "企業規模",
+    "founded": "設立年",
+    "industry": "主な業種",
+    "purposes": "登録目的（複数選択可）",
+    "offering": "貴社が提供できること",
+    "offeringPlaceholder": "例：スペシャルティコーヒー グレード1、年間輸出能力200トン…",
+    "seeking": "貴社が探していること",
+    "seekingPlaceholder": "例：日本のバイヤー、販売代理店、技術提携…",
+    "notes": "補足事項",
+    "notesPlaceholder": "その他お伝えいただきたいこと…",
+    "reviewTitle": "入力内容の確認",
+    "reviewHint": "送信前に内容をご確認ください。担当者よりメールでご連絡します。",
+    "submit": "登録を送信",
+    "successTitle": "登録を受け付けました！",
+    "successBody": "ありがとうございます。ANCジャパンが審査のうえ、2〜3営業日以内に結果をメールでお送りします。",
+    "goDashboard": "ダッシュボードへ",
+    "notFilled": "未入力"
+  },
+  "meta": {
+    "countries": { "JP": "日本", "ID": "インドネシア" },
+    "industries": {
+      "manufacturing": "製造業",
+      "it": "IT・エンジニアリング",
+      "fnb": "食品・農業",
+      "textile": "繊維・アパレル",
+      "logistics": "物流",
+      "automotive": "自動車"
+    },
+    "purposes": {
+      "sales": "販路拡大",
+      "sourcing": "仕入れ・調達",
+      "partnership": "協業",
+      "investment": "投資",
+      "talent": "人材"
+    },
+    "sizes": {
+      "small": "〜50名",
+      "medium": "51〜300名",
+      "large": "301名〜"
+    }
+  }
+}

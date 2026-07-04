@@ -1,0 +1,37 @@
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { ToastProvider } from './components/ui/Toast';
+import ScrollToTop from './components/ScrollToTop';
+import LandingPage from './pages/LandingPage';
+import AppLayout from './layouts/AppLayout';
+import DashboardPage from './pages/app/DashboardPage';
+import CompaniesPage from './pages/app/CompaniesPage';
+import CompanyDetailPage from './pages/app/CompanyDetailPage';
+import MatchingPage from './pages/app/MatchingPage';
+import ChatPage from './pages/app/ChatPage';
+import RegisterPage from './pages/app/RegisterPage';
+
+export default function App() {
+  return (
+    <BrowserRouter
+      basename={import.meta.env.BASE_URL.replace(/\/$/, '')}
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
+      <ToastProvider>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/app" element={<AppLayout />}>
+            <Route index element={<Navigate to="/app/dashboard" replace />} />
+            <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="companies" element={<CompaniesPage />} />
+            <Route path="companies/:id" element={<CompanyDetailPage />} />
+            <Route path="matching" element={<MatchingPage />} />
+            <Route path="chat" element={<ChatPage />} />
+            <Route path="register" element={<RegisterPage />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </ToastProvider>
+    </BrowserRouter>
+  );
+}
