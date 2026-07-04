@@ -5,6 +5,9 @@ Platform business matching B2B **Indonesia ⇔ Jepang**, dioperasikan oleh **ANC
 > ⚠️ Ini **prototype front-end untuk review** — tidak ada backend, database, atau autentikasi.
 > Semua data berasal dari file mock di `src/data/`. Tombol "Masuk" hanya navigasi ke area app.
 
+**🔗 Demo live:** https://ancha379.github.io/kakehashi/
+(otomatis ter-deploy ulang setiap push ke `main` via GitHub Actions)
+
 ## Cara menjalankan
 
 ```bash
