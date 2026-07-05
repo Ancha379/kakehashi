@@ -1,4 +1,172 @@
 {
+  "lp": {
+    "nav": {
+      "features": "Keunggulan",
+      "process": "Cara Kerja",
+      "companies": "Perusahaan",
+      "pricing": "Harga",
+      "faq": "FAQ"
+    },
+    "cta": {
+      "login": "Masuk",
+      "register": "Daftar",
+      "registerFree": "Daftar Gratis →",
+      "viewCompanies": "Lihat Perusahaan",
+      "consult": "Hubungi Konsultan",
+      "consultFree": "Konsultasi Gratis"
+    },
+    "hero": {
+      "badge": "Platform B2B Business Matching",
+      "line1a": "Satu ",
+      "line1em": "jembatan",
+      "line1b": " bisnis",
+      "countryLeft": "Indonesia",
+      "countryRight": "Jepang",
+      "subtitle": "Kakehashi by ANC Japan mempertemukan perusahaan Jepang dengan mitra Indonesia tepercaya — didukung verifikasi menyeluruh, AI matching, dan pendampingan konsultan.",
+      "japan": "Japan",
+      "indonesia": "Indonesia",
+      "matchBadge": "96% AI Match",
+      "matchSub": "Mitra terverifikasi"
+    },
+    "pain": {
+      "tag": "Tantangan",
+      "title": "Ekspansi lintas negara sering terasa rumit",
+      "items": [
+        {
+          "title": "Bingung mulai dari mana",
+          "desc": "Ingin ekspansi ke pasar baru, tapi tidak tahu langkah pertama, regulasi, atau siapa yang bisa dipercaya."
+        },
+        {
+          "title": "Sulit cari partner tepercaya",
+          "desc": "Banyak calon mitra, tapi sulit memastikan legalitas, rekam jejak, dan keseriusan mereka."
+        },
+        {
+          "title": "Kendala bahasa & budaya",
+          "desc": "Perbedaan bahasa dan budaya bisnis Jepang–Indonesia sering menimbulkan salah paham yang mahal."
+        }
+      ]
+    },
+    "features": {
+      "tag": "Keunggulan",
+      "title": "Solusi lengkap dalam satu platform",
+      "items": [
+        { "title": "Kepercayaan", "desc": "Setiap perusahaan tervalidasi legalitas & rekam jejaknya sebelum tampil." },
+        { "title": "AI Translation", "desc": "Komunikasi JP–ID lancar dengan terjemahan real-time kontekstual." },
+        { "title": "AI Matching", "desc": "Rekomendasi mitra paling relevan berdasarkan industri & tujuan." },
+        { "title": "Pendampingan", "desc": "Konsultan ANC Japan mendampingi dari perkenalan hingga deal." }
+      ]
+    },
+    "process": {
+      "tag": "Cara Kerja",
+      "title": "Empat langkah menuju kerja sama yang aman",
+      "steps": [
+        { "title": "Daftar", "desc": "Buat profil perusahaan & tujuan bisnis Anda. Gratis, tanpa biaya awal." },
+        { "title": "Matching", "desc": "AI merekomendasikan mitra paling relevan berikut skor kecocokan." },
+        { "title": "Verifikasi & Pendampingan", "desc": "Konsultan memverifikasi & mendampingi setiap tahap negosiasi." },
+        { "title": "Deal Aman", "desc": "Kesepakatan tercapai dengan dokumen & pembayaran yang terlindungi." }
+      ]
+    },
+    "companies": {
+      "tag": "Perusahaan Pilihan",
+      "title": "Temukan mitra bisnis Anda",
+      "detail": "Lihat detail →",
+      "items": [
+        { "country": "Japan", "match": "96%", "industry": "Manufaktur / 製造", "name": "Sakura Manufacturing", "desc": "Presisi komponen otomotif, mencari mitra produksi di Indonesia." },
+        { "country": "Indonesia", "match": "93%", "industry": "Agribisnis / 農業", "name": "Nusantara Agrotech", "desc": "Ekspor produk agrikultur premium, membuka mitra distribusi Jepang." },
+        { "country": "Japan", "match": "91%", "industry": "IT & Software / IT", "name": "Tokyo Digital Works", "desc": "Studio pengembangan software, mencari talenta & partner ID." },
+        { "country": "Indonesia", "match": "89%", "industry": "Logistik / 物流", "name": "Bumi Logistik Nusantara", "desc": "Rantai pasok lintas pulau, siap mendukung ekspansi Jepang." },
+        { "country": "Japan", "match": "88%", "industry": "F&B / 食品", "name": "Kyoto Foods Co.", "desc": "Produsen makanan tradisional, mencari bahan baku Indonesia." },
+        { "country": "Indonesia", "match": "87%", "industry": "Tekstil / 繊維", "name": "Garuda Textile Group", "desc": "Manufaktur tekstil berkelanjutan, membuka OEM untuk Jepang." }
+      ]
+    },
+    "why": {
+      "tag": "Kenapa Kakehashi",
+      "title": "Dibangun untuk kepercayaan lintas budaya",
+      "intro": "Bukan sekadar direktori — sebuah ekosistem tepercaya yang menutup celah bahasa, budaya, dan risiko.",
+      "photoCaption": "Delegasi bisnis Indonesia–Jepang bersama ANC Japan",
+      "items": [
+        { "title": "Verifikasi Menyeluruh", "desc": "Legalitas & rekam jejak dicek sebelum tampil." },
+        { "title": "Dukungan Dwibahasa", "desc": "Konsultan & AI menjembatani JP–ID." },
+        { "title": "Jaringan Luas", "desc": "Terhubung universitas & industri kedua negara." },
+        { "title": "Aman & Transparan", "desc": "Dokumen & pembayaran terlindungi." }
+      ]
+    },
+    "testi": {
+      "tag": "Testimoni",
+      "title": "Apa kata mitra kami",
+      "items": [
+        { "quote": "Kami menemukan mitra produksi Indonesia dalam hitungan minggu. Pendampingannya membuat prosesnya terasa aman.", "name": "Hiroshi Tanaka", "role": "CEO, Sakura Manufacturing 🇯🇵" },
+        { "quote": "AI matching-nya akurat. Terjemahan real-time menghapus hambatan bahasa dengan calon klien Jepang kami.", "name": "Sari Wijaya", "role": "Direktur, Nusantara Agrotech 🇮🇩" },
+        { "quote": "Verifikasi menyeluruh membuat kami percaya diri. Setiap perusahaan yang kami temui benar-benar kredibel.", "name": "Kenji Sato", "role": "COO, Tokyo Digital Works 🇯🇵" },
+        { "quote": "Model success-fee sangat adil. Kami mulai tanpa risiko dan baru membayar setelah kerja sama terjadi.", "name": "Budi Santoso", "role": "Founder, Bumi Logistik 🇮🇩" },
+        { "quote": "Konsultan ANC memahami budaya bisnis kedua negara. Itu perbedaan terbesar dibanding platform lain.", "name": "Aiko Nakamura", "role": "Manajer Ekspansi, Kyoto Foods 🇯🇵" },
+        { "quote": "Dari perkenalan sampai kontrak, semua terpandu. Kakehashi benar-benar jadi jembatan bagi kami.", "name": "Dewi Lestari", "role": "CEO, Garuda Textile 🇮🇩" }
+      ]
+    },
+    "pricing": {
+      "tag": "Harga",
+      "title": "Bayar hanya saat berhasil",
+      "subtitle": "Tanpa biaya pendaftaran. Tanpa biaya awal. Model success-fee yang adil.",
+      "popular": "POPULER",
+      "plans": [
+        {
+          "name": "Kandidat Mitra · Indonesia 🇮🇩",
+          "price": "Rp0",
+          "unit": "/ selamanya",
+          "desc": "Buat profil, tampil ke perusahaan Jepang, dan mulai dilirik — gratis.",
+          "features": [
+            "Profil perusahaan terverifikasi",
+            "AI matching & notifikasi",
+            "Terjemahan JP–ID"
+          ],
+          "cta": "Daftar Gratis"
+        },
+        {
+          "name": "Klien Korporat · Jepang 🇯🇵",
+          "price": "0",
+          "unit": "biaya awal · success-fee saat deal",
+          "desc": "Mulai tanpa risiko. Bayar hanya ketika kerja sama benar-benar terjadi.",
+          "features": [
+            "Akses seluruh mitra terverifikasi",
+            "Pendampingan konsultan penuh",
+            "Dukungan verifikasi & kontrak"
+          ],
+          "cta": "Konsultasi Gratis"
+        }
+      ]
+    },
+    "faq": {
+      "tag": "FAQ",
+      "title": "Pertanyaan yang sering diajukan",
+      "items": [
+        { "q": "Apakah pendaftaran benar-benar gratis?", "a": "Ya. Membuat profil dan tampil di platform gratis tanpa biaya awal. Anda hanya membayar success-fee ketika kerja sama benar-benar terjadi." },
+        { "q": "Bagaimana perusahaan diverifikasi?", "a": "Setiap perusahaan diperiksa legalitas, dokumen resmi, dan rekam jejaknya oleh tim ANC Japan sebelum tampil di platform." },
+        { "q": "Bahasa apa yang didukung?", "a": "Platform mendukung Bahasa Indonesia dan Jepang, dilengkapi terjemahan AI real-time serta pendampingan konsultan dwibahasa." },
+        { "q": "Bagaimana AI matching bekerja?", "a": "AI menganalisis industri, tujuan, dan profil perusahaan untuk merekomendasikan mitra paling relevan beserta skor kecocokan." },
+        { "q": "Kapan saya membayar success-fee?", "a": "Success-fee hanya berlaku ketika kesepakatan atau kerja sama resmi tercapai — tidak ada biaya di muka." }
+      ]
+    },
+    "finalCta": {
+      "title": "Mulai jembatan bisnis Anda hari ini",
+      "subtitle": "Gabung dengan perusahaan Jepang & Indonesia yang membangun kemitraan tepercaya bersama Kakehashi.",
+      "primary": "Daftar Gratis →",
+      "secondary": "Hubungi Konsultan"
+    },
+    "footer": {
+      "tagline": "Jembatan bisnis tepercaya antara Indonesia dan Jepang.",
+      "operated": "Operated by ANC Japan / 株式会社ANCジャパン",
+      "colPlatform": "Platform",
+      "colCompany": "Perusahaan",
+      "colLegal": "Legal",
+      "linkAbout": "Tentang ANC Japan",
+      "linkCareer": "Karier",
+      "linkContact": "Kontak",
+      "linkPrivacy": "Kebijakan Privasi",
+      "linkTerms": "Syarat Layanan",
+      "copyright": "© 2026 ANC Japan / 株式会社ANCジャパン. All rights reserved.",
+      "cities": "Tokyo 🇯🇵 · Jakarta 🇮🇩"
+    }
+  },
   "common": {
     "appName": "Kakehashi",
     "byAnc": "by ANC Japan",

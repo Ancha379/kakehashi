@@ -1,4 +1,172 @@
 {
+  "lp": {
+    "nav": {
+      "features": "特長",
+      "process": "流れ",
+      "companies": "企業一覧",
+      "pricing": "料金",
+      "faq": "FAQ"
+    },
+    "cta": {
+      "login": "ログイン",
+      "register": "登録",
+      "registerFree": "無料で登録 →",
+      "viewCompanies": "企業を見る",
+      "consult": "相談する",
+      "consultFree": "無料相談する"
+    },
+    "hero": {
+      "badge": "B2Bビジネスマッチング",
+      "line1a": "ビジネスの",
+      "line1em": "架け橋",
+      "line1b": "",
+      "countryLeft": "インドネシア",
+      "countryRight": "日本",
+      "subtitle": "Kakehashi by ANC Japanは、日本企業と信頼できるインドネシア企業を、徹底した検証・AIマッチング・コンサルタントの伴走支援でつなぎます。",
+      "japan": "Japan",
+      "indonesia": "Indonesia",
+      "matchBadge": "96% AI Match",
+      "matchSub": "検証済みの企業"
+    },
+    "pain": {
+      "tag": "課題",
+      "title": "海外進出は、思った以上に複雑です",
+      "items": [
+        {
+          "title": "どこから始めればいい？",
+          "desc": "新しい市場へ進出したいが、最初の一歩・規制・信頼できる相手が分からない。"
+        },
+        {
+          "title": "信頼できる相手が探せない",
+          "desc": "候補は多くても、法的地位・実績・本気度を見極めるのが難しい。"
+        },
+        {
+          "title": "言葉と商習慣の壁",
+          "desc": "日本とインドネシアの言語・商習慣の違いが、高くつく誤解を生む。"
+        }
+      ]
+    },
+    "features": {
+      "tag": "特長",
+      "title": "ひとつのプラットフォームで完結",
+      "items": [
+        { "title": "信頼性", "desc": "掲載前に全企業の法的地位・実績を検証。" },
+        { "title": "AI翻訳", "desc": "文脈を踏まえたリアルタイム翻訳で日尼の対話を円滑に。" },
+        { "title": "AIマッチング", "desc": "業種・目的に基づき最適な相手を推薦。" },
+        { "title": "伴走支援", "desc": "紹介から成約までANCのコンサルが伴走。" }
+      ]
+    },
+    "process": {
+      "tag": "ご利用の流れ",
+      "title": "安心の協業まで、4つのステップ",
+      "steps": [
+        { "title": "登録", "desc": "企業プロフィールと目的を登録。初期費用は無料。" },
+        { "title": "マッチング", "desc": "AIが適合スコア付きで最適な相手を推薦。" },
+        { "title": "検証・伴走", "desc": "コンサルが検証し、交渉の各段階を支援。" },
+        { "title": "安心の成約", "desc": "書類と支払いを保護した状態で成約。" }
+      ]
+    },
+    "companies": {
+      "tag": "注目の企業",
+      "title": "あなたのビジネスパートナーを見つける",
+      "detail": "詳細を見る →",
+      "items": [
+        { "country": "Japan", "match": "96%", "industry": "製造 / Manufaktur", "name": "Sakura Manufacturing", "desc": "自動車部品の精密加工。インドネシアの生産パートナーを募集。" },
+        { "country": "Indonesia", "match": "93%", "industry": "農業 / Agribisnis", "name": "Nusantara Agrotech", "desc": "プレミアム農産物の輸出。日本の販売パートナーを募集。" },
+        { "country": "Japan", "match": "91%", "industry": "IT / IT & Software", "name": "Tokyo Digital Works", "desc": "ソフトウェア開発スタジオ。人材・インドネシアのパートナーを探索中。" },
+        { "country": "Indonesia", "match": "89%", "industry": "物流 / Logistik", "name": "Bumi Logistik Nusantara", "desc": "島間サプライチェーン。日本企業の進出を支援。" },
+        { "country": "Japan", "match": "88%", "industry": "食品 / F&B", "name": "Kyoto Foods Co.", "desc": "伝統食品メーカー。インドネシア産の原材料を探索中。" },
+        { "country": "Indonesia", "match": "87%", "industry": "繊維 / Tekstil", "name": "Garuda Textile Group", "desc": "サステナブルな繊維製造。日本向けOEMを募集。" }
+      ]
+    },
+    "why": {
+      "tag": "選ばれる理由",
+      "title": "文化を越えた信頼のために",
+      "intro": "単なる名簿ではなく、言語・文化・リスクの溝を埋める信頼のエコシステム。",
+      "photoCaption": "ANCジャパンと共にする日尼ビジネス代表団",
+      "items": [
+        { "title": "徹底した検証", "desc": "掲載前に法的地位と実績を確認。" },
+        { "title": "二言語サポート", "desc": "コンサルとAIが日尼を橋渡し。" },
+        { "title": "広いネットワーク", "desc": "両国の大学・産業とつながる。" },
+        { "title": "安全・透明", "desc": "書類と支払いを保護。" }
+      ]
+    },
+    "testi": {
+      "tag": "お客様の声",
+      "title": "ご利用企業の声",
+      "items": [
+        { "quote": "数週間でインドネシアの生産パートナーが見つかりました。伴走支援のおかげで、安心して進められました。", "name": "田中 寛", "role": "CEO, Sakura Manufacturing 🇯🇵" },
+        { "quote": "AIマッチングが的確でした。リアルタイム翻訳が、日本の見込み客との言語の壁をなくしてくれました。", "name": "Sari Wijaya", "role": "Direktur, Nusantara Agrotech 🇮🇩" },
+        { "quote": "徹底した検証のおかげで自信を持てました。出会う企業はどこも本当に信頼できます。", "name": "佐藤 健二", "role": "COO, Tokyo Digital Works 🇯🇵" },
+        { "quote": "成功報酬モデルはとても公正です。リスクなく始め、協業が成立してから支払いました。", "name": "Budi Santoso", "role": "Founder, Bumi Logistik 🇮🇩" },
+        { "quote": "ANCのコンサルは両国の商習慣を理解しています。それが他のプラットフォームとの最大の違いです。", "name": "中村 愛子", "role": "拡大担当マネージャー, Kyoto Foods 🇯🇵" },
+        { "quote": "紹介から契約まで、すべて導いてもらえました。Kakehashiはまさに私たちの架け橋です。", "name": "Dewi Lestari", "role": "CEO, Garuda Textile 🇮🇩" }
+      ]
+    },
+    "pricing": {
+      "tag": "料金",
+      "title": "成果が出たときだけ、お支払い",
+      "subtitle": "登録費・初期費用ゼロ。公正な成功報酬モデル。",
+      "popular": "人気",
+      "plans": [
+        {
+          "name": "パートナー候補・インドネシア 🇮🇩",
+          "price": "Rp0",
+          "unit": "/ 永年",
+          "desc": "プロフィールを作成し、日本企業に掲載。無料で始められます。",
+          "features": [
+            "検証済み企業プロフィール",
+            "AIマッチング・通知",
+            "日尼翻訳"
+          ],
+          "cta": "無料で登録"
+        },
+        {
+          "name": "法人クライアント・日本 🇯🇵",
+          "price": "0",
+          "unit": "初期費用・成約時に成功報酬",
+          "desc": "リスクなしで開始。協業が成立したときのみお支払い。",
+          "features": [
+            "全検証済み企業へアクセス",
+            "コンサルタントの伴走支援",
+            "検証・契約サポート"
+          ],
+          "cta": "無料相談する"
+        }
+      ]
+    },
+    "faq": {
+      "tag": "FAQ",
+      "title": "よくあるご質問",
+      "items": [
+        { "q": "登録は本当に無料ですか？", "a": "はい。プロフィール作成と掲載は初期費用なしで無料です。協業が成立したときのみ成功報酬をお支払いいただきます。" },
+        { "q": "企業はどのように検証されますか？", "a": "全企業は掲載前に、ANCジャパンのチームが法的地位・公式書類・実績を確認します。" },
+        { "q": "対応言語は？", "a": "インドネシア語と日本語に対応し、AIによるリアルタイム翻訳と二言語対応コンサルタントが支援します。" },
+        { "q": "AIマッチングの仕組みは？", "a": "AIが業種・目的・企業プロフィールを分析し、適合スコア付きで最適な相手を推薦します。" },
+        { "q": "成功報酬はいつ支払いますか？", "a": "成功報酬は正式な合意・協業が成立したときのみ発生し、前払いはありません。" }
+      ]
+    },
+    "finalCta": {
+      "title": "今日から、ビジネスの架け橋を",
+      "subtitle": "Kakehashiで信頼のパートナーシップを築く日本・インドネシア企業に加わりましょう。",
+      "primary": "無料で登録 →",
+      "secondary": "相談する"
+    },
+    "footer": {
+      "tagline": "インドネシアと日本をつなぐ、信頼のビジネス架け橋。",
+      "operated": "運営：株式会社ANCジャパン / Operated by ANC Japan",
+      "colPlatform": "プラットフォーム",
+      "colCompany": "会社情報",
+      "colLegal": "規約",
+      "linkAbout": "ANCについて",
+      "linkCareer": "採用",
+      "linkContact": "お問い合わせ",
+      "linkPrivacy": "プライバシー",
+      "linkTerms": "利用規約",
+      "copyright": "© 2026 ANC Japan / 株式会社ANCジャパン. All rights reserved.",
+      "cities": "Tokyo 🇯🇵 · Jakarta 🇮🇩"
+    }
+  },
   "common": {
     "appName": "Kakehashi",
     "byAnc": "by ANC Japan",

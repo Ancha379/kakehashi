@@ -33,13 +33,39 @@ export default {
           700: '#b74206',
           800: '#94320c',
           900: '#7a2a0d'
+        },
+        // ── Token redesign landing (dari desain Claude Design) ──
+        navy: {
+          950: '#0A1230',
+          900: '#0B1437',
+          800: '#111a52',
+          700: '#22317a',
+          600: '#2b3a86'
+        },
+        royal: {
+          300: '#aeb9ff',
+          400: '#8ca0ff',
+          500: '#4F6BFF',
+          600: '#3a52e0'
+        },
+        coral: {
+          400: '#FF6A57',
+          500: '#FF5A47',
+          600: '#e8442f'
+        },
+        mint: {
+          400: '#5ce6a5',
+          500: '#2bb47a'
         }
       },
       fontFamily: {
-        sans: ['"Noto Sans"', '"Noto Sans JP"', 'system-ui', 'sans-serif']
+        sans: ['"Noto Sans"', '"Noto Sans JP"', 'system-ui', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', '"Noto Sans JP"', 'system-ui', 'sans-serif']
       },
       boxShadow: {
-        card: '0 1px 3px rgba(15, 36, 64, 0.06), 0 8px 24px rgba(15, 36, 64, 0.07)'
+        card: '0 1px 3px rgba(15, 36, 64, 0.06), 0 8px 24px rgba(15, 36, 64, 0.07)',
+        glow: '0 20px 60px -20px rgba(79, 107, 255, 0.5)',
+        lift: '0 24px 60px -24px rgba(10, 18, 48, 0.35)'
       }
     }
   },
