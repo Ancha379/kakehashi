@@ -22,7 +22,7 @@
       "line1b": " bisnis",
       "countryLeft": "Indonesia",
       "countryRight": "Jepang",
-      "subtitle": "Kakehashi by ANC Japan mempertemukan perusahaan Jepang dengan mitra Indonesia tepercaya — didukung verifikasi menyeluruh, AI matching, dan pendampingan konsultan.",
+      "subtitle": "Kakehashi by ANC Japan mempertemukan perusahaan Jepang dengan mitra Indonesia tepercaya. Matching dijalankan AI secara otonom sehingga jauh lebih cepat — konsultan hadir sebagai pendamping, bukan perantara.",
       "japan": "Japan",
       "indonesia": "Indonesia",
       "matchBadge": "96% AI Match",
@@ -52,7 +52,7 @@
       "items": [
         { "title": "Kepercayaan", "desc": "Setiap perusahaan tervalidasi legalitas & rekam jejaknya sebelum tampil." },
         { "title": "AI Translation", "desc": "Komunikasi JP–ID lancar dengan terjemahan real-time kontekstual." },
-        { "title": "AI Matching", "desc": "Rekomendasi mitra paling relevan berdasarkan industri & tujuan." },
+        { "title": "AI Matching Otonom", "desc": "Kedua perusahaan & AI menjalankan pencocokan secara otonom — mitra relevan muncul dalam waktu singkat, tanpa menunggu proses manual." },
         { "title": "Pendampingan", "desc": "Konsultan ANC Japan mendampingi dari perkenalan hingga deal." }
       ]
     },
@@ -61,7 +61,7 @@
       "title": "Empat langkah menuju kerja sama yang aman",
       "steps": [
         { "title": "Daftar", "desc": "Buat profil perusahaan & tujuan bisnis Anda. Gratis, tanpa biaya awal." },
-        { "title": "Matching", "desc": "AI merekomendasikan mitra paling relevan berikut skor kecocokan." },
+        { "title": "Matching", "desc": "AI menjalankan pencocokan otonom dan menampilkan mitra paling relevan berikut skor kecocokan — cepat, tanpa perantara manual." },
         { "title": "Verifikasi & Pendampingan", "desc": "Konsultan memverifikasi & mendampingi setiap tahap negosiasi." },
         { "title": "Deal Aman", "desc": "Kesepakatan tercapai dengan dokumen & pembayaran yang terlindungi." }
       ]
@@ -364,6 +364,10 @@
     "step4": "Review",
     "companyName": "Nama perusahaan",
     "companyNamePlaceholder": "PT Contoh Sejahtera / 株式会社サンプル",
+    "logo": "Logo perusahaan",
+    "logoHint": "PNG/JPG. Logo tampil di kiri-atas profil & kartu perusahaan Anda.",
+    "logoUpload": "Unggah logo",
+    "logoChange": "Ganti logo",
     "country": "Negara",
     "website": "Website",
     "websitePlaceholder": "https://…",

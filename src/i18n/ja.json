@@ -22,7 +22,7 @@
       "line1b": "",
       "countryLeft": "インドネシア",
       "countryRight": "日本",
-      "subtitle": "Kakehashi by ANC Japanは、日本企業と信頼できるインドネシア企業を、徹底した検証・AIマッチング・コンサルタントの伴走支援でつなぎます。",
+      "subtitle": "Kakehashi by ANC Japanは、日本企業と信頼できるインドネシア企業をつなぎます。マッチングはAIが自律的に進めるからスピーディー。コンサルタントは仲介者ではなく、それを支える伴走役です。",
       "japan": "Japan",
       "indonesia": "Indonesia",
       "matchBadge": "96% AI Match",
@@ -52,7 +52,7 @@
       "items": [
         { "title": "信頼性", "desc": "掲載前に全企業の法的地位・実績を検証。" },
         { "title": "AI翻訳", "desc": "文脈を踏まえたリアルタイム翻訳で日尼の対話を円滑に。" },
-        { "title": "AIマッチング", "desc": "業種・目的に基づき最適な相手を推薦。" },
+        { "title": "自律型AIマッチング", "desc": "双方の企業とAIが自律的に候補を絞り込み、人手を待たずに最適な相手を素早く提案。" },
         { "title": "伴走支援", "desc": "紹介から成約までANCのコンサルが伴走。" }
       ]
     },
@@ -61,7 +61,7 @@
       "title": "安心の協業まで、4つのステップ",
       "steps": [
         { "title": "登録", "desc": "企業プロフィールと目的を登録。初期費用は無料。" },
-        { "title": "マッチング", "desc": "AIが適合スコア付きで最適な相手を推薦。" },
+        { "title": "マッチング", "desc": "AIが自律的にマッチングを進め、適合スコア付きで最適な相手をスピーディーに提案。人手による仲介は不要。" },
         { "title": "検証・伴走", "desc": "コンサルが検証し、交渉の各段階を支援。" },
         { "title": "安心の成約", "desc": "書類と支払いを保護した状態で成約。" }
       ]
@@ -364,6 +364,10 @@
     "step4": "確認",
     "companyName": "会社名",
     "companyNamePlaceholder": "株式会社サンプル / PT Contoh Sejahtera",
+    "logo": "会社ロゴ",
+    "logoHint": "PNG/JPG。企業プロフィール・企業カードの左上に表示されます。",
+    "logoUpload": "ロゴをアップロード",
+    "logoChange": "ロゴを変更",
     "country": "国",
     "website": "ウェブサイト",
     "websitePlaceholder": "https://…",
