@@ -66,6 +66,15 @@ export default {
         card: '0 1px 3px rgba(15, 36, 64, 0.06), 0 8px 24px rgba(15, 36, 64, 0.07)',
         glow: '0 20px 60px -20px rgba(79, 107, 255, 0.5)',
         lift: '0 24px 60px -24px rgba(10, 18, 48, 0.35)'
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' }
+        }
+      },
+      animation: {
+        marquee: 'marquee 45s linear infinite'
       }
     }
   },

@@ -1,5 +1,6 @@
 import Header from '../components/landing2/Header';
 import Hero from '../components/landing2/Hero';
+import LogoMarquee from '../components/landing2/LogoMarquee';
 import PainPoints from '../components/landing2/PainPoints';
 import Features from '../components/landing2/Features';
 import Process from '../components/landing2/Process';
@@ -17,6 +18,7 @@ export default function LandingPage() {
       <Header />
       <main>
         <Hero />
+        <LogoMarquee />
         <PainPoints />
         <Features />
         <Process />
