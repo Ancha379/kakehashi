@@ -4,3 +4,5 @@ dist
 *.local
 202605_会社説明 copy.pptx
 .claude/settings.local.json
+design-import/
+*.tsbuildinfo

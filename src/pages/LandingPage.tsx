@@ -1,33 +1,33 @@
-import Header from '../components/landing/Header';
-import Hero from '../components/landing/Hero';
-import PainPoints from '../components/landing/PainPoints';
-import MarketStats from '../components/landing/MarketStats';
-import ServiceOverview from '../components/landing/ServiceOverview';
-import HowItWorks from '../components/landing/HowItWorks';
-import Features from '../components/landing/Features';
-import WhyChooseUs from '../components/landing/WhyChooseUs';
-import ServiceFlow from '../components/landing/ServiceFlow';
-import Pricing from '../components/landing/Pricing';
-import Faq from '../components/landing/Faq';
-import ContactSection from '../components/landing/ContactSection';
-import Footer from '../components/landing/Footer';
+import Header from '../components/landing2/Header';
+import Hero from '../components/landing2/Hero';
+import LogoMarquee from '../components/landing2/LogoMarquee';
+import PainPoints from '../components/landing2/PainPoints';
+import Features from '../components/landing2/Features';
+import Process from '../components/landing2/Process';
+import Companies from '../components/landing2/Companies';
+import WhyChoose from '../components/landing2/WhyChoose';
+import Testimonials from '../components/landing2/Testimonials';
+import Pricing from '../components/landing2/Pricing';
+import Faq from '../components/landing2/Faq';
+import FinalCta from '../components/landing2/FinalCta';
+import Footer from '../components/landing2/Footer';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white font-sans">
       <Header />
       <main>
         <Hero />
+        <LogoMarquee />
         <PainPoints />
-        <MarketStats />
-        <ServiceOverview />
-        <HowItWorks />
         <Features />
-        <WhyChooseUs />
-        <ServiceFlow />
+        <Process />
+        <Companies />
+        <WhyChoose />
+        <Testimonials />
         <Pricing />
         <Faq />
-        <ContactSection />
+        <FinalCta />
       </main>
       <Footer />
     </div>

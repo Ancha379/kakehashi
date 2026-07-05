@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import type { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, ArrowRight, Check, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, CheckCircle2, ImagePlus, Upload } from 'lucide-react';
 import type { CompanySize, Country, Industry, Purpose } from '../../data/types';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
@@ -12,6 +13,8 @@ const sizeOptions: CompanySize[] = ['small', 'medium', 'large'];
 
 interface FormState {
   companyName: string;
+  logoUrl: string;
+  logoName: string;
   country: Country;
   website: string;
   size: CompanySize;
@@ -25,6 +28,8 @@ interface FormState {
 
 const initialForm: FormState = {
   companyName: '',
+  logoUrl: '',
+  logoName: '',
   country: 'ID',
   website: '',
   size: 'small',
@@ -64,6 +69,17 @@ export default function RegisterPage() {
 
   const togglePurpose = (p: Purpose) =>
     set('purposes', form.purposes.includes(p) ? form.purposes.filter((v) => v !== p) : [...form.purposes, p]);
+
+  // Upload logo (front-end saja): preview lokal via object URL, tidak dikirim ke mana pun.
+  const onLogoChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setForm((prev) => {
+      if (prev.logoUrl) URL.revokeObjectURL(prev.logoUrl);
+      return { ...prev, logoUrl: url, logoName: file.name };
+    });
+  };
 
   const display = (value: string) => value.trim() || t('register.notFilled');
 
@@ -130,6 +146,30 @@ export default function RegisterPage() {
       <Card className="md:p-8">
         {step === 0 && (
           <div className="space-y-4">
+            {/* Upload logo — tampil di kiri-atas info perusahaan (masukan 牧野さん #7) */}
+            <div>
+              <span className="mb-1.5 block text-sm font-semibold text-slate-700">
+                {t('register.logo')}
+                <span className="ml-2 text-xs font-normal text-slate-400">({t('common.optional')})</span>
+              </span>
+              <div className="flex items-center gap-4">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-dashed border-slate-300 bg-slate-50">
+                  {form.logoUrl ? (
+                    <img src={form.logoUrl} alt="" className="h-full w-full object-cover" />
+                  ) : (
+                    <ImagePlus className="h-6 w-6 text-slate-300" aria-hidden />
+                  )}
+                </div>
+                <div>
+                  <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50">
+                    <Upload className="h-4 w-4" aria-hidden />
+                    {form.logoUrl ? t('register.logoChange') : t('register.logoUpload')}
+                    <input type="file" accept="image/*" className="hidden" onChange={onLogoChange} />
+                  </label>
+                  <p className="mt-1.5 text-xs text-slate-400">{t('register.logoHint')}</p>
+                </div>
+              </div>
+            </div>
             <Field label={t('register.companyName')}>
               <input
                 type="text"
@@ -265,6 +305,24 @@ export default function RegisterPage() {
           <div>
             <h3 className="font-bold text-slate-900">{t('register.reviewTitle')}</h3>
             <p className="mt-1 text-xs text-slate-500">{t('register.reviewHint')}</p>
+
+            {/* Header: logo di kiri-atas + nama perusahaan */}
+            <div className="mt-5 flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white">
+                {form.logoUrl ? (
+                  <img src={form.logoUrl} alt="" className="h-full w-full object-cover" />
+                ) : (
+                  <span
+                    aria-hidden
+                    className="flex h-full w-full items-center justify-center rounded-xl bg-primary-700 text-lg font-bold text-white"
+                  >
+                    {form.companyName.replace(/^PT\s+/i, '').charAt(0).toUpperCase() || '?'}
+                  </span>
+                )}
+              </div>
+              <span className="font-bold text-slate-900">{display(form.companyName)}</span>
+            </div>
+
             <dl className="mt-5 divide-y divide-slate-100 text-sm">
               {[
                 [t('register.companyName'), display(form.companyName)],
