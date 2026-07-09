@@ -18,7 +18,7 @@ export default function Process() {
     >
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <SectionTag tag={t('lp.process.tag')} title={t('lp.process.title')} tone="dark" />
-        <ol className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-12 grid gap-5 sm:grid-cols-3">
           {steps.map((step, i) => (
             <li
               key={step.title}

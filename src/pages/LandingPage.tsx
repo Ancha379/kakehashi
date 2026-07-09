@@ -7,6 +7,8 @@ import Process from '../components/landing2/Process';
 import Companies from '../components/landing2/Companies';
 import WhyChoose from '../components/landing2/WhyChoose';
 import Testimonials from '../components/landing2/Testimonials';
+import News from '../components/landing2/News';
+import Events from '../components/landing2/Events';
 import Pricing from '../components/landing2/Pricing';
 import Faq from '../components/landing2/Faq';
 import FinalCta from '../components/landing2/FinalCta';
@@ -25,6 +27,8 @@ export default function LandingPage() {
         <Companies />
         <WhyChoose />
         <Testimonials />
+        <News />
+        <Events />
         <Pricing />
         <Faq />
         <FinalCta />

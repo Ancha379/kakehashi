@@ -4,6 +4,8 @@
       "features": "Keunggulan",
       "process": "Cara Kerja",
       "companies": "Perusahaan",
+      "news": "News",
+      "events": "Event",
       "pricing": "Harga",
       "faq": "FAQ"
     },
@@ -58,16 +60,33 @@
     },
     "process": {
       "tag": "Cara Kerja",
-      "title": "Empat langkah menuju kerja sama yang aman",
+      "title": "Tiga langkah menuju kerja sama yang aman",
       "steps": [
-        { "title": "Daftar", "desc": "Buat profil perusahaan & tujuan bisnis Anda. Gratis, tanpa biaya awal." },
+        { "title": "Daftar & Verifikasi", "desc": "Buat profil perusahaan; tim ANC Japan memverifikasi legalitas & rekam jejak Anda. Gratis, tanpa biaya awal." },
         { "title": "Matching", "desc": "AI menjalankan pencocokan otonom dan menampilkan mitra paling relevan berikut skor kecocokan — cepat, tanpa perantara manual." },
-        { "title": "Verifikasi & Pendampingan", "desc": "Konsultan memverifikasi & mendampingi setiap tahap negosiasi." },
-        { "title": "Deal Aman", "desc": "Kesepakatan tercapai dengan dokumen & pembayaran yang terlindungi." }
+        { "title": "Deal", "desc": "Kesepakatan tercapai dengan dokumen & pembayaran yang terlindungi, didampingi konsultan." }
       ]
     },
     "logos": {
       "title": "Perusahaan Jepang & Indonesia yang telah terdaftar"
+    },
+    "news": {
+      "tag": "News",
+      "title": "Info & regulasi Indonesia dalam bahasa Jepang",
+      "subtitle": "Rangkuman peraturan dan info bisnis Indonesia yang paling dicari perusahaan Jepang. Sebagian gratis, artikel lengkap khusus member.",
+      "freeBadge": "Gratis",
+      "memberBadge": "Khusus Member",
+      "readMore": "Baca selengkapnya",
+      "unlock": "Buka dengan Member",
+      "viewAll": "Lihat semua berita"
+    },
+    "events": {
+      "tag": "Event",
+      "title": "Expo di Indonesia & Jepang",
+      "subtitle": "Pameran dagang pilihan di kedua negara. Pendaftaran peserta kami uruskan — Anda tinggal siapkan produk & tim.",
+      "ancHandles": "Pendaftaran diurus ANC Japan",
+      "register": "Ikut lewat ANC",
+      "viewAll": "Lihat semua event"
     },
     "companies": {
       "tag": "Perusahaan Pilihan",
@@ -397,10 +416,19 @@
       "fnb": "F&B & Agri",
       "textile": "Tekstil & Garmen",
       "logistics": "Logistik",
-      "automotive": "Otomotif"
+      "automotive": "Otomotif",
+      "fishery": "Perikanan",
+      "education": "Pendidikan",
+      "travel": "Travel & Pariwisata",
+      "hospital": "Rumah Sakit & Kesehatan",
+      "handicraft": "Kerajinan",
+      "hotelresort": "Hotel & Resort",
+      "sport": "Olahraga",
+      "others": "Lainnya"
     },
     "purposes": {
       "sales": "Ekspansi pasar",
+      "export": "Ekspor",
       "sourcing": "Pengadaan / Supplier",
       "partnership": "Kolaborasi",
       "investment": "Investasi",

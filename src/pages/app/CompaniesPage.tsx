@@ -8,8 +8,23 @@ import Button from '../../components/ui/Button';
 import { cn } from '../../lib/cn';
 
 const countryOptions: Country[] = ['JP', 'ID'];
-const industryOptions: Industry[] = ['manufacturing', 'it', 'fnb', 'textile', 'logistics', 'automotive'];
-const purposeOptions: Purpose[] = ['sales', 'sourcing', 'partnership', 'investment', 'talent'];
+const industryOptions: Industry[] = [
+  'manufacturing',
+  'it',
+  'fnb',
+  'textile',
+  'logistics',
+  'automotive',
+  'fishery',
+  'education',
+  'travel',
+  'hospital',
+  'handicraft',
+  'hotelresort',
+  'sport',
+  'others'
+];
+const purposeOptions: Purpose[] = ['sales', 'export', 'sourcing', 'partnership', 'investment', 'talent'];
 const sizeOptions: CompanySize[] = ['small', 'medium', 'large'];
 
 const countryFlag: Record<Country, string> = { JP: '🇯🇵', ID: '🇮🇩' };
