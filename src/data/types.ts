@@ -14,9 +14,23 @@ export type Industry =
   | 'fnb'
   | 'textile'
   | 'logistics'
-  | 'automotive';
+  | 'automotive'
+  | 'fishery'
+  | 'education'
+  | 'travel'
+  | 'hospital'
+  | 'handicraft'
+  | 'hotelresort'
+  | 'sport'
+  | 'others';
 
-export type Purpose = 'sales' | 'sourcing' | 'partnership' | 'investment' | 'talent';
+export type Purpose =
+  | 'sales'
+  | 'export'
+  | 'sourcing'
+  | 'partnership'
+  | 'investment'
+  | 'talent';
 
 export type CompanySize = 'small' | 'medium' | 'large';
 

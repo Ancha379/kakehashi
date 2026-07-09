@@ -10,6 +10,8 @@ const navItems = [
   { key: 'lp.nav.features', href: '#keunggulan' },
   { key: 'lp.nav.process', href: '#proses' },
   { key: 'lp.nav.companies', href: '#perusahaan' },
+  { key: 'lp.nav.news', href: '#news' },
+  { key: 'lp.nav.events', href: '#event' },
   { key: 'lp.nav.pricing', href: '#harga' },
   { key: 'lp.nav.faq', href: '#faq' }
 ];
@@ -25,7 +27,7 @@ export default function Header() {
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Main">
+        <nav className="hidden items-center gap-5 lg:flex" aria-label="Main">
           {navItems.map((item) => (
             <a
               key={item.key}
@@ -37,7 +39,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <LanguageToggle />
           <Link
             to="/app/dashboard"
