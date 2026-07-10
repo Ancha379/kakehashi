@@ -65,7 +65,7 @@ export default function DashboardPage() {
             </div>
             <div className="min-w-0">
               <p className="text-2xl font-extrabold text-slate-900">{stat.value}</p>
-              <p className="truncate text-xs text-slate-500">{stat.label}</p>
+              <p className="text-xs leading-snug text-slate-500">{stat.label}</p>
             </div>
           </Card>
         ))}

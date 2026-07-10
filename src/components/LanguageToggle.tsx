@@ -7,13 +7,13 @@ const langs = [
 ] as const;
 
 export default function LanguageToggle() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const active = i18n.language === 'ja' ? 'ja' : 'id';
 
   return (
     <div
       role="group"
-      aria-label="Language"
+      aria-label={t('common.language')}
       className="flex items-center rounded-full border border-slate-200 bg-white p-0.5"
     >
       {langs.map((lang) => (

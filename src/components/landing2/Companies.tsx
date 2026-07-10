@@ -32,7 +32,7 @@ export default function Companies() {
             <button
               type="button"
               onClick={() => scroll(-1)}
-              aria-label="Previous"
+              aria-label={t('common.prevItem')}
               className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-600 transition-colors hover:bg-navy-950 hover:text-white"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -40,7 +40,7 @@ export default function Companies() {
             <button
               type="button"
               onClick={() => scroll(1)}
-              aria-label="Next"
+              aria-label={t('common.nextItem')}
               className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-600 transition-colors hover:bg-navy-950 hover:text-white"
             >
               <ArrowRight className="h-4 w-4" />

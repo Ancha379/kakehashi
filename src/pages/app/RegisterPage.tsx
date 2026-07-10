@@ -140,7 +140,7 @@ export default function RegisterPage() {
                 </span>
                 <span
                   className={cn(
-                    'mt-1.5 hidden text-[11px] font-semibold sm:block',
+                    'mt-1.5 hidden max-w-[5.5rem] text-center text-[11px] font-semibold leading-tight sm:block',
                     current ? 'text-primary-700' : 'text-slate-400'
                   )}
                 >

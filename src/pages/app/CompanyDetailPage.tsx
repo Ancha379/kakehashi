@@ -180,22 +180,22 @@ export default function CompanyDetailPage() {
             <dl className="mt-6 space-y-3 text-sm">
               <div className="flex items-center gap-3">
                 <Calendar className="h-4 w-4 shrink-0 text-slate-400" aria-hidden />
-                <dt className="w-24 shrink-0 text-slate-500">{t('company.founded')}</dt>
+                <dt className="w-28 shrink-0 text-slate-500">{t('company.founded')}</dt>
                 <dd className="font-semibold text-slate-800">{company.founded}</dd>
               </div>
               <div className="flex items-center gap-3">
                 <Users className="h-4 w-4 shrink-0 text-slate-400" aria-hidden />
-                <dt className="w-24 shrink-0 text-slate-500">{t('company.sizeLabel')}</dt>
+                <dt className="w-28 shrink-0 text-slate-500">{t('company.sizeLabel')}</dt>
                 <dd className="font-semibold text-slate-800">{t(`meta.sizes.${company.size}`)}</dd>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="h-4 w-4 shrink-0 text-slate-400" aria-hidden />
-                <dt className="w-24 shrink-0 text-slate-500">{t('company.location')}</dt>
+                <dt className="w-28 shrink-0 text-slate-500">{t('company.location')}</dt>
                 <dd className="font-semibold text-slate-800">{location}</dd>
               </div>
               <div className="flex items-center gap-3">
                 <Globe className="h-4 w-4 shrink-0 text-slate-400" aria-hidden />
-                <dt className="w-24 shrink-0 text-slate-500">{t('company.website')}</dt>
+                <dt className="w-28 shrink-0 text-slate-500">{t('company.website')}</dt>
                 <dd className="truncate font-semibold text-primary-700">
                   <a href={company.website} target="_blank" rel="noreferrer" className="hover:underline">
                     {company.website.replace('https://', '')}

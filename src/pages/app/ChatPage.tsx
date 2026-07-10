@@ -120,7 +120,9 @@ export default function ChatPage() {
                 >
                   <CompanyLogo company={company} size="sm" />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-semibold text-slate-900">{name}</span>
+                    <span title={name} className="block truncate text-sm font-semibold text-slate-900">
+                      {name}
+                    </span>
                     <span className="block truncate text-xs text-slate-500">{last.original}</span>
                   </span>
                   <span className="text-[10px] text-slate-400">{last.time}</span>
@@ -153,7 +155,7 @@ export default function ChatPage() {
                 return (
                   <>
                     <CompanyLogo company={company} size="sm" />
-                    <span className="min-w-0 flex-1 truncate text-sm font-bold text-slate-900">
+                    <span title={name} className="min-w-0 flex-1 truncate text-sm font-bold text-slate-900">
                       {name}
                     </span>
                   </>

@@ -34,7 +34,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         </Link>
       </div>
 
-      <nav className="flex-1 space-y-1 px-3" aria-label="App">
+      <nav className="flex-1 space-y-1 px-3" aria-label={t('common.appNav')}>
         {navItems.map((item) => (
           <NavLink
             key={item.to}
@@ -95,7 +95,7 @@ export default function AppLayout() {
             <button
               type="button"
               onClick={() => setSidebarOpen(false)}
-              aria-label="Close menu"
+              aria-label={t('common.closeMenu')}
               className="absolute right-3 top-4 rounded-lg p-2 text-slate-500 hover:bg-slate-100"
             >
               <X className="h-5 w-5" />
@@ -112,7 +112,7 @@ export default function AppLayout() {
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
-              aria-label="Menu"
+              aria-label={t('common.menu')}
               className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 lg:hidden"
             >
               <Menu className="h-5 w-5" />

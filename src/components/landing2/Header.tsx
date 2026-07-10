@@ -27,7 +27,7 @@ export default function Header() {
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-5 lg:flex" aria-label="Main">
+        <nav className="hidden items-center gap-5 lg:flex" aria-label={t('common.mainNav')}>
           {navItems.map((item) => (
             <a
               key={item.key}
@@ -61,7 +61,7 @@ export default function Header() {
             type="button"
             onClick={() => setOpen(!open)}
             aria-expanded={open}
-            aria-label="Menu"
+            aria-label={t('common.menu')}
             className="rounded-lg p-2 text-slate-600 hover:bg-slate-100"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -70,7 +70,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <nav className="border-t border-slate-100 bg-white px-4 pb-4 lg:hidden" aria-label="Mobile">
+        <nav className="border-t border-slate-100 bg-white px-4 pb-4 lg:hidden" aria-label={t('common.mobileNav')}>
           {navItems.map((item) => (
             <a
               key={item.key}
