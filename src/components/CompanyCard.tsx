@@ -22,7 +22,9 @@ export default function CompanyCard({ company }: { company: Company }) {
       <div className="flex items-start gap-3">
         <CompanyLogo company={company} />
         <div className="min-w-0 flex-1">
-          <h3 className="truncate font-bold text-slate-900 group-hover:text-primary-700">{name}</h3>
+          <h3 title={name} className="truncate font-bold text-slate-900 group-hover:text-primary-700">
+            {name}
+          </h3>
           <p className="mt-0.5 text-xs text-slate-500">
             {countryFlag[company.country]} {t(`meta.countries.${company.country}`)} ·{' '}
             {t(`meta.industries.${company.industry}`)}
