@@ -42,13 +42,13 @@ export default function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <LanguageToggle />
           <Link
-            to="/app/dashboard"
+            to="/login"
             className="font-display text-sm font-semibold text-slate-700 transition-colors hover:text-navy-800"
           >
             {t('lp.cta.login')}
           </Link>
           <Link
-            to="/app/register"
+            to="/signup"
             className="rounded-full bg-royal-500 px-5 py-2 font-display text-sm font-bold text-white shadow-glow transition-colors hover:bg-royal-600"
           >
             {t('lp.cta.register')}
@@ -83,7 +83,8 @@ export default function Header() {
           ))}
           <div className="mt-4 flex gap-3">
             <Link
-              to="/app/dashboard"
+              to="/login"
+              onClick={() => setOpen(false)}
               className={cn(
                 'flex-1 rounded-full border border-slate-300 py-2.5 text-center font-display text-sm font-bold text-slate-700'
               )}
@@ -91,7 +92,8 @@ export default function Header() {
               {t('lp.cta.login')}
             </Link>
             <Link
-              to="/app/register"
+              to="/signup"
+              onClick={() => setOpen(false)}
               className="flex-1 rounded-full bg-royal-500 py-2.5 text-center font-display text-sm font-bold text-white"
             >
               {t('lp.cta.register')}

@@ -50,7 +50,7 @@ export default function Hero() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              to="/app/register"
+              to="/signup"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 font-display text-base font-bold text-navy-900 shadow-lift transition-transform hover:-translate-y-0.5"
             >
               {t('lp.cta.registerFree')}

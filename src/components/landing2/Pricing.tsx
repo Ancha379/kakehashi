@@ -86,7 +86,7 @@ export default function Pricing() {
                 </ul>
 
                 <Link
-                  to="/app/register"
+                  to="/signup"
                   className={cn(
                     'mt-8 inline-flex items-center justify-center rounded-full px-6 py-3 font-display text-sm font-bold transition-colors',
                     popular

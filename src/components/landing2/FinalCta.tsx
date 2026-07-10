@@ -19,13 +19,13 @@ export default function FinalCta() {
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <Link
-            to="/app/register"
+            to="/signup"
             className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 font-display text-base font-bold text-navy-900 shadow-lift transition-transform hover:-translate-y-0.5"
           >
             {t('lp.finalCta.primary')}
           </Link>
           <Link
-            to="/app/register"
+            to="/signup"
             className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-7 py-3.5 font-display text-base font-bold text-white backdrop-blur transition-colors hover:bg-white/15"
           >
             {t('lp.finalCta.secondary')}
