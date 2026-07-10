@@ -2,6 +2,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ToastProvider } from './components/ui/Toast';
 import ScrollToTop from './components/ScrollToTop';
 import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/auth/LoginPage';
+import SignupPage from './pages/auth/SignupPage';
 import AppLayout from './layouts/AppLayout';
 import DashboardPage from './pages/app/DashboardPage';
 import CompaniesPage from './pages/app/CompaniesPage';
@@ -20,6 +22,8 @@ export default function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/app" element={<AppLayout />}>
             <Route index element={<Navigate to="/app/dashboard" replace />} />
             <Route path="dashboard" element={<DashboardPage />} />

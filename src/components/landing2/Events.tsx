@@ -47,7 +47,7 @@ export default function Events() {
                   </p>
                 </div>
                 <Link
-                  to="/app/register"
+                  to="/signup"
                   className="mt-5 inline-flex items-center justify-center gap-1.5 rounded-full bg-navy-950 px-4 py-2.5 font-display text-sm font-bold text-white transition-colors hover:bg-navy-800"
                 >
                   {t('lp.events.register')}

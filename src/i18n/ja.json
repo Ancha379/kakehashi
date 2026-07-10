@@ -1,4 +1,45 @@
 {
+  "auth": {
+    "backHome": "トップに戻る",
+    "demoHint": "デモモード — 入力せずにクリックで進めます。",
+    "brand": {
+      "title": "インドネシアと日本をつなぐビジネスの架け橋",
+      "subtitle": "両国の審査済み企業に参加。AIマッチング・自動翻訳、そしてANCジャパンのコンサル伴走がサポートします。",
+      "trust1": "審査済み企業のみ",
+      "trust2": "AI翻訳 日⇔尼",
+      "trust3": "自律型AIマッチングで高速"
+    },
+    "field": {
+      "email": "メールアドレス",
+      "emailPlaceholder": "name@company.co.jp",
+      "password": "パスワード",
+      "passwordPlaceholder": "パスワードを入力",
+      "passwordHint": "8文字以上。",
+      "showPassword": "パスワードを表示",
+      "hidePassword": "パスワードを非表示",
+      "companyName": "会社名",
+      "companyNamePlaceholder": "株式会社サンプル",
+      "country": "国"
+    },
+    "login": {
+      "title": "ログイン",
+      "subtitle": "おかえりなさい。ログインして続けましょう。",
+      "remember": "ログイン状態を保存",
+      "forgot": "パスワードをお忘れですか？",
+      "submit": "ログイン",
+      "noAccount": "アカウントをお持ちでないですか？",
+      "signupLink": "無料で登録"
+    },
+    "signup": {
+      "title": "無料でアカウント作成",
+      "subtitle": "1分で登録し、続けて企業プロフィールを作成できます。",
+      "agree": "Kakehashiの利用規約とプライバシーポリシーに同意します。",
+      "submit": "登録して次へ",
+      "freeNote": "初期費用なし・無料 — 成果が出たときだけお支払い。",
+      "hasAccount": "すでにアカウントをお持ちですか？",
+      "loginLink": "ログイン"
+    }
+  },
   "lp": {
     "nav": {
       "features": "特長",

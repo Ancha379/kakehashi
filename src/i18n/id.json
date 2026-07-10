@@ -1,4 +1,45 @@
 {
+  "auth": {
+    "backHome": "Kembali ke beranda",
+    "demoHint": "Mode demo — klik untuk masuk tanpa mengisi apa pun.",
+    "brand": {
+      "title": "Satu jembatan bisnis Indonesia ⇔ Jepang",
+      "subtitle": "Bergabung dengan perusahaan tervalidasi dari kedua negara. Didukung AI matching, terjemahan otomatis, dan pendampingan konsultan ANC Japan.",
+      "trust1": "Hanya perusahaan tervalidasi",
+      "trust2": "AI Translation JP⇔ID",
+      "trust3": "AI Matching otonom & cepat"
+    },
+    "field": {
+      "email": "Alamat email",
+      "emailPlaceholder": "nama@perusahaan.co.id",
+      "password": "Kata sandi",
+      "passwordPlaceholder": "Masukkan kata sandi",
+      "passwordHint": "Minimal 8 karakter.",
+      "showPassword": "Tampilkan kata sandi",
+      "hidePassword": "Sembunyikan kata sandi",
+      "companyName": "Nama perusahaan",
+      "companyNamePlaceholder": "PT Contoh Sejahtera",
+      "country": "Negara"
+    },
+    "login": {
+      "title": "Masuk ke akun Anda",
+      "subtitle": "Selamat datang kembali. Silakan masuk untuk melanjutkan.",
+      "remember": "Ingat saya",
+      "forgot": "Lupa kata sandi?",
+      "submit": "Masuk",
+      "noAccount": "Belum punya akun?",
+      "signupLink": "Daftar gratis"
+    },
+    "signup": {
+      "title": "Buat akun gratis",
+      "subtitle": "Daftar dalam satu menit, lalu lengkapi profil perusahaan Anda.",
+      "agree": "Saya menyetujui Syarat Layanan dan Kebijakan Privasi Kakehashi.",
+      "submit": "Daftar & lanjutkan",
+      "freeNote": "Gratis, tanpa biaya awal — bayar hanya saat ada hasil.",
+      "hasAccount": "Sudah punya akun?",
+      "loginLink": "Masuk"
+    }
+  },
   "lp": {
     "nav": {
       "features": "Keunggulan",
