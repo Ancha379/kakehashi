@@ -91,16 +91,34 @@ export async function fetchMessages(threadId: string): Promise<ChatMessage[]> {
   return ((data as MsgRow[]) ?? []).map((r) => mapMessage(r, viewerId));
 }
 
-/** Kirim pesan sebagai viewer (front-end demo: tanpa auth per-perusahaan). */
+/**
+ * Kirim pesan sebagai viewer (front-end demo: tanpa auth per-perusahaan).
+ * Utama: lewat Edge Function `translate-message` yang menerjemahkan (Haiku 4.5)
+ * lalu menyimpan pesan berikut terjemahannya. Bila fungsi gagal (mis. secret
+ * ANTHROPIC_API_KEY belum di-set), fallback ke insert langsung tanpa terjemahan
+ * agar chat tetap berfungsi.
+ */
 export async function sendMessage(threadId: string, lang: Lang, original: string): Promise<ChatMessage> {
   const viewerId = await getViewerId();
-  const { data, error } = await supabase
-    .from('messages')
-    .insert({ thread_id: threadId, sender_company_id: viewerId, lang, original_text: original })
-    .select('id, sender_company_id, lang, original_text, translated_text, created_at')
-    .single();
-  if (error) throw error;
-  return mapMessage(data as MsgRow, viewerId);
+
+  try {
+    const { data, error } = await supabase.functions.invoke('translate-message', {
+      body: { threadId, lang, original, senderSlug: VIEWER_SLUG }
+    });
+    if (error) throw error;
+    const row = (data as { message?: MsgRow })?.message;
+    if (!row) throw new Error('Edge Function tidak mengembalikan pesan');
+    return mapMessage(row, viewerId);
+  } catch (err) {
+    console.warn('[chat] terjemahan gagal, fallback insert tanpa terjemahan:', err);
+    const { data, error } = await supabase
+      .from('messages')
+      .insert({ thread_id: threadId, sender_company_id: viewerId, lang, original_text: original })
+      .select('id, sender_company_id, lang, original_text, translated_text, created_at')
+      .single();
+    if (error) throw error;
+    return mapMessage(data as MsgRow, viewerId);
+  }
 }
 
 /** Langganan Realtime: panggil onMessage tiap ada INSERT pesan baru di thread. */
