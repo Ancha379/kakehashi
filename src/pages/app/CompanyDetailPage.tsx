@@ -14,7 +14,7 @@ import {
   Sparkles,
   Users
 } from 'lucide-react';
-import { getCompany } from '../../data/companies';
+import { useCompanies } from '../../lib/CompaniesProvider';
 import { useLang } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
 import Badge from '../../components/ui/Badge';
@@ -30,10 +30,20 @@ export default function CompanyDetailPage() {
   const { t } = useTranslation();
   const lang = useLang();
   const { showToast } = useToast();
+  const { getCompany, loading } = useCompanies();
   const company = id ? getCompany(id) : undefined;
 
   // 'translated' = bahasa UI aktif, 'original' = bahasa asli perusahaan
   const [textMode, setTextMode] = useState<'translated' | 'original'>('translated');
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="h-40 animate-pulse rounded-2xl border border-slate-100 bg-slate-100" />
+        <div className="h-64 animate-pulse rounded-2xl border border-slate-100 bg-slate-100" />
+      </div>
+    );
+  }
 
   if (!company) {
     return (

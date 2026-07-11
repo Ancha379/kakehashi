@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { companies } from '../../data/companies';
+import { useCompanies } from '../../lib/CompaniesProvider';
 import type { Company } from '../../data/types';
 import { useLang } from '../../lib/localized';
 
@@ -29,6 +29,8 @@ function LogoChip({ company }: { company: Company }) {
  */
 export default function LogoMarquee() {
   const { t } = useTranslation();
+  const { companies } = useCompanies();
+  if (companies.length === 0) return null;
   const loop = [...companies, ...companies];
 
   return (

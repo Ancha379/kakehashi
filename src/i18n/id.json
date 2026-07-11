@@ -2,6 +2,8 @@
   "auth": {
     "backHome": "Kembali ke beranda",
     "demoHint": "Mode demo — klik untuk masuk tanpa mengisi apa pun.",
+    "processing": "Memproses…",
+    "signout": "Keluar",
     "brand": {
       "title": "Satu jembatan bisnis Indonesia ⇔ Jepang",
       "subtitle": "Bergabung dengan perusahaan tervalidasi dari kedua negara. Didukung AI matching, terjemahan otomatis, dan pendampingan konsultan ANC Japan.",
@@ -27,6 +29,7 @@
       "remember": "Ingat saya",
       "forgot": "Lupa kata sandi?",
       "submit": "Masuk",
+      "failed": "Email atau kata sandi salah.",
       "noAccount": "Belum punya akun?",
       "signupLink": "Daftar gratis"
     },
@@ -35,7 +38,10 @@
       "subtitle": "Daftar dalam satu menit, lalu lengkapi profil perusahaan Anda.",
       "agree": "Saya menyetujui Syarat Layanan dan Kebijakan Privasi Kakehashi.",
       "submit": "Daftar & lanjutkan",
+      "failed": "Gagal mendaftar. Periksa data Anda dan coba lagi.",
       "freeNote": "Gratis, tanpa biaya awal — bayar hanya saat ada hasil.",
+      "checkEmailTitle": "Cek email Anda",
+      "checkEmailBody": "Kami mengirim tautan konfirmasi ke {{email}}. Klik tautan itu untuk mengaktifkan akun, lalu masuk.",
       "hasAccount": "Sudah punya akun?",
       "loginLink": "Masuk"
     }
@@ -356,7 +362,9 @@
     "mobileNav": "Navigasi mobile",
     "appNav": "Navigasi aplikasi",
     "prevItem": "Sebelumnya",
-    "nextItem": "Berikutnya"
+    "nextItem": "Berikutnya",
+    "loading": "Memuat…",
+    "loadError": "Gagal memuat data. Coba muat ulang halaman."
   },
   "app": {
     "dashboard": "Dashboard",
