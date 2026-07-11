@@ -15,6 +15,7 @@ import CompanyDetailPage from './pages/app/CompanyDetailPage';
 import MatchingPage from './pages/app/MatchingPage';
 import ChatPage from './pages/app/ChatPage';
 import RegisterPage from './pages/app/RegisterPage';
+import CompanyProfilePage from './pages/app/CompanyProfilePage';
 
 export default function App() {
   return (
@@ -40,6 +41,7 @@ export default function App() {
             <Route path="matching" element={<MatchingPage />} />
             <Route path="chat" element={<ChatPage />} />
             <Route path="register" element={<RegisterPage />} />
+            <Route path="profile" element={<CompanyProfilePage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

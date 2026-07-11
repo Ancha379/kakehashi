@@ -14,6 +14,7 @@ import { fetchDashboard } from '../../data/dashboardApi';
 import type { DashboardNotification, DashboardStats } from '../../data/dashboardApi';
 import { useCompanies } from '../../lib/CompaniesProvider';
 import { useViewer } from '../../lib/ViewerProvider';
+import { computeProfileCompletion } from '../../data/companyProfileApi';
 import { relativeTime } from '../../lib/relativeTime';
 import { useLang, useLocalized } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
@@ -48,7 +49,8 @@ export default function DashboardPage() {
     unreadMessages: 0,
     activeMeetings: 0
   });
-  const [profileCompletion, setProfileCompletion] = useState(0);
+  // Kelengkapan profil dihitung dari field perusahaan yang terisi (live).
+  const profileCompletion = computeProfileCompletion(viewerCompany);
 
   useEffect(() => {
     let active = true;
@@ -59,7 +61,6 @@ export default function DashboardPage() {
         setDeals(d.deals);
         setNotifications(d.notifications);
         setDashboardStats(d.stats);
-        setProfileCompletion(d.profileCompletion);
       })
       .catch(() => {});
     return () => {
@@ -211,7 +212,7 @@ export default function DashboardPage() {
               />
             </div>
             <p className="mt-3 text-xs leading-relaxed text-slate-500">{t('dashboard.profileHint')}</p>
-            <Button to="/app/register" variant="secondary" size="sm" className="mt-4 w-full">
+            <Button to="/app/profile" variant="secondary" size="sm" className="mt-4 w-full">
               {t('dashboard.completeProfile')}
             </Button>
           </Card>
