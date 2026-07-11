@@ -7,6 +7,7 @@ import {
   Sparkles,
   MessageSquare,
   UserPlus,
+  ShieldCheck,
   ArrowLeft,
   LogOut,
   Menu,
@@ -31,10 +32,16 @@ const navItems = [
   { to: '/app/register', key: 'app.register', icon: UserPlus }
 ];
 
+// Item khusus staf ANC (coordinator/admin).
+const staffNavItem = { to: '/app/screening', key: 'app.screening', icon: ShieldCheck };
+const allNavItems = [...navItems, staffNavItem];
+
 function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { session, signOut } = useAuth();
+  const { isStaff } = useViewer();
+  const items = isStaff ? allNavItems : navItems;
 
   const handleSignOut = async () => {
     await signOut();
@@ -51,7 +58,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       </div>
 
       <nav className="flex-1 space-y-1 px-3" aria-label={t('common.appNav')}>
-        {navItems.map((item) => (
+        {items.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
@@ -111,7 +118,7 @@ export default function AppLayout() {
   const l = useLocalized();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
-  const active = navItems.find((item) => location.pathname.startsWith(item.to));
+  const active = allNavItems.find((item) => location.pathname.startsWith(item.to));
 
   // Tunggu status sesi & resolusi perusahaan viewer agar tidak "berkedip".
   if (loading || viewer.loading) {
@@ -132,7 +139,8 @@ export default function AppLayout() {
   }
 
   // Login tapi belum punya perusahaan → arahkan ke onboarding (Registrasi).
-  if (session && !viewer.hasCompany && location.pathname !== '/app/register') {
+  // Staf ANC (coordinator/admin) tak punya perusahaan → dikecualikan.
+  if (session && !viewer.hasCompany && !viewer.isStaff && location.pathname !== '/app/register') {
     return <Navigate to="/app/register" replace />;
   }
 

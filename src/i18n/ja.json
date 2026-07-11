@@ -372,6 +372,7 @@
     "matching": "AIマッチング",
     "chat": "チャット",
     "register": "新規登録",
+    "screening": "審査",
     "backToSite": "サイトトップへ",
     "demoCompany": "PT Nusantara Coffee Sejahtera",
     "demoBadge": "デモモード — サンプルデータ",
@@ -383,6 +384,16 @@
       "demo": "デモとして見る",
       "demoHint": "サンプルデータ（PT Nusantara社）で閲覧します。アカウント不要。"
     }
+  },
+  "screening": {
+    "title": "企業審査",
+    "subtitle": "新規企業を公開ディレクトリに掲載する前に審査します。",
+    "empty": "審査待ちの企業はありません。",
+    "pending": "審査待ち",
+    "approve": "承認",
+    "reject": "却下",
+    "approved": "企業を承認し、ディレクトリに掲載しました。",
+    "rejected": "企業を却下しました。"
   },
   "profile": {
     "title": "会社プロフィール編集",

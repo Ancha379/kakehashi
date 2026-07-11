@@ -16,6 +16,7 @@ import MatchingPage from './pages/app/MatchingPage';
 import ChatPage from './pages/app/ChatPage';
 import RegisterPage from './pages/app/RegisterPage';
 import CompanyProfilePage from './pages/app/CompanyProfilePage';
+import CoordinatorScreeningPage from './pages/app/CoordinatorScreeningPage';
 
 export default function App() {
   return (
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="chat" element={<ChatPage />} />
             <Route path="register" element={<RegisterPage />} />
             <Route path="profile" element={<CompanyProfilePage />} />
+            <Route path="screening" element={<CoordinatorScreeningPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
