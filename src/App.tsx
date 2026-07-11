@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ToastProvider } from './components/ui/Toast';
 import { CompaniesProvider } from './lib/CompaniesProvider';
 import { AuthProvider } from './lib/AuthProvider';
+import { DemoModeProvider } from './lib/DemoModeProvider';
 import ScrollToTop from './components/ScrollToTop';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/auth/LoginPage';
@@ -22,6 +23,7 @@ export default function App() {
     >
       <ToastProvider>
         <AuthProvider>
+        <DemoModeProvider>
         <CompaniesProvider>
         <ScrollToTop />
         <Routes>
@@ -40,6 +42,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         </CompaniesProvider>
+        </DemoModeProvider>
         </AuthProvider>
       </ToastProvider>
     </BrowserRouter>

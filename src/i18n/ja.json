@@ -374,7 +374,15 @@
     "register": "新規登録",
     "backToSite": "サイトトップへ",
     "demoCompany": "PT Nusantara Coffee Sejahtera",
-    "demoBadge": "デモモード — サンプルデータ"
+    "demoBadge": "デモモード — サンプルデータ",
+    "gate": {
+      "title": "Kakehashiにログイン",
+      "subtitle": "ログインして自社を管理するか、まずサンプルデータで体験できます。",
+      "login": "ログイン",
+      "signup": "新規登録",
+      "demo": "デモとして見る",
+      "demoHint": "サンプルデータ（PT Nusantara社）で閲覧します。アカウント不要。"
+    }
   },
   "companies": {
     "title": "企業ディレクトリ",

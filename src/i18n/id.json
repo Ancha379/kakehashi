@@ -374,7 +374,15 @@
     "register": "Registrasi",
     "backToSite": "Ke Landing Page",
     "demoCompany": "PT Nusantara Coffee Sejahtera",
-    "demoBadge": "Mode demo — data contoh"
+    "demoBadge": "Mode demo — data contoh",
+    "gate": {
+      "title": "Masuk ke Kakehashi",
+      "subtitle": "Masuk untuk mengelola perusahaan Anda, atau jelajahi dulu dengan data contoh.",
+      "login": "Masuk",
+      "signup": "Daftar",
+      "demo": "Lihat sebagai demo",
+      "demoHint": "Menjelajah dengan data contoh (perusahaan PT Nusantara). Tanpa akun."
+    }
   },
   "companies": {
     "title": "Direktori Perusahaan",
