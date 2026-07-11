@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -10,12 +10,12 @@ import {
   UserRoundCheck
 } from 'lucide-react';
 import {
-  activeDeals,
   dashboardStats,
-  matchRequests as initialRequests,
   notifications,
   profileCompletion
 } from '../../data/dashboard';
+import type { ActiveDeal, MatchRequest } from '../../data/dashboard';
+import { fetchDashboard } from '../../data/dashboardApi';
 import { useCompanies } from '../../lib/CompaniesProvider';
 import { useLang, useLocalized } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
@@ -36,7 +36,22 @@ export default function DashboardPage() {
   const l = useLocalized();
   const { showToast } = useToast();
   const { getCompany } = useCompanies();
-  const [requests, setRequests] = useState(initialRequests);
+  const [requests, setRequests] = useState<MatchRequest[]>([]);
+  const [deals, setDeals] = useState<ActiveDeal[]>([]);
+
+  useEffect(() => {
+    let active = true;
+    fetchDashboard()
+      .then(({ requests, deals }) => {
+        if (!active) return;
+        setRequests(requests);
+        setDeals(deals);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const stats = [
     { icon: Eye, label: t('dashboard.statViews'), value: dashboardStats.profileViews },
@@ -130,7 +145,7 @@ export default function DashboardPage() {
               {t('dashboard.activeDeals')}
             </h3>
             <ul className="space-y-4">
-              {activeDeals.map((deal) => {
+              {deals.map((deal) => {
                 const company = getCompany(deal.companyId);
                 if (!company) return null;
                 const name = lang === 'ja' ? company.name_ja : company.name_id;
