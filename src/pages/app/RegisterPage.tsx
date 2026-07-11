@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import type { ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, ArrowRight, Check, CheckCircle2, ImagePlus, Upload } from 'lucide-react';
 import type { CompanySize, Country, Industry, Purpose } from '../../data/types';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
+import { useToast } from '../../components/ui/Toast';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../lib/AuthProvider';
+import { useViewer } from '../../lib/ViewerProvider';
+import { useCompanies } from '../../lib/CompaniesProvider';
 import { cn } from '../../lib/cn';
 
 const industryOptions: Industry[] = [
@@ -73,9 +79,57 @@ function Field({ label, children, optional }: { label: string; children: React.R
 
 export default function RegisterPage() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { showToast } = useToast();
+  const { session } = useAuth();
+  const viewer = useViewer();
+  const { reload } = useCompanies();
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormState>(initialForm);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Onboarding nyata = user login yang belum punya perusahaan. Kalau mode demo
+  // (tanpa sesi), submit hanya menampilkan layar sukses (tidak menulis DB).
+  const onboarding = !!session && !viewer.hasCompany;
+
+  const handleSubmit = async () => {
+    setError(null);
+    if (!onboarding) {
+      setSubmitted(true);
+      return;
+    }
+    if (!form.companyName.trim()) {
+      setError(t('register.nameRequired'));
+      setStep(0);
+      return;
+    }
+    setSubmitting(true);
+    const { error: rpcError } = await supabase.rpc('onboard_company', {
+      p_name: form.companyName,
+      p_country: form.country,
+      p_industry: form.industry,
+      p_size: form.size,
+      p_purposes: form.purposes,
+      p_offering: form.offering,
+      p_seeking: form.seeking,
+      p_notes: form.notes,
+      p_website: form.website || null,
+      p_founded: form.founded ? Number(form.founded) : null
+    });
+    setSubmitting(false);
+    if (rpcError) {
+      setError(rpcError.message);
+      return;
+    }
+    // Perusahaan dibuat & profil tertaut. Muat ulang viewer/direktori lalu ke
+    // dashboard (menghindari layar sukses ter-unmount saat viewer re-resolve).
+    reload();
+    viewer.refresh();
+    showToast(t('register.created'));
+    navigate('/app/dashboard');
+  };
 
   const steps = [t('register.step1'), t('register.step2'), t('register.step3'), t('register.step4')];
 
@@ -365,8 +419,16 @@ export default function RegisterPage() {
           </div>
         )}
 
+        {error && (
+          <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</p>
+        )}
+
         <div className="mt-8 flex items-center justify-between">
-          <Button variant="outline" onClick={() => setStep(step - 1)} className={cn(step === 0 && 'invisible')}>
+          <Button
+            variant="outline"
+            onClick={() => setStep(step - 1)}
+            className={cn(step === 0 && 'invisible')}
+          >
             <ArrowLeft className="h-4 w-4" />
             {t('common.back')}
           </Button>
@@ -376,9 +438,9 @@ export default function RegisterPage() {
               <ArrowRight className="h-4 w-4" />
             </Button>
           ) : (
-            <Button variant="accent" onClick={() => setSubmitted(true)}>
+            <Button variant="accent" onClick={handleSubmit} disabled={submitting}>
               <Check className="h-4 w-4" />
-              {t('register.submit')}
+              {submitting ? t('register.submitting') : t('register.submit')}
             </Button>
           )}
         </div>

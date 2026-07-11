@@ -1,8 +1,6 @@
 import { supabase } from '../lib/supabase';
+import { getViewerSlug } from '../lib/viewer';
 import type { Company, CompanySize, Country, Industry, Purpose } from './types';
-
-/** Perusahaan demo yang dianggap sedang "login" — sudut pandang skor match. */
-const VIEWER_SLUG = 'id-01';
 
 /** Bentuk baris dari tabel `companies` + relasi `company_items`. */
 interface CompanyRow {
@@ -56,7 +54,7 @@ function mapRow(
   const pick = (kind: 'offering' | 'seeking') =>
     items.filter((i) => i.kind === kind).map((i) => ({ ja: i.text_ja, id: i.text_id }));
 
-  const isViewer = row.slug === VIEWER_SLUG;
+  const isViewer = row.slug === getViewerSlug();
 
   return {
     id: row.slug,
@@ -100,7 +98,7 @@ export async function fetchCompanies(): Promise<Company[]> {
   if (cErr) throw cErr;
   const rows = companyData as unknown as CompanyRow[];
 
-  const viewerId = rows.find((r) => r.slug === VIEWER_SLUG)?.id;
+  const viewerId = rows.find((r) => r.slug === getViewerSlug())?.id;
 
   // Skor match berarah dari viewer → tiap perusahaan lain.
   const matchByCompanyId = new Map<string, MatchRow>();

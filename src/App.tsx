@@ -3,6 +3,7 @@ import { ToastProvider } from './components/ui/Toast';
 import { CompaniesProvider } from './lib/CompaniesProvider';
 import { AuthProvider } from './lib/AuthProvider';
 import { DemoModeProvider } from './lib/DemoModeProvider';
+import { ViewerProvider } from './lib/ViewerProvider';
 import ScrollToTop from './components/ScrollToTop';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/auth/LoginPage';
@@ -24,6 +25,7 @@ export default function App() {
       <ToastProvider>
         <AuthProvider>
         <DemoModeProvider>
+        <ViewerProvider>
         <CompaniesProvider>
         <ScrollToTop />
         <Routes>
@@ -42,6 +44,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         </CompaniesProvider>
+        </ViewerProvider>
         </DemoModeProvider>
         </AuthProvider>
       </ToastProvider>

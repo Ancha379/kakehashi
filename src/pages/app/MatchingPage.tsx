@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Handshake, Lightbulb, Sparkles } from 'lucide-react';
-import { useCompanies, currentCompanyId } from '../../lib/CompaniesProvider';
+import { useCompanies } from '../../lib/CompaniesProvider';
+import { getViewerSlug } from '../../lib/viewer';
 import { useLang } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
 import Button from '../../components/ui/Button';
@@ -22,7 +23,7 @@ export default function MatchingPage() {
   const { companies, loading } = useCompanies();
 
   const recommendations = companies
-    .filter((c) => c.id !== currentCompanyId)
+    .filter((c) => c.id !== getViewerSlug())
     .sort((a, b) => b.matchScore - a.matchScore);
 
   return (

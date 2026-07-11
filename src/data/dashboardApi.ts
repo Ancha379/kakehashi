@@ -1,9 +1,7 @@
 import { supabase } from '../lib/supabase';
+import { getViewerSlug } from '../lib/viewer';
 import type { ActiveDeal, MatchRequest } from './dashboard';
 import type { Bilingual } from './types';
-
-/** Perusahaan viewer (demo yang dianggap login). */
-const VIEWER_SLUG = 'id-01';
 
 export interface DashboardNotification {
   id: string;
@@ -74,7 +72,7 @@ export async function fetchDashboard(): Promise<DashboardData> {
   const { data: viewer } = await supabase
     .from('companies')
     .select('id')
-    .eq('slug', VIEWER_SLUG)
+    .eq('slug', getViewerSlug())
     .maybeSingle();
   const viewerId = viewer?.id;
   if (!viewerId) return EMPTY;
