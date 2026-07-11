@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Search, SlidersHorizontal } from 'lucide-react';
-import { companies } from '../../data/companies';
+import { useCompanies } from '../../lib/CompaniesProvider';
 import type { Company, CompanySize, Country, Industry, Purpose } from '../../data/types';
 import CompanyCard from '../../components/CompanyCard';
 import Button from '../../components/ui/Button';
@@ -75,6 +75,7 @@ function FilterGroup<T extends string>({
 
 export default function CompaniesPage() {
   const { t } = useTranslation();
+  const { companies, loading, error } = useCompanies();
   const [query, setQuery] = useState('');
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
   const [selectedIndustries, setSelectedIndustries] = useState<Industry[]>([]);
@@ -114,7 +115,7 @@ export default function CompaniesPage() {
           (selectedSizes.length === 0 || selectedSizes.includes(c.size))
       )
       .sort((a, b) => b.matchScore - a.matchScore);
-  }, [query, selectedCountries, selectedIndustries, selectedPurposes, selectedSizes]);
+  }, [companies, query, selectedCountries, selectedIndustries, selectedPurposes, selectedSizes]);
 
   const filterPanel = (
     <div className="space-y-6">
@@ -212,7 +213,17 @@ export default function CompaniesPage() {
             {t('companies.results', { count: results.length })}
           </p>
 
-          {results.length === 0 ? (
+          {error ? (
+            <p className="rounded-2xl border border-dashed border-red-200 bg-red-50 p-10 text-center text-sm text-red-600">
+              {t('common.loadError')}
+            </p>
+          ) : loading ? (
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="h-44 animate-pulse rounded-2xl border border-slate-100 bg-slate-100" />
+              ))}
+            </div>
+          ) : results.length === 0 ? (
             <p className="rounded-2xl border border-dashed border-slate-200 bg-white p-10 text-center text-sm text-slate-500">
               {t('companies.noResults')}
             </p>

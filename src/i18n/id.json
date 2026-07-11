@@ -356,7 +356,9 @@
     "mobileNav": "Navigasi mobile",
     "appNav": "Navigasi aplikasi",
     "prevItem": "Sebelumnya",
-    "nextItem": "Berikutnya"
+    "nextItem": "Berikutnya",
+    "loading": "Memuat…",
+    "loadError": "Gagal memuat data. Coba muat ulang halaman."
   },
   "app": {
     "dashboard": "Dashboard",

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Handshake, Lightbulb, Sparkles } from 'lucide-react';
-import { companies, currentCompanyId } from '../../data/companies';
+import { useCompanies, currentCompanyId } from '../../lib/CompaniesProvider';
 import { useLang } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
 import Button from '../../components/ui/Button';
@@ -19,6 +19,7 @@ export default function MatchingPage() {
   const { t } = useTranslation();
   const lang = useLang();
   const { showToast } = useToast();
+  const { companies, loading } = useCompanies();
 
   const recommendations = companies
     .filter((c) => c.id !== currentCompanyId)
@@ -35,7 +36,12 @@ export default function MatchingPage() {
       </div>
 
       <div className="space-y-4">
-        {recommendations.map((company) => {
+        {loading &&
+          Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="h-32 animate-pulse rounded-2xl border border-slate-100 bg-slate-100" />
+          ))}
+        {!loading &&
+          recommendations.map((company) => {
           const name = lang === 'ja' ? company.name_ja : company.name_id;
           const reason = lang === 'ja' ? company.matchReason_ja : company.matchReason_id;
           return (

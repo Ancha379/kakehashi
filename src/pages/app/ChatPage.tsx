@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Languages, Send } from 'lucide-react';
 import { chatThreads } from '../../data/messages';
 import type { ChatMessage } from '../../data/messages';
-import { getCompany } from '../../data/companies';
+import { useCompanies } from '../../lib/CompaniesProvider';
 import { useLang } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
 import { cn } from '../../lib/cn';
@@ -55,6 +55,7 @@ function Bubble({ message, showTranslation }: { message: ChatMessage; showTransl
 export default function ChatPage() {
   const { t } = useTranslation();
   const lang = useLang();
+  const { getCompany } = useCompanies();
   const [activeId, setActiveId] = useState<string | null>(chatThreads[0]?.id ?? null);
   const [mobileListVisible, setMobileListVisible] = useState(true);
   const [showTranslation, setShowTranslation] = useState(true);

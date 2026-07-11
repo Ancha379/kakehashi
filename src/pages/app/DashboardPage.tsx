@@ -16,7 +16,7 @@ import {
   notifications,
   profileCompletion
 } from '../../data/dashboard';
-import { getCompany } from '../../data/companies';
+import { useCompanies } from '../../lib/CompaniesProvider';
 import { useLang, useLocalized } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
 import Badge from '../../components/ui/Badge';
@@ -35,6 +35,7 @@ export default function DashboardPage() {
   const lang = useLang();
   const l = useLocalized();
   const { showToast } = useToast();
+  const { getCompany } = useCompanies();
   const [requests, setRequests] = useState(initialRequests);
 
   const stats = [

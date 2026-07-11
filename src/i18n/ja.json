@@ -356,7 +356,9 @@
     "mobileNav": "モバイルナビゲーション",
     "appNav": "アプリナビゲーション",
     "prevItem": "前へ",
-    "nextItem": "次へ"
+    "nextItem": "次へ",
+    "loading": "読み込み中…",
+    "loadError": "データの読み込みに失敗しました。ページを再読み込みしてください。"
   },
   "app": {
     "dashboard": "ダッシュボード",

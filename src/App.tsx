@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ToastProvider } from './components/ui/Toast';
+import { CompaniesProvider } from './lib/CompaniesProvider';
 import ScrollToTop from './components/ScrollToTop';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/auth/LoginPage';
@@ -19,6 +20,7 @@ export default function App() {
       future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
     >
       <ToastProvider>
+        <CompaniesProvider>
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -35,6 +37,7 @@ export default function App() {
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        </CompaniesProvider>
       </ToastProvider>
     </BrowserRouter>
   );
