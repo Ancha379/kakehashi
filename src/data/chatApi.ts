@@ -1,8 +1,6 @@
 import { supabase } from '../lib/supabase';
+import { getViewerSlug } from '../lib/viewer';
 import type { Lang } from './types';
-
-/** Perusahaan viewer (demo yang dianggap login). */
-const VIEWER_SLUG = 'id-01';
 
 export interface ChatMessage {
   id: string;
@@ -31,10 +29,15 @@ interface MsgRow {
   created_at: string;
 }
 
+// Cache id viewer, di-keyed oleh slug supaya otomatis re-resolve saat viewer
+// berganti (mis. demo id-01 -> perusahaan sendiri setelah login).
+let cachedSlug: string | null = null;
 let viewerIdCache: string | null = null;
 async function getViewerId(): Promise<string | null> {
-  if (viewerIdCache) return viewerIdCache;
-  const { data } = await supabase.from('companies').select('id').eq('slug', VIEWER_SLUG).maybeSingle();
+  const slug = getViewerSlug();
+  if (cachedSlug === slug && viewerIdCache) return viewerIdCache;
+  const { data } = await supabase.from('companies').select('id').eq('slug', slug).maybeSingle();
+  cachedSlug = slug;
   viewerIdCache = data?.id ?? null;
   return viewerIdCache;
 }
@@ -103,7 +106,7 @@ export async function sendMessage(threadId: string, lang: Lang, original: string
 
   try {
     const { data, error } = await supabase.functions.invoke('translate-message', {
-      body: { threadId, lang, original, senderSlug: VIEWER_SLUG }
+      body: { threadId, lang, original, senderSlug: getViewerSlug() }
     });
     if (error) throw error;
     const row = (data as { message?: MsgRow })?.message;

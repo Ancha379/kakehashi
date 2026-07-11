@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, Link, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   LayoutDashboard,
@@ -17,6 +17,9 @@ import LanguageToggle from '../components/LanguageToggle';
 import Badge from '../components/ui/Badge';
 import { useAuth } from '../lib/AuthProvider';
 import { useDemoMode } from '../lib/DemoModeProvider';
+import { useViewer } from '../lib/ViewerProvider';
+import { useCompanies } from '../lib/CompaniesProvider';
+import { useLocalized } from '../lib/localized';
 import AppGate from '../pages/app/AppGate';
 import { cn } from '../lib/cn';
 
@@ -103,12 +106,15 @@ export default function AppLayout() {
   const { t } = useTranslation();
   const { session, loading } = useAuth();
   const { demo } = useDemoMode();
+  const viewer = useViewer();
+  const { getCompany } = useCompanies();
+  const l = useLocalized();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const active = navItems.find((item) => location.pathname.startsWith(item.to));
 
-  // Tunggu status sesi supaya tidak "berkedip" ke gate saat sudah login.
-  if (loading) {
+  // Tunggu status sesi & resolusi perusahaan viewer agar tidak "berkedip".
+  if (loading || viewer.loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-50">
         <div
@@ -124,6 +130,19 @@ export default function AppLayout() {
   if (!session && !demo) {
     return <AppGate />;
   }
+
+  // Login tapi belum punya perusahaan → arahkan ke onboarding (Registrasi).
+  if (session && !viewer.hasCompany && location.pathname !== '/app/register') {
+    return <Navigate to="/app/register" replace />;
+  }
+
+  const viewerCompany = viewer.slug ? getCompany(viewer.slug) : undefined;
+  const companyName = viewerCompany
+    ? l({ ja: viewerCompany.name_ja, id: viewerCompany.name_id })
+    : session
+      ? session.user.email ?? t('app.demoCompany')
+      : t('app.demoCompany');
+  const avatarLetter = companyName.replace(/^PT\s+/i, '').charAt(0).toUpperCase() || 'K';
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -177,10 +196,10 @@ export default function AppLayout() {
                 aria-hidden
                 className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-500 text-xs font-bold text-white"
               >
-                N
+                {avatarLetter}
               </span>
               <span className="max-w-[180px] truncate text-xs font-semibold text-slate-600">
-                {t('app.demoCompany')}
+                {companyName}
               </span>
             </div>
           </div>

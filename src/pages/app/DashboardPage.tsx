@@ -13,6 +13,7 @@ import type { ActiveDeal, MatchRequest } from '../../data/dashboard';
 import { fetchDashboard } from '../../data/dashboardApi';
 import type { DashboardNotification, DashboardStats } from '../../data/dashboardApi';
 import { useCompanies } from '../../lib/CompaniesProvider';
+import { useViewer } from '../../lib/ViewerProvider';
 import { relativeTime } from '../../lib/relativeTime';
 import { useLang, useLocalized } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
@@ -33,6 +34,11 @@ export default function DashboardPage() {
   const l = useLocalized();
   const { showToast } = useToast();
   const { getCompany } = useCompanies();
+  const viewer = useViewer();
+  const viewerCompany = viewer.slug ? getCompany(viewer.slug) : undefined;
+  const viewerName = viewerCompany
+    ? l({ ja: viewerCompany.name_ja, id: viewerCompany.name_id })
+    : t('app.demoCompany');
   const [requests, setRequests] = useState<MatchRequest[]>([]);
   const [deals, setDeals] = useState<ActiveDeal[]>([]);
   const [notifications, setNotifications] = useState<DashboardNotification[]>([]);
@@ -77,7 +83,7 @@ export default function DashboardPage() {
     <div>
       <div className="mb-6">
         <p className="text-sm text-slate-500">{t('dashboard.welcome')}</p>
-        <h2 className="text-xl font-bold text-slate-900 md:text-2xl">{t('app.demoCompany')}</h2>
+        <h2 className="text-xl font-bold text-slate-900 md:text-2xl">{viewerName}</h2>
       </div>
 
       {/* Ringkasan angka */}
