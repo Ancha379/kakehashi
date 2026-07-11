@@ -1,8 +1,10 @@
 // Edge Function: translate-message
 // Menerjemahkan pesan chat JP<->ID via Claude Haiku 4.5, lalu menyimpan pesan
-// (original + terjemahan) ke tabel `messages` memakai service role. Dengan
-// begitu API key Anthropic tak pernah ada di front-end, dan pesan yang
-// disiarkan lewat Realtime sudah membawa terjemahannya.
+// (original + terjemahan) ke tabel `messages` memakai service role.
+//
+// KEAMANAN (slice 3): verify_jwt=true. Pengirim ditentukan dari JWT pemanggil
+// (auth.uid -> profiles.company_id), BUKAN dari input klien. Pemanggil wajib
+// peserta thread. API key Anthropic hanya di server.
 import Anthropic from 'npm:@anthropic-ai/sdk@0.68.0';
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
@@ -12,10 +14,6 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS'
 };
 
-// Panduan penerjemahan dwibahasa untuk konteks bisnis B2B Indonesia<->Jepang.
-// Catatan: prompt caching baru aktif bila prefix >= 4096 token (Haiku). Prompt
-// ini masih di bawah itu, jadi `cache_control` terpasang tapi belum "menggigit"
-// sampai panduan/glosarium diperbesar.
 const SYSTEM_PROMPT = `Anda penerjemah profesional untuk platform business matching B2B antara perusahaan Indonesia dan Jepang (Kakehashi oleh ANC Japan).
 
 Tugas: terjemahkan pesan chat bisnis antara bahasa Indonesia (id) dan bahasa Jepang (ja).
@@ -40,13 +38,49 @@ Deno.serve(async (req: Request) => {
   if (req.method !== 'POST') return jsonResponse({ error: 'Metode tidak didukung' }, 405);
 
   try {
-    const { threadId, lang, original, senderSlug = 'id-01' } = await req.json();
+    const { threadId, lang, original } = await req.json();
     if (!threadId || !lang || !original || (lang !== 'ja' && lang !== 'id')) {
       return jsonResponse({ error: 'threadId, lang (ja|id), dan original wajib diisi' }, 400);
     }
 
     const apiKey = Deno.env.get('ANTHROPIC_API_KEY');
     if (!apiKey) return jsonResponse({ error: 'ANTHROPIC_API_KEY belum di-set sebagai secret' }, 500);
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const anonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const authHeader = req.headers.get('Authorization') ?? '';
+
+    // Identitas pemanggil dari JWT.
+    const userClient = createClient(supabaseUrl, anonKey, {
+      global: { headers: { Authorization: authHeader } },
+      auth: { persistSession: false }
+    });
+    const {
+      data: { user },
+      error: userErr
+    } = await userClient.auth.getUser();
+    if (userErr || !user) return jsonResponse({ error: 'Tidak terautentikasi' }, 401);
+
+    const service = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
+
+    const { data: profile } = await service
+      .from('profiles')
+      .select('company_id')
+      .eq('id', user.id)
+      .maybeSingle();
+    const senderCompanyId = profile?.company_id;
+    if (!senderCompanyId) return jsonResponse({ error: 'Akun belum tertaut ke perusahaan' }, 403);
+
+    // Pemanggil wajib peserta thread.
+    const { data: thread } = await service
+      .from('threads')
+      .select('company_a_id, company_b_id')
+      .eq('id', threadId)
+      .maybeSingle();
+    if (!thread || (thread.company_a_id !== senderCompanyId && thread.company_b_id !== senderCompanyId)) {
+      return jsonResponse({ error: 'Bukan peserta percakapan ini' }, 403);
+    }
 
     const target = lang === 'ja' ? 'id' : 'ja';
     const targetName = target === 'ja' ? 'bahasa Jepang' : 'bahasa Indonesia';
@@ -65,22 +99,11 @@ Deno.serve(async (req: Request) => {
       .join('')
       .trim();
 
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    );
-
-    const { data: company } = await supabase
-      .from('companies')
-      .select('id')
-      .eq('slug', senderSlug)
-      .maybeSingle();
-
-    const { data: row, error } = await supabase
+    const { data: row, error } = await service
       .from('messages')
       .insert({
         thread_id: threadId,
-        sender_company_id: company?.id ?? null,
+        sender_company_id: senderCompanyId,
         lang,
         original_text: original,
         translated_text: translated

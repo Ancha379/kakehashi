@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Languages, Send } from 'lucide-react';
+import { ArrowLeft, Languages, Lock, Send } from 'lucide-react';
 import {
   fetchMessages,
   fetchThreads,
@@ -10,6 +10,7 @@ import {
 } from '../../data/chatApi';
 import type { ChatMessage, ChatThreadSummary } from '../../data/chatApi';
 import { useCompanies } from '../../lib/CompaniesProvider';
+import { useAuth } from '../../lib/AuthProvider';
 import { useLang } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
 import { cn } from '../../lib/cn';
@@ -61,6 +62,9 @@ export default function ChatPage() {
   const { t } = useTranslation();
   const lang = useLang();
   const { getCompany } = useCompanies();
+  const { session } = useAuth();
+  // Kirim pesan hanya untuk yang login (mode demo = baca saja, slice 3).
+  const canSend = !!session;
   const [threads, setThreads] = useState<ChatThreadSummary[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -111,6 +115,7 @@ export default function ChatPage() {
 
   const handleSend = async (e: FormEvent) => {
     e.preventDefault();
+    if (!canSend) return;
     const text = draft.trim();
     if (!activeId || !text) return;
     setDraft('');
@@ -218,23 +223,30 @@ export default function ChatPage() {
               <div ref={bottomRef} />
             </div>
 
-            <form onSubmit={handleSend} className="flex items-center gap-2 border-t border-slate-100 p-3">
-              <input
-                type="text"
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-                placeholder={t('chat.inputPlaceholder')}
-                aria-label={t('chat.inputPlaceholder')}
-                className="min-w-0 flex-1 rounded-xl border border-slate-200 px-4 py-2.5 text-sm placeholder:text-slate-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-100"
-              />
-              <button
-                type="submit"
-                aria-label={t('chat.send')}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-700 text-white transition-colors hover:bg-primary-800"
-              >
-                <Send className="h-4 w-4" />
-              </button>
-            </form>
+            {canSend ? (
+              <form onSubmit={handleSend} className="flex items-center gap-2 border-t border-slate-100 p-3">
+                <input
+                  type="text"
+                  value={draft}
+                  onChange={(e) => setDraft(e.target.value)}
+                  placeholder={t('chat.inputPlaceholder')}
+                  aria-label={t('chat.inputPlaceholder')}
+                  className="min-w-0 flex-1 rounded-xl border border-slate-200 px-4 py-2.5 text-sm placeholder:text-slate-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-100"
+                />
+                <button
+                  type="submit"
+                  aria-label={t('chat.send')}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-700 text-white transition-colors hover:bg-primary-800"
+                >
+                  <Send className="h-4 w-4" />
+                </button>
+              </form>
+            ) : (
+              <div className="flex items-center justify-center gap-2 border-t border-slate-100 bg-slate-50 p-3 text-xs font-medium text-slate-500">
+                <Lock className="h-3.5 w-3.5" />
+                {t('chat.loginToSend')}
+              </div>
+            )}
           </>
         ) : (
           <div className="flex flex-1 items-center justify-center p-8 text-sm text-slate-400">
