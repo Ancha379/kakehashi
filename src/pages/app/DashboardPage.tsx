@@ -9,14 +9,11 @@ import {
   Sparkles,
   UserRoundCheck
 } from 'lucide-react';
-import {
-  dashboardStats,
-  notifications,
-  profileCompletion
-} from '../../data/dashboard';
 import type { ActiveDeal, MatchRequest } from '../../data/dashboard';
 import { fetchDashboard } from '../../data/dashboardApi';
+import type { DashboardNotification, DashboardStats } from '../../data/dashboardApi';
 import { useCompanies } from '../../lib/CompaniesProvider';
+import { relativeTime } from '../../lib/relativeTime';
 import { useLang, useLocalized } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
 import Badge from '../../components/ui/Badge';
@@ -38,14 +35,25 @@ export default function DashboardPage() {
   const { getCompany } = useCompanies();
   const [requests, setRequests] = useState<MatchRequest[]>([]);
   const [deals, setDeals] = useState<ActiveDeal[]>([]);
+  const [notifications, setNotifications] = useState<DashboardNotification[]>([]);
+  const [dashboardStats, setDashboardStats] = useState<DashboardStats>({
+    profileViews: 0,
+    newMatches: 0,
+    unreadMessages: 0,
+    activeMeetings: 0
+  });
+  const [profileCompletion, setProfileCompletion] = useState(0);
 
   useEffect(() => {
     let active = true;
     fetchDashboard()
-      .then(({ requests, deals }) => {
+      .then((d) => {
         if (!active) return;
-        setRequests(requests);
-        setDeals(deals);
+        setRequests(d.requests);
+        setDeals(d.deals);
+        setNotifications(d.notifications);
+        setDashboardStats(d.stats);
+        setProfileCompletion(d.profileCompletion);
       })
       .catch(() => {});
     return () => {
@@ -217,7 +225,9 @@ export default function DashboardPage() {
                   />
                   <div>
                     <p className="text-xs leading-relaxed text-slate-700">{l(item.text)}</p>
-                    <p className="mt-0.5 text-[10px] text-slate-400">{l(item.time)}</p>
+                    <p className="mt-0.5 text-[10px] text-slate-400">
+                      {relativeTime(item.createdAt, lang)}
+                    </p>
                   </div>
                 </li>
               ))}
