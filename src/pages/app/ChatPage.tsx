@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Languages, Send } from 'lucide-react';
-import { chatThreads } from '../../data/messages';
-import type { ChatMessage } from '../../data/messages';
+import {
+  fetchMessages,
+  fetchThreads,
+  sendMessage,
+  subscribeMessages
+} from '../../data/chatApi';
+import type { ChatMessage, ChatThreadSummary } from '../../data/chatApi';
 import { useCompanies } from '../../lib/CompaniesProvider';
 import { useLang } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
@@ -40,7 +45,7 @@ function Bubble({ message, showTranslation }: { message: ChatMessage; showTransl
               lang={message.lang === 'ja' ? 'id' : 'ja'}
               className={cn('text-xs leading-relaxed', mine ? 'text-primary-100' : 'text-slate-500')}
             >
-              {message.translated}
+              {message.translated || t('chat.demoTranslation')}
             </p>
           </div>
         )}
@@ -56,35 +61,68 @@ export default function ChatPage() {
   const { t } = useTranslation();
   const lang = useLang();
   const { getCompany } = useCompanies();
-  const [activeId, setActiveId] = useState<string | null>(chatThreads[0]?.id ?? null);
+  const [threads, setThreads] = useState<ChatThreadSummary[]>([]);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [mobileListVisible, setMobileListVisible] = useState(true);
   const [showTranslation, setShowTranslation] = useState(true);
   const [draft, setDraft] = useState('');
-  // Pesan tambahan yang dikirim user selama sesi (per thread, hanya React state)
-  const [sentMessages, setSentMessages] = useState<Record<string, ChatMessage[]>>({});
+  const bottomRef = useRef<HTMLDivElement>(null);
 
-  const activeThread = chatThreads.find((th) => th.id === activeId);
-  const messages = activeThread
-    ? [...activeThread.messages, ...(sentMessages[activeThread.id] ?? [])]
-    : [];
-
-  const handleSend = (e: FormEvent) => {
-    e.preventDefault();
-    if (!activeThread || !draft.trim()) return;
-    const msg: ChatMessage = {
-      id: `sent-${Date.now()}`,
-      sender: 'me',
-      lang,
-      original: draft.trim(),
-      translated: t('chat.demoTranslation'),
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  // Muat daftar percakapan sekali.
+  useEffect(() => {
+    let active = true;
+    fetchThreads()
+      .then((data) => {
+        if (!active) return;
+        setThreads(data);
+        setActiveId((cur) => cur ?? data[0]?.id ?? null);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
     };
-    setSentMessages((prev) => ({
-      ...prev,
-      [activeThread.id]: [...(prev[activeThread.id] ?? []), msg]
-    }));
+  }, []);
+
+  const appendMessage = useCallback((m: ChatMessage) => {
+    setMessages((prev) => (prev.some((x) => x.id === m.id) ? prev : [...prev, m]));
+  }, []);
+
+  // Muat pesan thread aktif + langganan Realtime.
+  useEffect(() => {
+    if (!activeId) return;
+    let active = true;
+    fetchMessages(activeId)
+      .then((msgs) => {
+        if (active) setMessages(msgs);
+      })
+      .catch(() => {});
+    const unsub = subscribeMessages(activeId, appendMessage);
+    return () => {
+      active = false;
+      unsub();
+    };
+  }, [activeId, appendMessage]);
+
+  // Auto-scroll ke pesan terbaru.
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ block: 'end' });
+  }, [messages]);
+
+  const handleSend = async (e: FormEvent) => {
+    e.preventDefault();
+    const text = draft.trim();
+    if (!activeId || !text) return;
     setDraft('');
+    try {
+      const m = await sendMessage(activeId, lang, text);
+      appendMessage(m);
+    } catch {
+      setDraft(text);
+    }
   };
+
+  const activeThread = threads.find((th) => th.id === activeId);
 
   return (
     <div className="flex h-[calc(100vh-9rem)] min-h-[420px] overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-card">
@@ -101,11 +139,10 @@ export default function ChatPage() {
           <p className="mt-0.5 text-[11px] text-slate-400">{t('chat.translationNote')}</p>
         </div>
         <ul>
-          {chatThreads.map((thread) => {
+          {threads.map((thread) => {
             const company = getCompany(thread.companyId);
             if (!company) return null;
             const name = lang === 'ja' ? company.name_ja : company.name_id;
-            const last = thread.messages[thread.messages.length - 1];
             return (
               <li key={thread.id}>
                 <button
@@ -124,9 +161,9 @@ export default function ChatPage() {
                     <span title={name} className="block truncate text-sm font-semibold text-slate-900">
                       {name}
                     </span>
-                    <span className="block truncate text-xs text-slate-500">{last.original}</span>
+                    <span className="block truncate text-xs text-slate-500">{thread.lastOriginal}</span>
                   </span>
-                  <span className="text-[10px] text-slate-400">{last.time}</span>
+                  <span className="text-[10px] text-slate-400">{thread.lastTime}</span>
                 </button>
               </li>
             );
@@ -178,6 +215,7 @@ export default function ChatPage() {
               {messages.map((message) => (
                 <Bubble key={message.id} message={message} showTranslation={showTranslation} />
               ))}
+              <div ref={bottomRef} />
             </div>
 
             <form onSubmit={handleSend} className="flex items-center gap-2 border-t border-slate-100 p-3">
