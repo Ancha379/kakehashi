@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowRight, Lock, Newspaper } from 'lucide-react';
-import { newsItems } from '../../data/news';
+import type { NewsItem } from '../../data/news';
+import { fetchNews } from '../../data/newsApi';
 import { useLang, useLocalized } from '../../lib/localized';
 import SectionTag from './SectionTag';
 import { cn } from '../../lib/cn';
@@ -9,6 +11,19 @@ export default function News() {
   const { t } = useTranslation();
   const lang = useLang();
   const l = useLocalized();
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
+
+  useEffect(() => {
+    let active = true;
+    fetchNews()
+      .then((data) => {
+        if (active) setNewsItems(data);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const dateFmt = (iso: string) =>
     new Date(iso).toLocaleDateString(lang === 'ja' ? 'ja-JP' : 'id-ID', {

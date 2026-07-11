@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowRight, CalendarDays, MapPin, ShieldCheck } from 'lucide-react';
-import { eventItems } from '../../data/events';
+import type { EventItem } from '../../data/events';
+import { fetchEvents } from '../../data/eventsApi';
 import { useLocalized } from '../../lib/localized';
 import SectionTag from './SectionTag';
 
@@ -10,6 +12,19 @@ const flagOf = (c: 'JP' | 'ID') => (c === 'JP' ? '🇯🇵' : '🇮🇩');
 export default function Events() {
   const { t } = useTranslation();
   const l = useLocalized();
+  const [eventItems, setEventItems] = useState<EventItem[]>([]);
+
+  useEffect(() => {
+    let active = true;
+    fetchEvents()
+      .then((data) => {
+        if (active) setEventItems(data);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <section id="event" className="scroll-mt-20 bg-slate-50 py-16 md:py-24">
