@@ -372,6 +372,7 @@
     "matching": "AI Matching",
     "chat": "Chat",
     "register": "Registrasi",
+    "screening": "Screening",
     "backToSite": "Ke Landing Page",
     "demoCompany": "PT Nusantara Coffee Sejahtera",
     "demoBadge": "Mode demo — data contoh",
@@ -383,6 +384,16 @@
       "demo": "Lihat sebagai demo",
       "demoHint": "Menjelajah dengan data contoh (perusahaan PT Nusantara). Tanpa akun."
     }
+  },
+  "screening": {
+    "title": "Screening Perusahaan",
+    "subtitle": "Verifikasi perusahaan baru sebelum tampil di direktori publik.",
+    "empty": "Tidak ada perusahaan menunggu verifikasi.",
+    "pending": "Menunggu",
+    "approve": "Setujui",
+    "reject": "Tolak",
+    "approved": "Perusahaan disetujui & masuk direktori.",
+    "rejected": "Perusahaan ditolak."
   },
   "profile": {
     "title": "Edit Profil Perusahaan",

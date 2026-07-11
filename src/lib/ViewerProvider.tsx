@@ -5,11 +5,17 @@ import { useAuth } from './AuthProvider';
 import { useDemoMode } from './DemoModeProvider';
 import { DEMO_VIEWER_SLUG, setViewerSlug } from './viewer';
 
+type UserRole = 'company_admin' | 'coordinator' | 'admin';
+
 interface ViewerContextValue {
   /** slug perusahaan viewer, atau null bila login tapi belum punya perusahaan. */
   slug: string | null;
   /** true = login & sudah tertaut ke perusahaan (atau mode demo). */
   hasCompany: boolean;
+  /** role user login (null saat demo/anon). */
+  role: UserRole | null;
+  /** true = coordinator/admin (staf ANC). */
+  isStaff: boolean;
   /** sedang menentukan perusahaan viewer. */
   loading: boolean;
   /** Muat ulang tautan perusahaan (mis. setelah onboarding). */
@@ -22,6 +28,7 @@ export function ViewerProvider({ children }: { children: ReactNode }) {
   const { session, loading: authLoading } = useAuth();
   const { demo } = useDemoMode();
   const [slug, setSlug] = useState<string | null>(null);
+  const [role, setRole] = useState<UserRole | null>(null);
   const [loading, setLoading] = useState(true);
   const [nonce, setNonce] = useState(0);
 
@@ -42,7 +49,7 @@ export function ViewerProvider({ children }: { children: ReactNode }) {
       (async () => {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('company_id')
+          .select('company_id, role')
           .eq('id', userId)
           .maybeSingle();
         let resolved: string | null = null;
@@ -57,6 +64,7 @@ export function ViewerProvider({ children }: { children: ReactNode }) {
         if (!active) return;
         setViewerSlug(resolved ?? DEMO_VIEWER_SLUG);
         setSlug(resolved);
+        setRole((profile?.role as UserRole) ?? null);
         setLoading(false);
       })();
       return () => {
@@ -65,6 +73,7 @@ export function ViewerProvider({ children }: { children: ReactNode }) {
     }
 
     // Tidak login: mode demo → id-01; kalau tidak, gate yang menangani.
+    setRole(null);
     if (demo) {
       setViewerSlug(DEMO_VIEWER_SLUG);
       setSlug(DEMO_VIEWER_SLUG);
@@ -81,10 +90,12 @@ export function ViewerProvider({ children }: { children: ReactNode }) {
     () => ({
       slug,
       hasCompany: slug !== null,
+      role,
+      isStaff: role === 'coordinator' || role === 'admin',
       loading,
       refresh: () => setNonce((n) => n + 1)
     }),
-    [slug, loading]
+    [slug, role, loading]
   );
 
   return <ViewerContext.Provider value={value}>{children}</ViewerContext.Provider>;
