@@ -16,6 +16,8 @@ import Logo from '../components/landing/Logo';
 import LanguageToggle from '../components/LanguageToggle';
 import Badge from '../components/ui/Badge';
 import { useAuth } from '../lib/AuthProvider';
+import { useDemoMode } from '../lib/DemoModeProvider';
+import AppGate from '../pages/app/AppGate';
 import { cn } from '../lib/cn';
 
 const navItems = [
@@ -99,9 +101,29 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 
 export default function AppLayout() {
   const { t } = useTranslation();
+  const { session, loading } = useAuth();
+  const { demo } = useDemoMode();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const active = navItems.find((item) => location.pathname.startsWith(item.to));
+
+  // Tunggu status sesi supaya tidak "berkedip" ke gate saat sudah login.
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-50">
+        <div
+          className="h-8 w-8 animate-spin rounded-full border-2 border-slate-200 border-t-primary-700"
+          role="status"
+          aria-label={t('common.appName')}
+        />
+      </div>
+    );
+  }
+
+  // Gate: belum login DAN belum masuk mode demo → tawarkan masuk / demo.
+  if (!session && !demo) {
+    return <AppGate />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50">
