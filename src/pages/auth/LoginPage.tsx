@@ -2,8 +2,9 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Eye, EyeOff, LogIn, Mail } from 'lucide-react';
+import { Eye, EyeOff, Loader2, LogIn, Mail } from 'lucide-react';
 import AuthLayout from '../../layouts/AuthLayout';
+import { useAuth } from '../../lib/AuthProvider';
 
 const inputClass =
   'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-royal-500 focus:outline-none focus:ring-2 focus:ring-royal-500/15';
@@ -11,11 +12,23 @@ const inputClass =
 export default function LoginPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { signIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Front-end only: submit langsung masuk ke area app (mode demo).
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setBusy(true);
+    setError(null);
+    const { error } = await signIn(email.trim(), password);
+    setBusy(false);
+    if (error) {
+      setError(t('auth.login.failed'));
+      return;
+    }
     navigate('/app/dashboard');
   };
 
@@ -36,6 +49,8 @@ export default function LoginPage() {
             <input
               type="email"
               autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder={t('auth.field.emailPlaceholder')}
               className={`${inputClass} pl-10`}
             />
@@ -50,6 +65,8 @@ export default function LoginPage() {
             <input
               type={showPassword ? 'text' : 'password'}
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder={t('auth.field.passwordPlaceholder')}
               className={`${inputClass} pr-10`}
             />
@@ -77,17 +94,20 @@ export default function LoginPage() {
           </a>
         </div>
 
+        {error && (
+          <p className="rounded-xl bg-red-50 px-4 py-2.5 text-center text-sm font-medium text-red-600">
+            {error}
+          </p>
+        )}
+
         <button
           type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-royal-500 px-6 py-3 font-display text-sm font-bold text-white shadow-glow transition-colors hover:bg-royal-600"
+          disabled={busy}
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-royal-500 px-6 py-3 font-display text-sm font-bold text-white shadow-glow transition-colors hover:bg-royal-600 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          <LogIn className="h-4 w-4" />
-          {t('auth.login.submit')}
+          {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogIn className="h-4 w-4" />}
+          {busy ? t('auth.processing') : t('auth.login.submit')}
         </button>
-
-        <p className="rounded-xl bg-slate-50 px-4 py-2.5 text-center text-xs text-slate-400">
-          {t('auth.demoHint')}
-        </p>
       </form>
 
       <p className="mt-8 text-center text-sm text-slate-600">

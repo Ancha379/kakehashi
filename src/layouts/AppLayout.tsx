@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, Link, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   LayoutDashboard,
@@ -8,12 +8,14 @@ import {
   MessageSquare,
   UserPlus,
   ArrowLeft,
+  LogOut,
   Menu,
   X
 } from 'lucide-react';
 import Logo from '../components/landing/Logo';
 import LanguageToggle from '../components/LanguageToggle';
 import Badge from '../components/ui/Badge';
+import { useAuth } from '../lib/AuthProvider';
 import { cn } from '../lib/cn';
 
 const navItems = [
@@ -26,6 +28,15 @@ const navItems = [
 
 function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { session, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    onNavigate?.();
+    navigate('/');
+  };
+
   return (
     <div className="flex h-full flex-col">
       <div className="px-5 py-5">
@@ -56,7 +67,23 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       </nav>
 
       <div className="space-y-3 px-5 py-5">
-        <Badge tone="accent">{t('app.demoBadge')}</Badge>
+        {session ? (
+          <div className="rounded-xl bg-slate-50 px-3 py-2">
+            <p className="truncate text-xs font-semibold text-slate-700" title={session.user.email}>
+              {session.user.email}
+            </p>
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="mt-1 flex items-center gap-1.5 text-xs font-semibold text-red-600 hover:text-red-700"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              {t('auth.signout')}
+            </button>
+          </div>
+        ) : (
+          <Badge tone="accent">{t('app.demoBadge')}</Badge>
+        )}
         <Link
           to="/"
           onClick={onNavigate}
