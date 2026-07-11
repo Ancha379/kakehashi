@@ -431,6 +431,7 @@
     "showTranslation": "Tampilkan terjemahan",
     "aiBadge": "AI翻訳",
     "inputPlaceholder": "Tulis pesan dalam bahasa Anda…",
+    "loginToSend": "Masuk untuk mengirim pesan (mode demo hanya-baca).",
     "send": "Kirim",
     "selectThread": "Pilih percakapan untuk mulai chat.",
     "demoTranslation": "(Terjemahan AI akan muncul di sini — demo)",

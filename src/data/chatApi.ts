@@ -105,8 +105,9 @@ export async function sendMessage(threadId: string, lang: Lang, original: string
   const viewerId = await getViewerId();
 
   try {
+    // Pengirim ditentukan server dari JWT (bukan dikirim klien).
     const { data, error } = await supabase.functions.invoke('translate-message', {
-      body: { threadId, lang, original, senderSlug: getViewerSlug() }
+      body: { threadId, lang, original }
     });
     if (error) throw error;
     const row = (data as { message?: MsgRow })?.message;

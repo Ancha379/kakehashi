@@ -431,6 +431,7 @@
     "showTranslation": "翻訳を表示",
     "aiBadge": "AI翻訳",
     "inputPlaceholder": "自分の言語でメッセージを入力…",
+    "loginToSend": "メッセージ送信はログインが必要です（デモは閲覧のみ）。",
     "send": "送信",
     "selectThread": "会話を選択してチャットを開始してください。",
     "demoTranslation": "（AI翻訳がここに表示されます — デモ）",
