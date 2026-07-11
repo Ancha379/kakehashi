@@ -384,6 +384,22 @@
       "demoHint": "Menjelajah dengan data contoh (perusahaan PT Nusantara). Tanpa akun."
     }
   },
+  "profile": {
+    "title": "Edit Profil Perusahaan",
+    "subtitle": "Lengkapi profil agar akurasi AI matching meningkat. Isi kedua bahasa (ID & JA) bila bisa.",
+    "location": "Lokasi",
+    "summary": "Ringkasan singkat",
+    "description": "Deskripsi",
+    "offering": "Yang ditawarkan (satu per baris)",
+    "seeking": "Yang dicari (satu per baris)",
+    "itemsHint": "Satu item per baris",
+    "pic": "Narahubung (PIC)",
+    "picName": "Nama PIC",
+    "picEmail": "Email PIC",
+    "picTitle": "Jabatan",
+    "save": "Simpan profil",
+    "saved": "Profil perusahaan tersimpan."
+  },
   "companies": {
     "title": "Direktori Perusahaan",
     "subtitle": "Semua perusahaan telah melewati screening ANC Japan.",

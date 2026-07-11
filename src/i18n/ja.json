@@ -384,6 +384,22 @@
       "demoHint": "サンプルデータ（PT Nusantara社）で閲覧します。アカウント不要。"
     }
   },
+  "profile": {
+    "title": "会社プロフィール編集",
+    "subtitle": "プロフィールを充実させるとAIマッチング精度が向上します。可能なら両言語（ID・JA）で入力してください。",
+    "location": "所在地",
+    "summary": "概要",
+    "description": "説明",
+    "offering": "提供できるもの（1行に1件）",
+    "seeking": "求めているもの（1行に1件）",
+    "itemsHint": "1行に1件",
+    "pic": "担当者（PIC）",
+    "picName": "担当者名",
+    "picEmail": "担当者メール",
+    "picTitle": "役職",
+    "save": "プロフィールを保存",
+    "saved": "会社プロフィールを保存しました。"
+  },
   "companies": {
     "title": "企業ディレクトリ",
     "subtitle": "掲載企業はすべてANCジャパンの審査を通過しています。",
