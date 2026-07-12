@@ -53,7 +53,7 @@
     "signup": {
       "title": "無料でアカウント作成",
       "subtitle": "1分で登録し、続けて企業プロフィールを作成できます。",
-      "agree": "Kakehashiの利用規約とプライバシーポリシーに同意します。",
+      "agree": "Kakehashiの<terms>利用規約</terms>と<privacy>プライバシーポリシー</privacy>に同意します。",
       "submit": "登録して次へ",
       "failed": "登録に失敗しました。入力内容をご確認のうえ、もう一度お試しください。",
       "freeNote": "初期費用なし・無料 — 成果が出たときだけお支払い。",
@@ -458,6 +458,7 @@
     "seeking": "探していること",
     "pic": "担当者",
     "contactGated": "担当者の連絡先は、ANCジャパンが商談を仲介した後に開示されます。",
+    "loginToRequest": "商談の申し込み・対応には企業としてログインが必要です。",
     "purposeTitle": "登録目的",
     "proposeMeeting": "商談を申し込む",
     "meetingToast": "商談リクエストを送信しました。ANCジャパンのコーディネーターよりご連絡します。",

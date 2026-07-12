@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -12,8 +12,10 @@ import {
 import type { ActiveDeal, MatchRequest } from '../../data/dashboard';
 import { fetchDashboard } from '../../data/dashboardApi';
 import type { DashboardNotification, DashboardStats } from '../../data/dashboardApi';
+import { respondMatchRequest } from '../../data/matchingApi';
 import { useCompanies } from '../../lib/CompaniesProvider';
 import { useViewer } from '../../lib/ViewerProvider';
+import { useAuth } from '../../lib/AuthProvider';
 import { computeProfileCompletion } from '../../data/companyProfileApi';
 import { relativeTime } from '../../lib/relativeTime';
 import { useLang, useLocalized } from '../../lib/localized';
@@ -34,6 +36,7 @@ export default function DashboardPage() {
   const lang = useLang();
   const l = useLocalized();
   const { showToast } = useToast();
+  const { session } = useAuth();
   const { getCompany } = useCompanies();
   const viewer = useViewer();
   const viewerCompany = viewer.slug ? getCompany(viewer.slug) : undefined;
@@ -52,21 +55,21 @@ export default function DashboardPage() {
   // Kelengkapan profil dihitung dari field perusahaan yang terisi (live).
   const profileCompletion = computeProfileCompletion(viewerCompany);
 
-  useEffect(() => {
-    let active = true;
-    fetchDashboard()
-      .then((d) => {
-        if (!active) return;
-        setRequests(d.requests);
-        setDeals(d.deals);
-        setNotifications(d.notifications);
-        setDashboardStats(d.stats);
-      })
-      .catch(() => {});
-    return () => {
-      active = false;
-    };
+  const loadDashboard = useCallback(async () => {
+    try {
+      const d = await fetchDashboard();
+      setRequests(d.requests);
+      setDeals(d.deals);
+      setNotifications(d.notifications);
+      setDashboardStats(d.stats);
+    } catch {
+      /* abaikan */
+    }
   }, []);
+
+  useEffect(() => {
+    void loadDashboard();
+  }, [loadDashboard]);
 
   const stats = [
     { icon: Eye, label: t('dashboard.statViews'), value: dashboardStats.profileViews },
@@ -75,9 +78,20 @@ export default function DashboardPage() {
     { icon: Handshake, label: t('dashboard.statMeetings'), value: dashboardStats.activeMeetings }
   ];
 
-  const resolveRequest = (id: string, accepted: boolean) => {
-    setRequests((prev) => prev.filter((r) => r.id !== id));
-    showToast(accepted ? t('dashboard.acceptedToast') : t('dashboard.declinedToast'));
+  const resolveRequest = async (id: string, accepted: boolean) => {
+    if (!session) {
+      showToast(t('company.loginToRequest'));
+      return;
+    }
+    try {
+      await respondMatchRequest(id, accepted);
+      setRequests((prev) => prev.filter((r) => r.id !== id));
+      showToast(accepted ? t('dashboard.acceptedToast') : t('dashboard.declinedToast'));
+      // Muat ulang: deal baru + statistik ter-update setelah accept.
+      void loadDashboard();
+    } catch (e) {
+      showToast(e instanceof Error ? e.message : String(e));
+    }
   };
 
   return (

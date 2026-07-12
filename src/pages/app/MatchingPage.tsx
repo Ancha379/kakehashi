@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Handshake, Lightbulb, Sparkles } from 'lucide-react';
 import { useCompanies } from '../../lib/CompaniesProvider';
 import { getViewerSlug } from '../../lib/viewer';
+import { useAuth } from '../../lib/AuthProvider';
+import { requestMeeting } from '../../data/matchingApi';
 import { useLang } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
 import Button from '../../components/ui/Button';
@@ -20,7 +23,25 @@ export default function MatchingPage() {
   const { t } = useTranslation();
   const lang = useLang();
   const { showToast } = useToast();
+  const { session } = useAuth();
   const { companies, loading } = useCompanies();
+  const [requestingId, setRequestingId] = useState<string | null>(null);
+
+  const handleMeeting = async (slug: string) => {
+    if (!session) {
+      showToast(t('company.loginToRequest'));
+      return;
+    }
+    setRequestingId(slug);
+    try {
+      await requestMeeting(slug);
+      showToast(t('company.meetingToast'));
+    } catch (e) {
+      showToast(e instanceof Error ? e.message : String(e));
+    } finally {
+      setRequestingId(null);
+    }
+  };
 
   const recommendations = companies
     .filter((c) => c.id !== getViewerSlug())
@@ -79,7 +100,11 @@ export default function MatchingPage() {
                   <Button variant="outline" size="sm" to={`/app/companies/${company.id}`}>
                     {t('matching.viewProfile')}
                   </Button>
-                  <Button size="sm" onClick={() => showToast(t('company.meetingToast'))}>
+                  <Button
+                    size="sm"
+                    onClick={() => handleMeeting(company.id)}
+                    disabled={requestingId === company.id}
+                  >
                     <Handshake className="h-3.5 w-3.5" />
                     {t('matching.propose')}
                   </Button>

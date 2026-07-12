@@ -53,7 +53,7 @@
     "signup": {
       "title": "Buat akun gratis",
       "subtitle": "Daftar dalam satu menit, lalu lengkapi profil perusahaan Anda.",
-      "agree": "Saya menyetujui Syarat Layanan dan Kebijakan Privasi Kakehashi.",
+      "agree": "Saya menyetujui <terms>Syarat Layanan</terms> dan <privacy>Kebijakan Privasi</privacy> Kakehashi.",
       "submit": "Daftar & lanjutkan",
       "failed": "Gagal mendaftar. Periksa data Anda dan coba lagi.",
       "freeNote": "Gratis, tanpa biaya awal — bayar hanya saat ada hasil.",
@@ -458,6 +458,7 @@
     "seeking": "Yang dicari",
     "pic": "Kontak / PIC",
     "contactGated": "Kontak narahubung terbuka setelah ANC Japan memfasilitasi 商談 (business meeting).",
+    "loginToRequest": "Masuk sebagai perusahaan untuk mengajukan/merespons 商談.",
     "purposeTitle": "Tujuan di platform",
     "proposeMeeting": "Ajukan Meeting (商談)",
     "meetingToast": "Permintaan meeting terkirim! Koordinator ANC Japan akan menghubungi Anda.",

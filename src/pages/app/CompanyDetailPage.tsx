@@ -18,8 +18,10 @@ import {
 } from 'lucide-react';
 import { useCompanies } from '../../lib/CompaniesProvider';
 import { useViewer } from '../../lib/ViewerProvider';
+import { useAuth } from '../../lib/AuthProvider';
 import { fetchCompanyContact } from '../../data/companyProfileApi';
 import type { CompanyContact } from '../../data/companyProfileApi';
+import { requestMeeting } from '../../data/matchingApi';
 import { useLang } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
 import Badge from '../../components/ui/Badge';
@@ -35,10 +37,29 @@ export default function CompanyDetailPage() {
   const { t } = useTranslation();
   const lang = useLang();
   const { showToast } = useToast();
+  const { session } = useAuth();
   const { getCompany, loading } = useCompanies();
   const viewer = useViewer();
   const company = id ? getCompany(id) : undefined;
   const isOwn = !!company && viewer.slug === company.id;
+  const [requesting, setRequesting] = useState(false);
+
+  const handleMeeting = async () => {
+    if (!company) return;
+    if (!session) {
+      showToast(t('company.loginToRequest'));
+      return;
+    }
+    setRequesting(true);
+    try {
+      await requestMeeting(company.id);
+      showToast(t('company.meetingToast'));
+    } catch (e) {
+      showToast(e instanceof Error ? e.message : String(e));
+    } finally {
+      setRequesting(false);
+    }
+  };
 
   // 'translated' = bahasa UI aktif, 'original' = bahasa asli perusahaan
   const [textMode, setTextMode] = useState<'translated' | 'original'>('translated');
@@ -130,7 +151,7 @@ export default function CompanyDetailPage() {
               {t('company.editProfile')}
             </Button>
           ) : (
-            <Button size="lg" onClick={() => showToast(t('company.meetingToast'))}>
+            <Button size="lg" onClick={handleMeeting} disabled={requesting}>
               <Handshake className="h-4 w-4" />
               {t('company.proposeMeeting')}
             </Button>

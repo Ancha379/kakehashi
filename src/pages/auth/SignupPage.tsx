@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { ArrowRight, Check, Eye, EyeOff, Loader2, Mail, MailCheck } from 'lucide-react';
 import type { Country } from '../../data/types';
 import AuthLayout from '../../layouts/AuthLayout';
@@ -158,7 +158,27 @@ export default function SignupPage() {
             onChange={(e) => setAgree(e.target.checked)}
             className="mt-0.5 h-4 w-4 rounded border-slate-300 text-royal-500 focus:ring-royal-500"
           />
-          <span>{t('auth.signup.agree')}</span>
+          <span>
+            <Trans
+              i18nKey="auth.signup.agree"
+              components={{
+                terms: (
+                  <Link
+                    to="/terms"
+                    target="_blank"
+                    className="font-semibold text-royal-600 hover:underline"
+                  />
+                ),
+                privacy: (
+                  <Link
+                    to="/privacy"
+                    target="_blank"
+                    className="font-semibold text-royal-600 hover:underline"
+                  />
+                )
+              }}
+            />
+          </span>
         </label>
 
         {error && (
