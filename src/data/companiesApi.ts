@@ -21,10 +21,6 @@ interface CompanyRow {
   purposes: Purpose[];
   website: string | null;
   logo_color: string | null;
-  pic_name: string | null;
-  pic_title_ja: string | null;
-  pic_title_id: string | null;
-  pic_email: string | null;
   company_items: {
     kind: 'offering' | 'seeking';
     text_ja: string;
@@ -40,10 +36,13 @@ interface MatchRow {
   reason_id: string | null;
 }
 
+// Catatan: kolom kontak PIC (pic_*) TIDAK diambil di sini — anon/authenticated
+// tak punya hak SELECT-nya (lihat migrasi hide_pic_contact_from_public).
+// Kontak PIC diambil terpisah via RPC `company_contact` (companyProfileApi).
 const COMPANY_COLS =
   'id, slug, name_ja, name_id, country, industry, size, founded, location_ja, location_id, ' +
   'summary_ja, summary_id, description_ja, description_id, purposes, website, logo_color, ' +
-  'pic_name, pic_title_ja, pic_title_id, pic_email, company_items ( kind, text_ja, text_id, position )';
+  'company_items ( kind, text_ja, text_id, position )';
 
 /** Petakan baris DB → tipe `Company` (id = slug agar kompatibel dgn kode lama). */
 function mapRow(
@@ -79,12 +78,8 @@ function mapRow(
     matchReason_ja: isViewer ? '' : match?.reason_ja ?? '',
     matchReason_id: isViewer ? '' : match?.reason_id ?? '',
     logoColor: row.logo_color ?? '#334155',
-    pic: {
-      name: row.pic_name ?? '',
-      title_ja: row.pic_title_ja ?? '',
-      title_id: row.pic_title_id ?? '',
-      email: row.pic_email ?? ''
-    },
+    // Kontak PIC tidak ikut di direktori (privat) — diisi via RPC company_contact.
+    pic: { name: '', title_ja: '', title_id: '', email: '' },
     website: row.website ?? ''
   };
 }

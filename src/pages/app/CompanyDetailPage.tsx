@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -9,6 +9,7 @@ import {
   Globe,
   Handshake,
   Languages,
+  Lock,
   MapPin,
   Pencil,
   Search,
@@ -17,6 +18,8 @@ import {
 } from 'lucide-react';
 import { useCompanies } from '../../lib/CompaniesProvider';
 import { useViewer } from '../../lib/ViewerProvider';
+import { fetchCompanyContact } from '../../data/companyProfileApi';
+import type { CompanyContact } from '../../data/companyProfileApi';
 import { useLang } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
 import Badge from '../../components/ui/Badge';
@@ -39,6 +42,19 @@ export default function CompanyDetailPage() {
 
   // 'translated' = bahasa UI aktif, 'original' = bahasa asli perusahaan
   const [textMode, setTextMode] = useState<'translated' | 'original'>('translated');
+
+  // Kontak PIC diambil via RPC ber-gate (null bila tak berhak: anon/perusahaan lain).
+  const [contact, setContact] = useState<CompanyContact | null>(null);
+  useEffect(() => {
+    if (!company) return;
+    let active = true;
+    fetchCompanyContact(company.id)
+      .then((c) => active && setContact(c))
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [company?.id]);
 
   if (loading) {
     return (
@@ -68,7 +84,8 @@ export default function CompanyDetailPage() {
   const name = lang === 'ja' ? company.name_ja : company.name_id;
   const description = textLang === 'ja' ? company.description_ja : company.description_id;
   const location = lang === 'ja' ? company.location_ja : company.location_id;
-  const picTitle = lang === 'ja' ? company.pic.title_ja : company.pic.title_id;
+  const picTitle = contact ? (lang === 'ja' ? contact.pic_title_ja : contact.pic_title_id) : '';
+  const hasContact = !!contact && !!(contact.pic_name || contact.pic_email);
 
   return (
     <div>
@@ -232,19 +249,33 @@ export default function CompanyDetailPage() {
 
           <Card>
             <h3 className="mb-4 font-bold text-slate-900">{t('company.pic')}</h3>
-            <div className="flex items-center gap-3">
-              <span
-                aria-hidden
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-100 font-bold text-primary-700"
-              >
-                {company.pic.name.charAt(0)}
-              </span>
-              <div className="min-w-0">
-                <p className="font-semibold text-slate-900">{company.pic.name}</p>
-                <p className="text-xs text-slate-500">{picTitle}</p>
-                <p className="mt-0.5 truncate text-xs text-primary-700">{company.pic.email}</p>
+            {hasContact ? (
+              <div className="flex items-center gap-3">
+                <span
+                  aria-hidden
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-100 font-bold text-primary-700"
+                >
+                  {contact!.pic_name.charAt(0) || '?'}
+                </span>
+                <div className="min-w-0">
+                  <p className="font-semibold text-slate-900">{contact!.pic_name}</p>
+                  <p className="text-xs text-slate-500">{picTitle}</p>
+                  {contact!.pic_email && (
+                    <a
+                      href={`mailto:${contact!.pic_email}`}
+                      className="mt-0.5 block truncate text-xs text-primary-700 hover:underline"
+                    >
+                      {contact!.pic_email}
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
+            ) : (
+              <p className="flex items-start gap-2 text-xs leading-relaxed text-slate-500">
+                <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                {t('company.contactGated')}
+              </p>
+            )}
           </Card>
         </div>
       </div>

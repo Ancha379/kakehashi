@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Check, Save } from 'lucide-react';
 import type { Company, CompanySize, Industry, Purpose } from '../../data/types';
-import { saveCompanyProfile } from '../../data/companyProfileApi';
-import type { ProfileEditPayload } from '../../data/companyProfileApi';
+import { saveCompanyProfile, fetchCompanyContact } from '../../data/companyProfileApi';
+import type { ProfileEditPayload, CompanyContact } from '../../data/companyProfileApi';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import { useToast } from '../../components/ui/Toast';
@@ -32,7 +32,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function buildInitial(company: Company): ProfileEditPayload {
+function buildInitial(company: Company, contact: CompanyContact | null): ProfileEditPayload {
   return {
     name: company.name_id,
     industry: company.industry,
@@ -46,21 +46,21 @@ function buildInitial(company: Company): ProfileEditPayload {
     description_id: company.description_id,
     description_ja: company.description_ja,
     purposes: company.purpose,
-    pic_name: company.pic.name,
-    pic_title_id: company.pic.title_id,
-    pic_title_ja: company.pic.title_ja,
-    pic_email: company.pic.email,
+    pic_name: contact?.pic_name ?? '',
+    pic_title_id: contact?.pic_title_id ?? '',
+    pic_title_ja: contact?.pic_title_ja ?? '',
+    pic_email: contact?.pic_email ?? '',
     offering: company.offering.map((o) => o.id),
     seeking: company.seeking.map((s) => s.id)
   };
 }
 
-function ProfileForm({ company }: { company: Company }) {
+function ProfileForm({ company, contact }: { company: Company; contact: CompanyContact | null }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { showToast } = useToast();
   const { reload } = useCompanies();
-  const [form, setForm] = useState<ProfileEditPayload>(() => buildInitial(company));
+  const [form, setForm] = useState<ProfileEditPayload>(() => buildInitial(company, contact));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -252,10 +252,26 @@ export default function CompanyProfilePage() {
   const { getCompany } = useCompanies();
   const company = viewer.slug ? getCompany(viewer.slug) : undefined;
 
+  // Prefill PIC via RPC ber-gate (pemilik berhak melihat kontaknya sendiri).
+  const [contact, setContact] = useState<CompanyContact | null>(null);
+  const [contactLoaded, setContactLoaded] = useState(false);
+  useEffect(() => {
+    if (!company) return;
+    let active = true;
+    setContactLoaded(false);
+    fetchCompanyContact(company.id)
+      .then((c) => active && setContact(c))
+      .catch(() => {})
+      .finally(() => active && setContactLoaded(true));
+    return () => {
+      active = false;
+    };
+  }, [company?.id]);
+
   // Edit profil hanya untuk yang login (mode demo tak bisa menyimpan).
   if (!session) return <Navigate to="/app/dashboard" replace />;
 
-  if (!company) {
+  if (!company || !contactLoaded) {
     return (
       <div className="flex min-h-[300px] items-center justify-center">
         <div
@@ -268,5 +284,5 @@ export default function CompanyProfilePage() {
   }
 
   // key: remount saat perusahaan viewer berganti agar form re-inisialisasi.
-  return <ProfileForm key={company.id} company={company} />;
+  return <ProfileForm key={company.id} company={company} contact={contact} />;
 }
