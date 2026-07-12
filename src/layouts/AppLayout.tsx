@@ -45,11 +45,13 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   // "Registrasi" hanya untuk yang perlu onboarding (belum punya perusahaan &
   // bukan staf). Demo (tanpa sesi) tetap melihatnya sebagai showcase alur.
   const showRegister = !session || (!hasCompany && !isStaff);
-  const items = [
-    ...baseNavItems,
-    ...(showRegister ? [registerNavItem] : []),
-    ...(isStaff ? [staffNavItem] : [])
-  ];
+  // Staf ANC tak punya perusahaan → hanya menu yang relevan: 審査 + direktori
+  // (untuk melihat & mengontak perusahaan). Dashboard/AIマッチング/チャット
+  // adalah sudut pandang perusahaan, tak berlaku bagi staf.
+  const companiesNavItem = baseNavItems.find((i) => i.to === '/app/companies')!;
+  const items = isStaff
+    ? [staffNavItem, companiesNavItem]
+    : [...baseNavItems, ...(showRegister ? [registerNavItem] : [])];
 
   const handleSignOut = async () => {
     await signOut();
@@ -152,9 +154,11 @@ export default function AppLayout() {
     return <Navigate to="/app/register" replace />;
   }
 
-  // Staf ANC tak punya "dashboard perusahaan" → beranda mereka adalah 審査
-  // (Screening). Tanpa ini mereka jatuh ke data perusahaan demo & aksinya gagal.
-  if (session && viewer.isStaff && location.pathname === '/app/dashboard') {
+  // Staf ANC tak punya sudut pandang perusahaan → halaman dashboard/matching/
+  // chat tak berlaku. Beranda mereka adalah 審査 (Screening). Tanpa ini mereka
+  // jatuh ke data perusahaan demo & aksinya gagal.
+  const staffBlockedPaths = ['/app/dashboard', '/app/matching', '/app/chat'];
+  if (session && viewer.isStaff && staffBlockedPaths.includes(location.pathname)) {
     return <Navigate to="/app/screening" replace />;
   }
 
