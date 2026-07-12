@@ -453,6 +453,7 @@
     "results": "{{count}} perusahaan ditemukan",
     "aiMatch": "AI Match",
     "verified": "Tervalidasi",
+    "pendingBadge": "Menunggu verifikasi",
     "noResults": "Tidak ada perusahaan yang cocok dengan filter Anda."
   },
   "company": {
@@ -507,6 +508,8 @@
     "profileComplete": "{{percent}}% lengkap",
     "completeProfile": "Lengkapi profil",
     "profileHint": "Profil lengkap meningkatkan akurasi AI matching.",
+    "verifPending": "Profil perusahaan Anda sedang ditinjau ANC Japan. Sampai disetujui, perusahaan Anda belum tampil di direktori untuk perusahaan lain.",
+    "verifRejected": "Profil perusahaan Anda tidak disetujui, sehingga tidak tampil di direktori. Silakan hubungi ANC Japan untuk detailnya.",
     "matchRequests": "Permintaan match masuk",
     "matchRequestsEmpty": "Belum ada permintaan masuk.",
     "accept": "Terima",

@@ -34,10 +34,14 @@ export type Purpose =
 
 export type CompanySize = 'small' | 'medium' | 'large';
 
+export type VerificationStatus = 'pending' | 'verified' | 'rejected';
+
 export interface Company {
   id: string;
   name_ja: string;
   name_id: string;
+  /** Status verifikasi ANC — hanya 'verified' tampil publik; pemilik tetap melihat miliknya. */
+  verificationStatus: VerificationStatus;
   country: Country;
   industry: Industry;
   size: CompanySize;

@@ -107,6 +107,19 @@ export default function DashboardPage() {
         <h2 className="text-xl font-bold text-slate-900 md:text-2xl">{viewerName}</h2>
       </div>
 
+      {/* Banner status verifikasi — pemilik perlu tahu kenapa perusahaannya
+          belum/tidak tampil di direktori publik. */}
+      {viewerCompany && viewerCompany.verificationStatus === 'pending' && (
+        <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          {t('dashboard.verifPending')}
+        </div>
+      )}
+      {viewerCompany && viewerCompany.verificationStatus === 'rejected' && (
+        <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {t('dashboard.verifRejected')}
+        </div>
+      )}
+
       {/* Ringkasan angka */}
       <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {stats.map((stat) => (

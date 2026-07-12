@@ -8,6 +8,7 @@ interface CompanyRow {
   slug: string;
   name_ja: string;
   name_id: string;
+  verification_status: 'pending' | 'verified' | 'rejected';
   country: Country;
   industry: Industry;
   size: CompanySize;
@@ -40,7 +41,7 @@ interface MatchRow {
 // tak punya hak SELECT-nya (lihat migrasi hide_pic_contact_from_public).
 // Kontak PIC diambil terpisah via RPC `company_contact` (companyProfileApi).
 const COMPANY_COLS =
-  'id, slug, name_ja, name_id, country, industry, size, founded, location_ja, location_id, ' +
+  'id, slug, name_ja, name_id, verification_status, country, industry, size, founded, location_ja, location_id, ' +
   'summary_ja, summary_id, description_ja, description_id, purposes, website, logo_color, ' +
   'company_items ( kind, text_ja, text_id, position )';
 
@@ -59,6 +60,7 @@ function mapRow(
     id: row.slug,
     name_ja: row.name_ja,
     name_id: row.name_id,
+    verificationStatus: row.verification_status,
     country: row.country,
     industry: row.industry,
     size: row.size,

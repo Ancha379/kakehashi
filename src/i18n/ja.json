@@ -453,6 +453,7 @@
     "results": "{{count}}社が見つかりました",
     "aiMatch": "AI Match",
     "verified": "審査済み",
+    "pendingBadge": "審査待ち",
     "noResults": "条件に合う企業が見つかりませんでした。"
   },
   "company": {
@@ -507,6 +508,8 @@
     "profileComplete": "{{percent}}% 完了",
     "completeProfile": "プロフィールを完成させる",
     "profileHint": "プロフィールが充実するほど、AIマッチングの精度が上がります。",
+    "verifPending": "貴社のプロフィールはANCジャパンが審査中です。承認されるまで、他社のディレクトリには表示されません。",
+    "verifRejected": "貴社のプロフィールは承認されなかったため、ディレクトリに表示されていません。詳細はANCジャパンへお問い合わせください。",
     "matchRequests": "受信したマッチリクエスト",
     "matchRequestsEmpty": "受信したリクエストはありません。",
     "accept": "承認",

@@ -137,10 +137,14 @@ export default function CompanyDetailPage() {
                 {t(`meta.industries.${company.industry}`)}
               </p>
               <div className="mt-3 flex flex-wrap gap-2">
-                <Badge tone="success">
-                  <BadgeCheck className="h-3 w-3" />
-                  {t('companies.verified')}
-                </Badge>
+                {company.verificationStatus === 'verified' ? (
+                  <Badge tone="success">
+                    <BadgeCheck className="h-3 w-3" />
+                    {t('companies.verified')}
+                  </Badge>
+                ) : (
+                  <Badge tone="accent">{t('companies.pendingBadge')}</Badge>
+                )}
                 {isOwn ? (
                   <Badge tone="neutral">{t('company.yourCompany')}</Badge>
                 ) : isStaff ? null : (

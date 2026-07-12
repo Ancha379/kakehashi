@@ -39,10 +39,14 @@ export default function CompanyCard({ company }: { company: Company }) {
           <Sparkles className="h-3 w-3" />
           {t('companies.aiMatch')} {company.matchScore}%
         </Badge>
-        <Badge tone="success">
-          <BadgeCheck className="h-3 w-3" />
-          {t('companies.verified')}
-        </Badge>
+        {company.verificationStatus === 'verified' ? (
+          <Badge tone="success">
+            <BadgeCheck className="h-3 w-3" />
+            {t('companies.verified')}
+          </Badge>
+        ) : (
+          <Badge tone="accent">{t('companies.pendingBadge')}</Badge>
+        )}
       </div>
     </Link>
   );
