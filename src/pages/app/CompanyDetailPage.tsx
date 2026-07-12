@@ -5,6 +5,7 @@ import {
   ArrowLeft,
   BadgeCheck,
   Calendar,
+  Check,
   CheckCircle2,
   Globe,
   Handshake,
@@ -18,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useCompanies } from '../../lib/CompaniesProvider';
 import { useViewer } from '../../lib/ViewerProvider';
+import { useMatchRequests } from '../../lib/MatchRequestsProvider';
 import { useAuth } from '../../lib/AuthProvider';
 import { fetchCompanyContact } from '../../data/companyProfileApi';
 import type { CompanyContact } from '../../data/companyProfileApi';
@@ -40,8 +42,10 @@ export default function CompanyDetailPage() {
   const { session } = useAuth();
   const { getCompany, loading } = useCompanies();
   const viewer = useViewer();
+  const { hasPending, markPending } = useMatchRequests();
   const company = id ? getCompany(id) : undefined;
   const isOwn = !!company && viewer.slug === company.id;
+  const requested = !!company && hasPending(company.id);
   const [requesting, setRequesting] = useState(false);
 
   const handleMeeting = async () => {
@@ -53,9 +57,11 @@ export default function CompanyDetailPage() {
     setRequesting(true);
     try {
       await requestMeeting(company.id);
+      markPending(company.id);
       showToast(t('company.meetingToast'));
     } catch (e) {
-      showToast(e instanceof Error ? e.message : String(e));
+      console.error('request_meeting gagal:', e);
+      showToast(t('company.meetingError'));
     } finally {
       setRequesting(false);
     }
@@ -149,6 +155,11 @@ export default function CompanyDetailPage() {
             <Button to="/app/profile" size="lg" variant="outline">
               <Pencil className="h-4 w-4" />
               {t('company.editProfile')}
+            </Button>
+          ) : requested ? (
+            <Button size="lg" variant="outline" disabled>
+              <Check className="h-4 w-4" />
+              {t('company.requested')}
             </Button>
           ) : (
             <Button size="lg" onClick={handleMeeting} disabled={requesting}>

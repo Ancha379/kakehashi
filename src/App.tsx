@@ -4,6 +4,7 @@ import { CompaniesProvider } from './lib/CompaniesProvider';
 import { AuthProvider } from './lib/AuthProvider';
 import { DemoModeProvider } from './lib/DemoModeProvider';
 import { ViewerProvider } from './lib/ViewerProvider';
+import { MatchRequestsProvider } from './lib/MatchRequestsProvider';
 import ScrollToTop from './components/ScrollToTop';
 import LandingPage from './pages/LandingPage';
 import StaticContentPage from './pages/StaticContentPage';
@@ -33,6 +34,7 @@ export default function App() {
         <DemoModeProvider>
         <ViewerProvider>
         <CompaniesProvider>
+        <MatchRequestsProvider>
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -56,6 +58,7 @@ export default function App() {
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        </MatchRequestsProvider>
         </CompaniesProvider>
         </ViewerProvider>
         </DemoModeProvider>

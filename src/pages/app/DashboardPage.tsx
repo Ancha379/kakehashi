@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Bell,
+  Clock,
   Eye,
   Handshake,
   MessageSquare,
+  Send,
   Sparkles,
   UserRoundCheck
 } from 'lucide-react';
@@ -15,6 +17,7 @@ import type { DashboardNotification, DashboardStats } from '../../data/dashboard
 import { respondMatchRequest } from '../../data/matchingApi';
 import { useCompanies } from '../../lib/CompaniesProvider';
 import { useViewer } from '../../lib/ViewerProvider';
+import { useMatchRequests } from '../../lib/MatchRequestsProvider';
 import { useAuth } from '../../lib/AuthProvider';
 import { computeProfileCompletion } from '../../data/companyProfileApi';
 import { relativeTime } from '../../lib/relativeTime';
@@ -38,6 +41,8 @@ export default function DashboardPage() {
   const { showToast } = useToast();
   const { session } = useAuth();
   const { getCompany } = useCompanies();
+  const { outgoing } = useMatchRequests();
+  const pendingSent = outgoing.filter((r) => r.status === 'pending');
   const viewer = useViewer();
   const viewerCompany = viewer.slug ? getCompany(viewer.slug) : undefined;
   const viewerName = viewerCompany
@@ -90,7 +95,8 @@ export default function DashboardPage() {
       // Muat ulang: deal baru + statistik ter-update setelah accept.
       void loadDashboard();
     } catch (e) {
-      showToast(e instanceof Error ? e.message : String(e));
+      console.error('respond_match_request gagal:', e);
+      showToast(t('dashboard.actionError'));
     }
   };
 
@@ -160,6 +166,48 @@ export default function DashboardPage() {
                           {t('dashboard.decline')}
                         </Button>
                       </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </Card>
+
+          {/* Permintaan 商談 terkirim (menunggu jawaban) */}
+          <Card>
+            <h3 className="mb-4 flex items-center gap-2 font-bold text-slate-900">
+              <Send className="h-4 w-4 text-primary-600" />
+              {t('dashboard.sentRequests')}
+              {pendingSent.length > 0 && <Badge tone="primary">{pendingSent.length}</Badge>}
+            </h3>
+            {pendingSent.length === 0 ? (
+              <p className="py-4 text-center text-sm text-slate-400">
+                {t('dashboard.sentRequestsEmpty')}
+              </p>
+            ) : (
+              <ul className="space-y-3">
+                {pendingSent.map((req) => {
+                  const company = getCompany(req.toSlug);
+                  if (!company) return null;
+                  const name = lang === 'ja' ? company.name_ja : company.name_id;
+                  return (
+                    <li
+                      key={req.id}
+                      className="flex items-center gap-3 rounded-xl border border-slate-100 p-3"
+                    >
+                      <Link to={`/app/companies/${company.id}`} className="shrink-0">
+                        <CompanyLogo company={company} size="sm" />
+                      </Link>
+                      <Link
+                        to={`/app/companies/${company.id}`}
+                        className="min-w-0 flex-1 truncate text-sm font-bold text-slate-900 hover:text-primary-700"
+                      >
+                        {name}
+                      </Link>
+                      <Badge tone="neutral">
+                        <Clock className="h-3 w-3" />
+                        {t('dashboard.waitingReply')}
+                      </Badge>
                     </li>
                   );
                 })}

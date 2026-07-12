@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Handshake, Lightbulb, Sparkles } from 'lucide-react';
+import { Check, Handshake, Lightbulb, Sparkles } from 'lucide-react';
 import { useCompanies } from '../../lib/CompaniesProvider';
 import { getViewerSlug } from '../../lib/viewer';
 import { useAuth } from '../../lib/AuthProvider';
+import { useMatchRequests } from '../../lib/MatchRequestsProvider';
 import { requestMeeting } from '../../data/matchingApi';
 import { useLang } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
@@ -25,6 +26,7 @@ export default function MatchingPage() {
   const { showToast } = useToast();
   const { session } = useAuth();
   const { companies, loading } = useCompanies();
+  const { hasPending, markPending } = useMatchRequests();
   const [requestingId, setRequestingId] = useState<string | null>(null);
 
   const handleMeeting = async (slug: string) => {
@@ -35,9 +37,11 @@ export default function MatchingPage() {
     setRequestingId(slug);
     try {
       await requestMeeting(slug);
+      markPending(slug);
       showToast(t('company.meetingToast'));
     } catch (e) {
-      showToast(e instanceof Error ? e.message : String(e));
+      console.error('request_meeting gagal:', e);
+      showToast(t('company.meetingError'));
     } finally {
       setRequestingId(null);
     }
@@ -100,14 +104,21 @@ export default function MatchingPage() {
                   <Button variant="outline" size="sm" to={`/app/companies/${company.id}`}>
                     {t('matching.viewProfile')}
                   </Button>
-                  <Button
-                    size="sm"
-                    onClick={() => handleMeeting(company.id)}
-                    disabled={requestingId === company.id}
-                  >
-                    <Handshake className="h-3.5 w-3.5" />
-                    {t('matching.propose')}
-                  </Button>
+                  {hasPending(company.id) ? (
+                    <Button size="sm" variant="outline" disabled>
+                      <Check className="h-3.5 w-3.5" />
+                      {t('matching.requested')}
+                    </Button>
+                  ) : (
+                    <Button
+                      size="sm"
+                      onClick={() => handleMeeting(company.id)}
+                      disabled={requestingId === company.id}
+                    >
+                      <Handshake className="h-3.5 w-3.5" />
+                      {t('matching.propose')}
+                    </Button>
+                  )}
                 </div>
               </div>
             </Card>

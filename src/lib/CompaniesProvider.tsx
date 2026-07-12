@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { Company } from '../data/types';
 import { fetchCompanies } from '../data/companiesApi';
+import { useAuth } from './AuthProvider';
 
 interface CompaniesContextValue {
   companies: Company[];
@@ -15,10 +16,15 @@ const CompaniesContext = createContext<CompaniesContextValue | null>(null);
 
 /** Memuat direktori perusahaan dari Supabase sekali, lalu menyediakannya ke seluruh app. */
 export function CompaniesProvider({ children }: { children: ReactNode }) {
+  const { session } = useAuth();
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [nonce, setNonce] = useState(0);
+
+  // Refetch saat sesi auth berubah: RLS baru mengembalikan perusahaan sendiri
+  // (termasuk yang masih 'pending') setelah token terpasang di client.
+  const userId = session?.user?.id ?? null;
 
   useEffect(() => {
     let active = true;
@@ -37,7 +43,7 @@ export function CompaniesProvider({ children }: { children: ReactNode }) {
     return () => {
       active = false;
     };
-  }, [nonce]);
+  }, [nonce, userId]);
 
   const value = useMemo<CompaniesContextValue>(() => {
     const byId = new Map(companies.map((c) => [c.id, c]));
