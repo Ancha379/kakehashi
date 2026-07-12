@@ -4,6 +4,7 @@ import { Check, Handshake, Lightbulb, Sparkles } from 'lucide-react';
 import { useCompanies } from '../../lib/CompaniesProvider';
 import { getViewerSlug } from '../../lib/viewer';
 import { useAuth } from '../../lib/AuthProvider';
+import { useViewer } from '../../lib/ViewerProvider';
 import { useMatchRequests } from '../../lib/MatchRequestsProvider';
 import { requestMeeting } from '../../data/matchingApi';
 import { useLang } from '../../lib/localized';
@@ -25,6 +26,7 @@ export default function MatchingPage() {
   const lang = useLang();
   const { showToast } = useToast();
   const { session } = useAuth();
+  const { isStaff } = useViewer();
   const { companies, loading } = useCompanies();
   const { hasPending, markPending } = useMatchRequests();
   const [requestingId, setRequestingId] = useState<string | null>(null);
@@ -104,7 +106,7 @@ export default function MatchingPage() {
                   <Button variant="outline" size="sm" to={`/app/companies/${company.id}`}>
                     {t('matching.viewProfile')}
                   </Button>
-                  {hasPending(company.id) ? (
+                  {isStaff ? null : hasPending(company.id) ? (
                     <Button size="sm" variant="outline" disabled>
                       <Check className="h-3.5 w-3.5" />
                       {t('matching.requested')}

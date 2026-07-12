@@ -45,6 +45,7 @@ export default function CompanyDetailPage() {
   const { hasPending, markPending } = useMatchRequests();
   const company = id ? getCompany(id) : undefined;
   const isOwn = !!company && viewer.slug === company.id;
+  const isStaff = viewer.isStaff;
   const requested = !!company && hasPending(company.id);
   const [requesting, setRequesting] = useState(false);
 
@@ -142,7 +143,7 @@ export default function CompanyDetailPage() {
                 </Badge>
                 {isOwn ? (
                   <Badge tone="neutral">{t('company.yourCompany')}</Badge>
-                ) : (
+                ) : isStaff ? null : (
                   <Badge tone="accent">
                     <Sparkles className="h-3 w-3" />
                     {t('companies.aiMatch')} {company.matchScore}%
@@ -151,7 +152,7 @@ export default function CompanyDetailPage() {
               </div>
             </div>
           </div>
-          {isOwn ? (
+          {isStaff ? null : isOwn ? (
             <Button to="/app/profile" size="lg" variant="outline">
               <Pencil className="h-4 w-4" />
               {t('company.editProfile')}
