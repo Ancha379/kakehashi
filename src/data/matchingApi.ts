@@ -20,10 +20,12 @@ interface OutgoingRow {
 
 /** Ambil permintaan 商談 yang DIKIRIM perusahaan viewer (untuk status tombol & dashboard). */
 export async function fetchOutgoingRequests(): Promise<OutgoingRequest[]> {
+  const slug = getViewerSlug();
+  if (!slug) return [];
   const { data: viewer } = await supabase
     .from('companies')
     .select('id')
-    .eq('slug', getViewerSlug())
+    .eq('slug', slug)
     .maybeSingle();
   const viewerId = viewer?.id;
   if (!viewerId) return [];

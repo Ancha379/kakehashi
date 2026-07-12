@@ -76,6 +76,7 @@
     "cta": {
       "login": "Masuk",
       "register": "Daftar",
+      "toApp": "Ke Dashboard",
       "registerFree": "Daftar Gratis →",
       "viewCompanies": "Lihat Perusahaan",
       "consult": "Hubungi Konsultan",

@@ -69,10 +69,12 @@ const EMPTY: DashboardData = {
 
 /** Ambil seluruh data dashboard perusahaan viewer dari Supabase. */
 export async function fetchDashboard(): Promise<DashboardData> {
+  const slug = getViewerSlug();
+  if (!slug) return EMPTY;
   const { data: viewer } = await supabase
     .from('companies')
     .select('id')
-    .eq('slug', getViewerSlug())
+    .eq('slug', slug)
     .maybeSingle();
   const viewerId = viewer?.id;
   if (!viewerId) return EMPTY;

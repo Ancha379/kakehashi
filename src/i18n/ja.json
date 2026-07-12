@@ -76,6 +76,7 @@
     "cta": {
       "login": "ログイン",
       "register": "登録",
+      "toApp": "ダッシュボードへ",
       "registerFree": "無料で登録 →",
       "viewCompanies": "企業を見る",
       "consult": "相談する",

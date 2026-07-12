@@ -152,6 +152,12 @@ export default function AppLayout() {
     return <Navigate to="/app/register" replace />;
   }
 
+  // Staf ANC tak punya "dashboard perusahaan" → beranda mereka adalah 審査
+  // (Screening). Tanpa ini mereka jatuh ke data perusahaan demo & aksinya gagal.
+  if (session && viewer.isStaff && location.pathname === '/app/dashboard') {
+    return <Navigate to="/app/screening" replace />;
+  }
+
   const viewerCompany = viewer.slug ? getCompany(viewer.slug) : undefined;
   const companyName = viewerCompany
     ? l({ ja: viewerCompany.name_ja, id: viewerCompany.name_id })

@@ -62,7 +62,8 @@ export function ViewerProvider({ children }: { children: ReactNode }) {
           resolved = company?.slug ?? null;
         }
         if (!active) return;
-        setViewerSlug(resolved ?? DEMO_VIEWER_SLUG);
+        // resolved bisa null (staf/onboarding) — JANGAN fallback ke id-01.
+        setViewerSlug(resolved);
         setSlug(resolved);
         setRole((profile?.role as UserRole) ?? null);
         setLoading(false);
@@ -78,6 +79,7 @@ export function ViewerProvider({ children }: { children: ReactNode }) {
       setViewerSlug(DEMO_VIEWER_SLUG);
       setSlug(DEMO_VIEWER_SLUG);
     } else {
+      setViewerSlug(null);
       setSlug(null);
     }
     setLoading(false);

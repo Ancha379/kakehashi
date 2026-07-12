@@ -7,12 +7,15 @@
 
 export const DEMO_VIEWER_SLUG = 'id-01';
 
-let currentSlug: string = DEMO_VIEWER_SLUG;
+// null = login tapi belum punya perusahaan (staf ANC / sedang onboarding).
+// Jangan pernah jatuh ke DEMO_VIEWER_SLUG untuk user login tanpa perusahaan,
+// supaya mereka tidak menyamar sebagai perusahaan demo id-01.
+let currentSlug: string | null = DEMO_VIEWER_SLUG;
 
-export function getViewerSlug(): string {
+export function getViewerSlug(): string | null {
   return currentSlug;
 }
 
-export function setViewerSlug(slug: string): void {
-  currentSlug = slug || DEMO_VIEWER_SLUG;
+export function setViewerSlug(slug: string | null): void {
+  currentSlug = slug;
 }

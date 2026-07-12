@@ -35,6 +35,7 @@ let cachedSlug: string | null = null;
 let viewerIdCache: string | null = null;
 async function getViewerId(): Promise<string | null> {
   const slug = getViewerSlug();
+  if (!slug) return null;
   if (cachedSlug === slug && viewerIdCache) return viewerIdCache;
   const { data } = await supabase.from('companies').select('id').eq('slug', slug).maybeSingle();
   cachedSlug = slug;

@@ -50,10 +50,12 @@ export interface ProfileEditPayload {
 }
 
 async function getMyCompanyId(): Promise<string | null> {
+  const slug = getViewerSlug();
+  if (!slug) return null;
   const { data } = await supabase
     .from('companies')
     .select('id')
-    .eq('slug', getViewerSlug())
+    .eq('slug', slug)
     .maybeSingle();
   return data?.id ?? null;
 }

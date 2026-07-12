@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Menu, X } from 'lucide-react';
 import Logo from '../landing/Logo';
 import LanguageToggle from '../LanguageToggle';
+import { useAuth } from '../../lib/AuthProvider';
 import { cn } from '../../lib/cn';
 
 const navItems = [
@@ -18,6 +19,7 @@ const navItems = [
 
 export default function Header() {
   const { t } = useTranslation();
+  const { session } = useAuth();
   const [open, setOpen] = useState(false);
 
   return (
@@ -41,18 +43,29 @@ export default function Header() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <LanguageToggle />
-          <Link
-            to="/login"
-            className="font-display text-sm font-semibold text-slate-700 transition-colors hover:text-navy-800"
-          >
-            {t('lp.cta.login')}
-          </Link>
-          <Link
-            to="/signup"
-            className="rounded-full bg-royal-500 px-5 py-2 font-display text-sm font-bold text-white shadow-glow transition-colors hover:bg-royal-600"
-          >
-            {t('lp.cta.register')}
-          </Link>
+          {session ? (
+            <Link
+              to="/app/dashboard"
+              className="rounded-full bg-royal-500 px-5 py-2 font-display text-sm font-bold text-white shadow-glow transition-colors hover:bg-royal-600"
+            >
+              {t('lp.cta.toApp')}
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="font-display text-sm font-semibold text-slate-700 transition-colors hover:text-navy-800"
+              >
+                {t('lp.cta.login')}
+              </Link>
+              <Link
+                to="/signup"
+                className="rounded-full bg-royal-500 px-5 py-2 font-display text-sm font-bold text-white shadow-glow transition-colors hover:bg-royal-600"
+              >
+                {t('lp.cta.register')}
+              </Link>
+            </>
+          )}
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
@@ -82,22 +95,34 @@ export default function Header() {
             </a>
           ))}
           <div className="mt-4 flex gap-3">
-            <Link
-              to="/login"
-              onClick={() => setOpen(false)}
-              className={cn(
-                'flex-1 rounded-full border border-slate-300 py-2.5 text-center font-display text-sm font-bold text-slate-700'
-              )}
-            >
-              {t('lp.cta.login')}
-            </Link>
-            <Link
-              to="/signup"
-              onClick={() => setOpen(false)}
-              className="flex-1 rounded-full bg-royal-500 py-2.5 text-center font-display text-sm font-bold text-white"
-            >
-              {t('lp.cta.register')}
-            </Link>
+            {session ? (
+              <Link
+                to="/app/dashboard"
+                onClick={() => setOpen(false)}
+                className="flex-1 rounded-full bg-royal-500 py-2.5 text-center font-display text-sm font-bold text-white"
+              >
+                {t('lp.cta.toApp')}
+              </Link>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    'flex-1 rounded-full border border-slate-300 py-2.5 text-center font-display text-sm font-bold text-slate-700'
+                  )}
+                >
+                  {t('lp.cta.login')}
+                </Link>
+                <Link
+                  to="/signup"
+                  onClick={() => setOpen(false)}
+                  className="flex-1 rounded-full bg-royal-500 py-2.5 text-center font-display text-sm font-bold text-white"
+                >
+                  {t('lp.cta.register')}
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       )}
