@@ -89,9 +89,9 @@ export default function LoginPage() {
             />
             {t('auth.login.remember')}
           </label>
-          <a href="#" className="text-sm font-semibold text-royal-600 hover:underline">
+          <Link to="/reset-password" className="text-sm font-semibold text-royal-600 hover:underline">
             {t('auth.login.forgot')}
-          </a>
+          </Link>
         </div>
 
         {error && (

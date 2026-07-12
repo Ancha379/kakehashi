@@ -33,6 +33,20 @@
       "noAccount": "Belum punya akun?",
       "signupLink": "Daftar gratis"
     },
+    "reset": {
+      "requestTitle": "Reset kata sandi",
+      "requestSubtitle": "Masukkan email Anda. Kami kirim tautan untuk membuat kata sandi baru.",
+      "sendButton": "Kirim tautan reset",
+      "sentTitle": "Cek email Anda",
+      "sentBody": "Kami mengirim tautan reset ke {{email}}. Klik tautan itu untuk membuat kata sandi baru.",
+      "updateTitle": "Kata sandi baru",
+      "updateSubtitle": "Masukkan kata sandi baru Anda.",
+      "newPassword": "Kata sandi baru",
+      "updateButton": "Simpan kata sandi",
+      "doneTitle": "Kata sandi diperbarui",
+      "doneBody": "Kata sandi Anda berhasil diubah. Silakan masuk.",
+      "toLogin": "Kembali ke login"
+    },
     "signup": {
       "title": "Buat akun gratis",
       "subtitle": "Daftar dalam satu menit, lalu lengkapi profil perusahaan Anda.",

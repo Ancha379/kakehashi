@@ -33,6 +33,20 @@
       "noAccount": "アカウントをお持ちでないですか？",
       "signupLink": "無料で登録"
     },
+    "reset": {
+      "requestTitle": "パスワードの再設定",
+      "requestSubtitle": "ご登録のメールアドレスを入力してください。再設定用のリンクをお送りします。",
+      "sendButton": "リセットリンクを送信",
+      "sentTitle": "メールをご確認ください",
+      "sentBody": "{{email}} に再設定リンクを送信しました。リンクから新しいパスワードを設定してください。",
+      "updateTitle": "新しいパスワード",
+      "updateSubtitle": "新しいパスワードを入力してください。",
+      "newPassword": "新しいパスワード",
+      "updateButton": "パスワードを保存",
+      "doneTitle": "パスワードを更新しました",
+      "doneBody": "パスワードを変更しました。ログインしてください。",
+      "toLogin": "ログインに戻る"
+    },
     "signup": {
       "title": "無料でアカウント作成",
       "subtitle": "1分で登録し、続けて企業プロフィールを作成できます。",

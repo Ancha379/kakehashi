@@ -18,6 +18,10 @@ interface AuthContextValue {
   /** Mengembalikan needsConfirmation=true jika email harus dikonfirmasi dulu (tak ada sesi). */
   signUp: (args: SignUpArgs) => Promise<{ error: string | null; needsConfirmation: boolean }>;
   signOut: () => Promise<void>;
+  /** Kirim email tautan reset kata sandi. */
+  resetPassword: (email: string) => Promise<{ error: string | null }>;
+  /** Set kata sandi baru (dipakai setelah tiba dari tautan reset). */
+  updatePassword: (password: string) => Promise<{ error: string | null }>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -61,6 +65,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       },
       signOut: async () => {
         await supabase.auth.signOut();
+      },
+      resetPassword: async (email) => {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}${import.meta.env.BASE_URL}reset-password`
+        });
+        return { error: error ? error.message : null };
+      },
+      updatePassword: async (password) => {
+        const { error } = await supabase.auth.updateUser({ password });
+        return { error: error ? error.message : null };
       }
     }),
     [session, loading]

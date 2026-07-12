@@ -11,6 +11,7 @@ import ContactPage from './pages/ContactPage';
 import { aboutDoc, privacyDoc, termsDoc } from './data/legalContent';
 import LoginPage from './pages/auth/LoginPage';
 import SignupPage from './pages/auth/SignupPage';
+import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 import AppLayout from './layouts/AppLayout';
 import DashboardPage from './pages/app/DashboardPage';
 import CompaniesPage from './pages/app/CompaniesPage';
@@ -41,6 +42,7 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/app" element={<AppLayout />}>
             <Route index element={<Navigate to="/app/dashboard" replace />} />
             <Route path="dashboard" element={<DashboardPage />} />
