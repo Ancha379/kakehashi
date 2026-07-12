@@ -231,7 +231,10 @@ export default function AppLayout() {
               >
                 {avatarLetter}
               </span>
-              <span className="max-w-[180px] truncate text-xs font-semibold text-slate-600">
+              <span
+                title={companyName}
+                className="max-w-[180px] truncate text-xs font-semibold text-slate-600"
+              >
                 {companyName}
               </span>
             </div>

@@ -503,6 +503,7 @@
     "completeProfile": "プロフィールを完成させる",
     "profileHint": "プロフィールが充実するほど、AIマッチングの精度が上がります。",
     "matchRequests": "受信したマッチリクエスト",
+    "matchRequestsEmpty": "受信したリクエストはありません。",
     "accept": "承認",
     "decline": "見送る",
     "acceptedToast": "リクエストを承認しました。新しい会話が開始されます。",

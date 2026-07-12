@@ -132,7 +132,9 @@ export default function DashboardPage() {
               {requests.length > 0 && <Badge tone="accent">{requests.length}</Badge>}
             </h3>
             {requests.length === 0 ? (
-              <p className="py-4 text-center text-sm text-slate-400">—</p>
+              <p className="py-4 text-center text-sm text-slate-400">
+                {t('dashboard.matchRequestsEmpty')}
+              </p>
             ) : (
               <ul className="space-y-4">
                 {requests.map((req) => {

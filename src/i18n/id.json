@@ -503,6 +503,7 @@
     "completeProfile": "Lengkapi profil",
     "profileHint": "Profil lengkap meningkatkan akurasi AI matching.",
     "matchRequests": "Permintaan match masuk",
+    "matchRequestsEmpty": "Belum ada permintaan masuk.",
     "accept": "Terima",
     "decline": "Tolak",
     "acceptedToast": "Permintaan diterima! Percakapan baru dibuka.",
