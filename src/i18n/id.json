@@ -421,7 +421,9 @@
     "requestsSubtitle": "Pantau & fasilitasi permintaan meeting antar-perusahaan. Menerima akan membuka chat + memulai 商談 atas nama penerima.",
     "requestsEmpty": "Belum ada permintaan 商談.",
     "reqAccepted": "商談 difasilitasi! Chat kedua perusahaan dibuka.",
-    "reqDeclined": "Permintaan ditolak atas nama penerima."
+    "reqDeclined": "Permintaan ditolak atas nama penerima.",
+    "docsTitle": "Dokumen verifikasi",
+    "docsNone": "Belum ada dokumen yang diunggah."
   },
   "profile": {
     "title": "Edit Profil Perusahaan",
@@ -566,6 +568,15 @@
     "submit": "Kirim Pendaftaran",
     "submitting": "Menyimpan…",
     "created": "Perusahaan berhasil dibuat. Menunggu verifikasi ANC Japan.",
+    "docsTitle": "Dokumen verifikasi",
+    "docsHint": "Dipakai ANC Japan untuk proses screening. Tidak ditampilkan di direktori publik.",
+    "docRegistry_JP": "Salinan register perusahaan (登記簿謄本)",
+    "docFinancial_JP": "Laporan keuangan terakhir (決算書)",
+    "docRegistry_ID": "Akta Pendirian Perusahaan terbaru",
+    "docFinancial_ID": "Laporan Keuangan terbaru",
+    "docChoose": "Pilih file (PDF/JPG/PNG)",
+    "docsRequired": "Silakan unggah kedua dokumen verifikasi.",
+    "docsUploadFailed": "Perusahaan terdaftar, tetapi unggah dokumen gagal. Silakan kirim dokumen langsung ke ANC Japan.",
     "nameRequired": "Nama perusahaan wajib diisi.",
     "successTitle": "Pendaftaran terkirim!",
     "successBody": "Terima kasih. Tim ANC Japan akan memverifikasi perusahaan Anda dan mengirimkan hasil screening via email dalam 2–3 hari kerja.",

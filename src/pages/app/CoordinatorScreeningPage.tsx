@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ShieldCheck, Check, X, Globe, Handshake, ArrowRight, Clock } from 'lucide-react';
+import { ShieldCheck, Check, X, Globe, Handshake, ArrowRight, Clock, FileText } from 'lucide-react';
 import {
   fetchAllMatchRequests,
   fetchPendingCompanies,
   setVerificationStatus
 } from '../../data/screeningApi';
 import type { PendingCompany, StaffMatchRequest } from '../../data/screeningApi';
+import { fetchCompanyDocuments } from '../../data/companyDocsApi';
+import type { CompanyDocument } from '../../data/companyDocsApi';
 import { respondMatchRequest } from '../../data/matchingApi';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
@@ -27,6 +29,7 @@ export default function CoordinatorScreeningPage() {
   const { reload } = useCompanies();
   const [pending, setPending] = useState<PendingCompany[]>([]);
   const [requests, setRequests] = useState<StaffMatchRequest[]>([]);
+  const [docs, setDocs] = useState<CompanyDocument[]>([]);
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState<string | null>(null);
 
@@ -34,10 +37,13 @@ export default function CoordinatorScreeningPage() {
     if (!viewer.isStaff) return;
     let active = true;
     Promise.all([fetchPendingCompanies(), fetchAllMatchRequests()])
-      .then(([companies, reqs]) => {
+      .then(async ([companies, reqs]) => {
         if (!active) return;
         setPending(companies);
         setRequests(reqs);
+        // Dokumen verifikasi perusahaan pending (URL bertanda-tangan, 1 jam).
+        const documents = await fetchCompanyDocuments(companies.map((c) => c.id));
+        if (active) setDocs(documents);
       })
       .catch((e) => console.error('Muat data screening gagal:', e))
       .finally(() => active && setLoading(false));
@@ -186,6 +192,40 @@ export default function CoordinatorScreeningPage() {
                         <Globe className="h-3 w-3" />
                         {c.website}
                       </a>
+                    )}
+                  </div>
+
+                  {/* Dokumen verifikasi (登記簿謄本/Akta dll.) — bahan utama 審査. */}
+                  <div className="mt-3 rounded-xl bg-slate-50 p-3">
+                    <p className="text-xs font-bold text-slate-600">{t('screening.docsTitle')}</p>
+                    {docs.filter((d) => d.companyId === c.id).length === 0 ? (
+                      <p className="mt-1 text-xs text-slate-400">{t('screening.docsNone')}</p>
+                    ) : (
+                      <ul className="mt-1.5 space-y-1">
+                        {docs
+                          .filter((d) => d.companyId === c.id)
+                          .map((d) => (
+                            <li key={d.id} className="flex items-center gap-2 text-xs">
+                              <FileText className="h-3.5 w-3.5 shrink-0 text-primary-600" aria-hidden />
+                              <span className="font-semibold text-slate-600">
+                                {t(`register.doc${d.kind === 'registry' ? 'Registry' : 'Financial'}_${c.country}`)}
+                                :
+                              </span>
+                              {d.url ? (
+                                <a
+                                  href={d.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="truncate text-primary-600 hover:underline"
+                                >
+                                  {d.fileName}
+                                </a>
+                              ) : (
+                                <span className="truncate text-slate-400">{d.fileName}</span>
+                              )}
+                            </li>
+                          ))}
+                      </ul>
                     )}
                   </div>
                 </div>

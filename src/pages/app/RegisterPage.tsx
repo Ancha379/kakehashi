@@ -2,8 +2,9 @@ import { useState } from 'react';
 import type { ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, ArrowRight, Check, CheckCircle2, ImagePlus, Upload } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, CheckCircle2, FileText, ImagePlus, Upload } from 'lucide-react';
 import type { CompanySize, Country, Industry, Purpose } from '../../data/types';
+import { uploadCompanyDocument } from '../../data/companyDocsApi';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import { useToast } from '../../components/ui/Toast';
@@ -86,6 +87,10 @@ export default function RegisterPage() {
   const { reload } = useCompanies();
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormState>(initialForm);
+  // Dokumen verifikasi (bahan 審査): registry = 登記簿謄本/Akta Pendirian,
+  // financial = 決算書/Laporan Keuangan. Label mengikuti negara perusahaan.
+  const [docRegistry, setDocRegistry] = useState<File | null>(null);
+  const [docFinancial, setDocFinancial] = useState<File | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -105,8 +110,13 @@ export default function RegisterPage() {
       setStep(0);
       return;
     }
+    if (!docRegistry || !docFinancial) {
+      setError(t('register.docsRequired'));
+      setStep(0);
+      return;
+    }
     setSubmitting(true);
-    const { error: rpcError } = await supabase.rpc('onboard_company', {
+    const { data: created, error: rpcError } = await supabase.rpc('onboard_company', {
       p_name: form.companyName,
       p_country: form.country,
       p_industry: form.industry,
@@ -118,16 +128,31 @@ export default function RegisterPage() {
       p_website: form.website || null,
       p_founded: form.founded ? Number(form.founded) : null
     });
-    setSubmitting(false);
     if (rpcError) {
+      setSubmitting(false);
       setError(rpcError.message);
       return;
     }
+    // Unggah dokumen verifikasi ke folder perusahaan yang baru dibuat.
+    // Gagal unggah TIDAK membatalkan pendaftaran (perusahaan sudah ada) —
+    // beri tahu agar dikirim langsung ke ANC.
+    const companyId = (created as { id: string; slug: string }[] | null)?.[0]?.id;
+    let docsOk = true;
+    if (companyId) {
+      try {
+        await uploadCompanyDocument(companyId, 'registry', docRegistry);
+        await uploadCompanyDocument(companyId, 'financial', docFinancial);
+      } catch (e) {
+        console.error('Unggah dokumen verifikasi gagal:', e);
+        docsOk = false;
+      }
+    }
+    setSubmitting(false);
     // Perusahaan dibuat & profil tertaut. Muat ulang viewer/direktori lalu ke
     // dashboard (menghindari layar sukses ter-unmount saat viewer re-resolve).
     reload();
     viewer.refresh();
-    showToast(t('register.created'));
+    showToast(docsOk ? t('register.created') : t('register.docsUploadFailed'));
     navigate('/app/dashboard');
   };
 
@@ -291,6 +316,40 @@ export default function RegisterPage() {
                 className={inputClass}
               />
             </Field>
+
+            {/* Dokumen verifikasi — label mengikuti negara perusahaan. */}
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <p className="text-sm font-semibold text-slate-700">{t('register.docsTitle')}</p>
+              <p className="mt-1 text-xs text-slate-500">{t('register.docsHint')}</p>
+              <div className="mt-3 space-y-3">
+                {(
+                  [
+                    ['registry', docRegistry, setDocRegistry],
+                    ['financial', docFinancial, setDocFinancial]
+                  ] as const
+                ).map(([kind, file, setFile]) => (
+                  <div key={kind}>
+                    <span className="mb-1 block text-xs font-semibold text-slate-600">
+                      {t(`register.doc${kind === 'registry' ? 'Registry' : 'Financial'}_${form.country}`)}
+                    </span>
+                    <label className="inline-flex max-w-full cursor-pointer items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100">
+                      {file ? (
+                        <FileText className="h-4 w-4 shrink-0 text-emerald-500" aria-hidden />
+                      ) : (
+                        <Upload className="h-4 w-4 shrink-0" aria-hidden />
+                      )}
+                      <span className="truncate">{file ? file.name : t('register.docChoose')}</span>
+                      <input
+                        type="file"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        className="hidden"
+                        onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                      />
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
@@ -410,7 +469,9 @@ export default function RegisterPage() {
                 ],
                 [t('register.offering'), display(form.offering)],
                 [t('register.seeking'), display(form.seeking)],
-                [t('register.notes'), display(form.notes)]
+                [t('register.notes'), display(form.notes)],
+                [t(`register.docRegistry_${form.country}`), docRegistry?.name ?? t('register.notFilled')],
+                [t(`register.docFinancial_${form.country}`), docFinancial?.name ?? t('register.notFilled')]
               ].map(([label, value]) => (
                 <div key={label} className="grid gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                   <dt className="font-semibold text-slate-500">{label}</dt>

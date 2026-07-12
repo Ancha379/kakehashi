@@ -421,7 +421,9 @@
     "requestsSubtitle": "企業間の商談リクエストを確認・仲介します。承認すると受信企業に代わって商談が成立し、チャットが開設されます。",
     "requestsEmpty": "商談リクエストはありません。",
     "reqAccepted": "商談を成立させました。両社のチャットが開設されます。",
-    "reqDeclined": "受信企業に代わってリクエストを見送りました。"
+    "reqDeclined": "受信企業に代わってリクエストを見送りました。",
+    "docsTitle": "提出書類",
+    "docsNone": "書類が提出されていません。"
   },
   "profile": {
     "title": "会社プロフィール編集",
@@ -566,6 +568,15 @@
     "submit": "登録を送信",
     "submitting": "保存中…",
     "created": "会社を作成しました。ANCジャパンの審査をお待ちください。",
+    "docsTitle": "確認書類のアップロード",
+    "docsHint": "ANCジャパンの審査に使用します。公開ディレクトリには表示されません。",
+    "docRegistry_JP": "登記簿謄本",
+    "docFinancial_JP": "決算書（直近）",
+    "docRegistry_ID": "会社設立証書（Akta Pendirian）最新版",
+    "docFinancial_ID": "財務報告書（Laporan Keuangan）最新版",
+    "docChoose": "ファイルを選択（PDF/JPG/PNG）",
+    "docsRequired": "確認書類2点をアップロードしてください。",
+    "docsUploadFailed": "会社は登録されましたが、書類のアップロードに失敗しました。ANCジャパンへ直接お送りください。",
     "nameRequired": "会社名は必須です。",
     "successTitle": "登録を受け付けました！",
     "successBody": "ありがとうございます。ANCジャパンが審査のうえ、2〜3営業日以内に結果をメールでお送りします。",
