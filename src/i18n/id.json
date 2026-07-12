@@ -423,7 +423,12 @@
     "reqAccepted": "商談 difasilitasi! Chat kedua perusahaan dibuka.",
     "reqDeclined": "Permintaan ditolak atas nama penerima.",
     "docsTitle": "Dokumen verifikasi",
-    "docsNone": "Belum ada dokumen yang diunggah."
+    "docsNone": "Belum ada dokumen yang diunggah.",
+    "rescore": "Hitung AI Match",
+    "rescoreRunning": "Menghitung…",
+    "rescoreDone": "AI Match dihitung ({{count}} pasangan baru).",
+    "rescoreDoneOne": "AI Match perusahaan baru selesai dihitung.",
+    "rescoreFailed": "Gagal menghitung AI Match. Coba lagi."
   },
   "profile": {
     "title": "Edit Profil Perusahaan",

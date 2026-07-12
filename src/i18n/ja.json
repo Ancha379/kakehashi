@@ -423,7 +423,12 @@
     "reqAccepted": "商談を成立させました。両社のチャットが開設されます。",
     "reqDeclined": "受信企業に代わってリクエストを見送りました。",
     "docsTitle": "提出書類",
-    "docsNone": "書類が提出されていません。"
+    "docsNone": "書類が提出されていません。",
+    "rescore": "AIマッチを計算",
+    "rescoreRunning": "計算中…",
+    "rescoreDone": "AIマッチを計算しました（新規{{count}}ペア）。",
+    "rescoreDoneOne": "新規企業のAIマッチ計算が完了しました。",
+    "rescoreFailed": "AIマッチの計算に失敗しました。もう一度お試しください。"
   },
   "profile": {
     "title": "会社プロフィール編集",

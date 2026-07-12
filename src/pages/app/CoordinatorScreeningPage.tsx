@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ShieldCheck, Check, X, Globe, Handshake, ArrowRight, Clock, FileText } from 'lucide-react';
+import { ShieldCheck, Check, X, Globe, Handshake, ArrowRight, Clock, FileText, Sparkles } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
 import {
   fetchAllMatchRequests,
   fetchPendingCompanies,
@@ -62,11 +63,47 @@ export default function CoordinatorScreeningPage() {
       setPending((prev) => prev.filter((c) => c.id !== id));
       reload(); // agar perusahaan verified langsung muncul di direktori
       showToast(t(status === 'verified' ? 'screening.approved' : 'screening.rejected'));
+      if (status === 'verified') {
+        // AI Matching: nilai perusahaan baru vs seluruh direktori (latar belakang).
+        supabase.functions
+          .invoke('score-matches', { body: { companyId: id } })
+          .then(({ error }) => {
+            if (error) throw error;
+            showToast(t('screening.rescoreDoneOne'));
+          })
+          .catch((e) => console.error('score-matches gagal:', e));
+      }
     } catch (e) {
       console.error('setVerificationStatus gagal:', e);
       showToast(t('screening.actionError'));
     } finally {
       setBusyId(null);
+    }
+  };
+
+  // Backfill AI Match seluruh direktori — bertahap (fungsi membatasi kerja per
+  // panggilan agar tak timeout; ulangi sampai remaining = 0).
+  const [rescoring, setRescoring] = useState(false);
+  const runBackfill = async () => {
+    setRescoring(true);
+    let total = 0;
+    try {
+      for (let guard = 0; guard < 12; guard++) {
+        const { data, error } = await supabase.functions.invoke('score-matches', {
+          body: { mode: 'backfill' }
+        });
+        if (error) throw error;
+        const res = data as { scored: number; remaining: number; failures: string[] };
+        total += res.scored;
+        if (res.failures?.length) console.error('score-matches failures:', res.failures);
+        if (!res.remaining) break;
+      }
+      showToast(t('screening.rescoreDone', { count: total }));
+    } catch (e) {
+      console.error('Backfill AI Match gagal:', e);
+      showToast(t('screening.rescoreFailed'));
+    } finally {
+      setRescoring(false);
     }
   };
 
@@ -106,12 +143,19 @@ export default function CoordinatorScreeningPage() {
 
   return (
     <div className="mx-auto max-w-4xl">
-      <div className="mb-6">
-        <h2 className="flex items-center gap-2 text-xl font-bold text-slate-900 md:text-2xl">
-          <ShieldCheck className="h-5 w-5 text-primary-600" />
-          {t('screening.title')}
-        </h2>
-        <p className="mt-1 text-sm text-slate-500">{t('screening.subtitle')}</p>
+      <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 className="flex items-center gap-2 text-xl font-bold text-slate-900 md:text-2xl">
+            <ShieldCheck className="h-5 w-5 text-primary-600" />
+            {t('screening.title')}
+          </h2>
+          <p className="mt-1 text-sm text-slate-500">{t('screening.subtitle')}</p>
+        </div>
+        {/* Backfill AI Match: hitung skor pasangan yang belum ada (memakai API). */}
+        <Button variant="outline" size="sm" onClick={runBackfill} disabled={rescoring}>
+          <Sparkles className="h-4 w-4" />
+          {rescoring ? t('screening.rescoreRunning') : t('screening.rescore')}
+        </Button>
       </div>
 
       {loading ? (
