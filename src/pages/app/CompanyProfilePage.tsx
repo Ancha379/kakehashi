@@ -85,7 +85,8 @@ function ProfileForm({ company, contact }: { company: Company; contact: CompanyC
       showToast(t('profile.saved'));
       navigate('/app/dashboard');
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
+      console.error('saveCompanyProfile gagal:', e);
+      setError(t('profile.saveError'));
     } finally {
       setSaving(false);
     }

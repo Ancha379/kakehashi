@@ -415,7 +415,8 @@
     "approve": "Setujui",
     "reject": "Tolak",
     "approved": "Perusahaan disetujui & masuk direktori.",
-    "rejected": "Perusahaan ditolak."
+    "rejected": "Perusahaan ditolak.",
+    "actionError": "Terjadi kesalahan. Silakan coba lagi."
   },
   "profile": {
     "title": "Edit Profil Perusahaan",
@@ -431,7 +432,8 @@
     "picEmail": "Email PIC",
     "picTitle": "Jabatan",
     "save": "Simpan profil",
-    "saved": "Profil perusahaan tersimpan."
+    "saved": "Profil perusahaan tersimpan.",
+    "saveError": "Gagal menyimpan profil. Silakan coba lagi."
   },
   "companies": {
     "title": "Direktori Perusahaan",

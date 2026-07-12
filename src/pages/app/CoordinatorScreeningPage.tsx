@@ -47,7 +47,8 @@ export default function CoordinatorScreeningPage() {
       reload(); // agar perusahaan verified langsung muncul di direktori
       showToast(t(status === 'verified' ? 'screening.approved' : 'screening.rejected'));
     } catch (e) {
-      showToast(e instanceof Error ? e.message : String(e));
+      console.error('setVerificationStatus gagal:', e);
+      showToast(t('screening.actionError'));
     } finally {
       setBusyId(null);
     }

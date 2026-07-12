@@ -155,9 +155,16 @@ export default function AppLayout() {
   }
 
   // Staf ANC tak punya sudut pandang perusahaan → halaman dashboard/matching/
-  // chat tak berlaku. Beranda mereka adalah 審査 (Screening). Tanpa ini mereka
-  // jatuh ke data perusahaan demo & aksinya gagal.
-  const staffBlockedPaths = ['/app/dashboard', '/app/matching', '/app/chat'];
+  // chat/register/profile tak berlaku. Beranda mereka adalah 審査 (Screening).
+  // Tanpa ini mereka jatuh ke data perusahaan demo & aksinya gagal (register:
+  // mencegah koordinator tak sengaja membuat perusahaan; profile: spinner abadi).
+  const staffBlockedPaths = [
+    '/app/dashboard',
+    '/app/matching',
+    '/app/chat',
+    '/app/register',
+    '/app/profile'
+  ];
   if (session && viewer.isStaff && staffBlockedPaths.includes(location.pathname)) {
     return <Navigate to="/app/screening" replace />;
   }
