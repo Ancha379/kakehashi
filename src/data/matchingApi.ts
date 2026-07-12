@@ -43,6 +43,32 @@ export async function fetchOutgoingRequests(): Promise<OutgoingRequest[]> {
   }));
 }
 
+/** Slug perusahaan yang sudah punya deal (商談) dengan viewer — dua arah. */
+export async function fetchPartnerSlugs(): Promise<string[]> {
+  const slug = getViewerSlug();
+  if (!slug) return [];
+  const { data: viewer } = await supabase
+    .from('companies')
+    .select('id')
+    .eq('slug', slug)
+    .maybeSingle();
+  const viewerId = viewer?.id;
+  if (!viewerId) return [];
+  const { data, error } = await supabase
+    .from('deals')
+    .select('company_a_id, a:companies!company_a_id(slug), b:companies!company_b_id(slug)')
+    .or(`company_a_id.eq.${viewerId},company_b_id.eq.${viewerId}`);
+  if (error) throw error;
+  interface Row {
+    company_a_id: string;
+    a: { slug: string } | null;
+    b: { slug: string } | null;
+  }
+  return ((data as unknown as Row[]) ?? [])
+    .map((d) => (d.company_a_id === viewerId ? d.b?.slug : d.a?.slug))
+    .filter((s): s is string => !!s);
+}
+
 /** Ajukan 商談 (business meeting) ke perusahaan target (via RPC ber-gate). */
 export async function requestMeeting(targetSlug: string, message?: string): Promise<void> {
   const { error } = await supabase.rpc('request_meeting', {

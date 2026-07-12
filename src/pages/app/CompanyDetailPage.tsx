@@ -12,6 +12,7 @@ import {
   Languages,
   Lock,
   MapPin,
+  MessageSquare,
   Pencil,
   Search,
   Sparkles,
@@ -43,11 +44,12 @@ export default function CompanyDetailPage() {
   const { session } = useAuth();
   const { getCompany, loading } = useCompanies();
   const viewer = useViewer();
-  const { hasPending, markPending } = useMatchRequests();
+  const { hasPending, isPartner, markPending } = useMatchRequests();
   const company = id ? getCompany(id) : undefined;
   const isOwn = !!company && viewer.slug === company.id;
   const isStaff = viewer.isStaff;
   const requested = !!company && hasPending(company.id);
+  const partner = !!company && isPartner(company.id);
   const [requesting, setRequesting] = useState(false);
 
   const handleMeeting = async () => {
@@ -154,7 +156,12 @@ export default function CompanyDetailPage() {
                 )}
                 {isOwn ? (
                   <Badge tone="neutral">{t('company.yourCompany')}</Badge>
-                ) : isStaff ? null : (
+                ) : isStaff ? null : partner ? (
+                  <Badge tone="primary">
+                    <Handshake className="h-3 w-3" />
+                    {t('company.partnerBadge')}
+                  </Badge>
+                ) : (
                   <Badge tone="accent">
                     <Sparkles className="h-3 w-3" />
                     {t('companies.aiMatch')} {company.matchScore}%
@@ -167,6 +174,11 @@ export default function CompanyDetailPage() {
             <Button to="/app/profile" size="lg" variant="outline">
               <Pencil className="h-4 w-4" />
               {t('company.editProfile')}
+            </Button>
+          ) : partner ? (
+            <Button to="/app/chat" size="lg" variant="outline">
+              <MessageSquare className="h-4 w-4" />
+              {t('company.openChat')}
             </Button>
           ) : requested ? (
             <Button size="lg" variant="outline" disabled>
@@ -317,7 +329,9 @@ export default function CompanyDetailPage() {
             ) : (
               <p className="flex items-start gap-2 text-xs leading-relaxed text-slate-500">
                 <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                {t('company.contactGated')}
+                {/* Mitra tapi PIC kosong = perusahaan belum mengisi datanya,
+                    bukan masih terkunci — jangan menyesatkan. */}
+                {partner ? t('company.contactEmpty') : t('company.contactGated')}
               </p>
             )}
           </Card>

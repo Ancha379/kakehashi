@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Check, Handshake, Lightbulb, Sparkles } from 'lucide-react';
+import { Check, Handshake, Lightbulb, MessageSquare, Sparkles } from 'lucide-react';
 import { useCompanies } from '../../lib/CompaniesProvider';
 import { getViewerSlug } from '../../lib/viewer';
 import { useAuth } from '../../lib/AuthProvider';
@@ -28,7 +28,7 @@ export default function MatchingPage() {
   const { session } = useAuth();
   const { isStaff } = useViewer();
   const { companies, loading } = useCompanies();
-  const { hasPending, markPending } = useMatchRequests();
+  const { hasPending, isPartner, markPending } = useMatchRequests();
   const [requestingId, setRequestingId] = useState<string | null>(null);
 
   const handleMeeting = async (slug: string) => {
@@ -106,7 +106,12 @@ export default function MatchingPage() {
                   <Button variant="outline" size="sm" to={`/app/companies/${company.id}`}>
                     {t('matching.viewProfile')}
                   </Button>
-                  {isStaff ? null : hasPending(company.id) ? (
+                  {isStaff ? null : isPartner(company.id) ? (
+                    <Button size="sm" variant="outline" to="/app/chat">
+                      <MessageSquare className="h-3.5 w-3.5" />
+                      {t('company.openChat')}
+                    </Button>
+                  ) : hasPending(company.id) ? (
                     <Button size="sm" variant="outline" disabled>
                       <Check className="h-3.5 w-3.5" />
                       {t('matching.requested')}

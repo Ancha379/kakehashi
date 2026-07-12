@@ -41,7 +41,7 @@ export default function DashboardPage() {
   const { showToast } = useToast();
   const { session } = useAuth();
   const { getCompany } = useCompanies();
-  const { outgoing } = useMatchRequests();
+  const { outgoing, refresh: refreshMatchRequests } = useMatchRequests();
   const pendingSent = outgoing.filter((r) => r.status === 'pending');
   const viewer = useViewer();
   const viewerCompany = viewer.slug ? getCompany(viewer.slug) : undefined;
@@ -92,8 +92,10 @@ export default function DashboardPage() {
       await respondMatchRequest(id, accepted);
       setRequests((prev) => prev.filter((r) => r.id !== id));
       showToast(accepted ? t('dashboard.acceptedToast') : t('dashboard.declinedToast'));
-      // Muat ulang: deal baru + statistik ter-update setelah accept.
+      // Muat ulang: deal baru + statistik ter-update setelah accept;
+      // status mitra (tombol 商談 lintas halaman) ikut segar.
       void loadDashboard();
+      refreshMatchRequests();
     } catch (e) {
       console.error('respond_match_request gagal:', e);
       showToast(t('dashboard.actionError'));

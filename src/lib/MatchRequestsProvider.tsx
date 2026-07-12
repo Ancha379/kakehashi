@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
-import { fetchOutgoingRequests } from '../data/matchingApi';
+import { fetchOutgoingRequests, fetchPartnerSlugs } from '../data/matchingApi';
 import type { OutgoingRequest } from '../data/matchingApi';
 import { useViewer } from './ViewerProvider';
 
@@ -11,6 +11,8 @@ interface MatchRequestsContextValue {
   pendingCount: number;
   /** true bila sudah ada permintaan pending ke slug perusahaan ini. */
   hasPending: (slug: string) => boolean;
+  /** true bila sudah bermitra (punya deal 商談) dengan slug perusahaan ini. */
+  isPartner: (slug: string) => boolean;
   /** Tandai optimistik bahwa permintaan ke slug ini baru dikirim. */
   markPending: (slug: string) => void;
   /** Muat ulang dari server. */
@@ -23,18 +25,23 @@ const MatchRequestsContext = createContext<MatchRequestsContextValue | null>(nul
 export function MatchRequestsProvider({ children }: { children: ReactNode }) {
   const { slug, hasCompany } = useViewer();
   const [outgoing, setOutgoing] = useState<OutgoingRequest[]>([]);
+  const [partnerSlugs, setPartnerSlugs] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
   const load = useCallback(async () => {
     if (!hasCompany) {
       setOutgoing([]);
+      setPartnerSlugs([]);
       return;
     }
     setLoading(true);
     try {
-      setOutgoing(await fetchOutgoingRequests());
-    } catch {
-      /* abaikan — dashboard/tombol tetap berfungsi tanpa data ini */
+      const [reqs, partners] = await Promise.all([fetchOutgoingRequests(), fetchPartnerSlugs()]);
+      setOutgoing(reqs);
+      setPartnerSlugs(partners);
+    } catch (e) {
+      // dashboard/tombol tetap berfungsi tanpa data ini
+      console.error('Muat permintaan/mitra 商談 gagal:', e);
     } finally {
       setLoading(false);
     }
@@ -49,10 +56,12 @@ export function MatchRequestsProvider({ children }: { children: ReactNode }) {
     const pendingSet = new Set(
       outgoing.filter((r) => r.status === 'pending').map((r) => r.toSlug)
     );
+    const partnerSet = new Set(partnerSlugs);
     return {
       outgoing,
       pendingCount: pendingSet.size,
       hasPending: (s: string) => pendingSet.has(s),
+      isPartner: (s: string) => partnerSet.has(s),
       markPending: (s: string) =>
         setOutgoing((prev) =>
           prev.some((r) => r.toSlug === s && r.status === 'pending')
@@ -70,7 +79,7 @@ export function MatchRequestsProvider({ children }: { children: ReactNode }) {
       refresh: () => void load(),
       loading
     };
-  }, [outgoing, loading, load]);
+  }, [outgoing, partnerSlugs, loading, load]);
 
   return (
     <MatchRequestsContext.Provider value={value}>{children}</MatchRequestsContext.Provider>
