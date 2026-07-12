@@ -87,6 +87,16 @@ function mapRow(
 }
 
 /**
+ * Catat view profil (fire-and-forget). Server yang memutus siapa dihitung:
+ * hanya perusahaan lain (bukan diri sendiri, bukan anon/demo, bukan staf),
+ * dedup 1x/hari per pasangan.
+ */
+export async function recordProfileView(slug: string): Promise<void> {
+  const { error } = await supabase.rpc('record_profile_view', { p_slug: slug });
+  if (error) throw error;
+}
+
+/**
  * Ambil semua perusahaan (verified terlihat via RLS) + skor match dari sudut
  * pandang perusahaan viewer (id-01), digabung dari tabel `matches`.
  */

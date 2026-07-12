@@ -86,7 +86,7 @@ export async function fetchDashboard(): Promise<DashboardData> {
   monthStart.setUTCDate(1);
   monthStart.setUTCHours(0, 0, 0, 0);
 
-  const [reqRes, dealRes, notifRes, statsRes, matchCountRes] = await Promise.all([
+  const [reqRes, dealRes, notifRes, statsRes, matchCountRes, viewCountRes] = await Promise.all([
     supabase
       .from('match_requests')
       .select('id, message_ja, message_id, created_at, from:companies!from_company_id(slug)')
@@ -118,7 +118,12 @@ export async function fetchDashboard(): Promise<DashboardData> {
       .select('id', { count: 'exact', head: true })
       .or(`from_company_id.eq.${viewerId},to_company_id.eq.${viewerId}`)
       .eq('status', 'accepted')
-      .gte('created_at', monthStart.toISOString())
+      .gte('created_at', monthStart.toISOString()),
+    // View profil nyata (tabel profile_views; RLS: hanya view yang diterima viewer).
+    supabase
+      .from('profile_views')
+      .select('id', { count: 'exact', head: true })
+      .eq('viewed_company_id', viewerId)
   ]);
 
   for (const res of [reqRes, dealRes, notifRes, statsRes]) {
@@ -150,8 +155,9 @@ export async function fetchDashboard(): Promise<DashboardData> {
 
   const s = statsRes.data as StatsRow | null;
   const stats: DashboardStats = {
-    // Belum ada pelacakan view sungguhan — angka seed hanya contoh; akun baru 0.
-    profileViews: s?.profile_views ?? 0,
+    // View profil NYATA dari tabel profile_views (dedup harian, hanya
+    // perusahaan lain). Angka seed di company_stats tak dipakai lagi.
+    profileViews: viewCountRes.count ?? 0,
     // Match baru dihitung nyata (accepted bulan ini); fallback angka seed.
     newMatches: matchCountRes.count ?? s?.new_matches ?? 0,
     unreadMessages: s?.unread_messages ?? 0,

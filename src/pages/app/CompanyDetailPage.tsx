@@ -18,6 +18,7 @@ import {
   Users
 } from 'lucide-react';
 import { useCompanies } from '../../lib/CompaniesProvider';
+import { recordProfileView } from '../../data/companiesApi';
 import { useViewer } from '../../lib/ViewerProvider';
 import { useMatchRequests } from '../../lib/MatchRequestsProvider';
 import { useAuth } from '../../lib/AuthProvider';
@@ -70,6 +71,12 @@ export default function CompanyDetailPage() {
 
   // 'translated' = bahasa UI aktif, 'original' = bahasa asli perusahaan
   const [textMode, setTextMode] = useState<'translated' | 'original'>('translated');
+
+  // Catat view profil (nyata) — server mengabaikan self/anon/staf & dedup harian.
+  useEffect(() => {
+    if (!company || isOwn || !session) return;
+    recordProfileView(company.id).catch(() => {});
+  }, [company?.id, isOwn, session]);
 
   // Kontak PIC diambil via RPC ber-gate (null bila tak berhak: anon/perusahaan lain).
   const [contact, setContact] = useState<CompanyContact | null>(null);
