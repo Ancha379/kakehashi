@@ -5,6 +5,7 @@ import { ArrowLeft, Languages, Lock, Send } from 'lucide-react';
 import {
   fetchMessages,
   fetchThreads,
+  markThreadRead,
   sendMessage,
   subscribeMessages
 } from '../../data/chatApi';
@@ -112,6 +113,13 @@ export default function ChatPage() {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ block: 'end' });
   }, [messages]);
+
+  // Tandai dibaca saat thread dilihat & saat pesan baru masuk selagi terbuka.
+  // (Server mengabaikan anon/demo; canSend mencegah panggilan sia-sia.)
+  useEffect(() => {
+    if (!canSend || !activeId || messages.length === 0) return;
+    markThreadRead(activeId).catch(() => {});
+  }, [canSend, activeId, messages.length]);
 
   const handleSend = async (e: FormEvent) => {
     e.preventDefault();

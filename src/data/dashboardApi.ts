@@ -86,7 +86,8 @@ export async function fetchDashboard(): Promise<DashboardData> {
   monthStart.setUTCDate(1);
   monthStart.setUTCHours(0, 0, 0, 0);
 
-  const [reqRes, dealRes, notifRes, statsRes, matchCountRes, viewCountRes] = await Promise.all([
+  const [reqRes, dealRes, notifRes, statsRes, matchCountRes, viewCountRes, unreadRes] =
+    await Promise.all([
     supabase
       .from('match_requests')
       .select('id, message_ja, message_id, created_at, from:companies!from_company_id(slug)')
@@ -123,7 +124,9 @@ export async function fetchDashboard(): Promise<DashboardData> {
     supabase
       .from('profile_views')
       .select('id', { count: 'exact', head: true })
-      .eq('viewed_company_id', viewerId)
+      .eq('viewed_company_id', viewerId),
+    // Pesan belum dibaca nyata (RPC; pesan mitra setelah last_read per thread).
+    supabase.rpc('unread_message_count')
   ]);
 
   for (const res of [reqRes, dealRes, notifRes, statsRes]) {
@@ -160,7 +163,8 @@ export async function fetchDashboard(): Promise<DashboardData> {
     profileViews: viewCountRes.count ?? 0,
     // Match baru dihitung nyata (accepted bulan ini); fallback angka seed.
     newMatches: matchCountRes.count ?? s?.new_matches ?? 0,
-    unreadMessages: s?.unread_messages ?? 0,
+    // Unread NYATA dari mark-baca per thread; angka seed tak dipakai lagi.
+    unreadMessages: (unreadRes.data as number | null) ?? 0,
     // 商談 aktif dihitung nyata dari jumlah deal.
     activeMeetings: deals.length
   };

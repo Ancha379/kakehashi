@@ -91,6 +91,15 @@ export async function fetchThreads(): Promise<ChatThreadSummary[]> {
   });
 }
 
+/**
+ * Tandai thread dibaca (unread count & notifikasi pesan ikut ter-reset).
+ * Server mengabaikan anon/demo/staf & non-peserta.
+ */
+export async function markThreadRead(threadId: string): Promise<void> {
+  const { error } = await supabase.rpc('mark_thread_read', { p_thread_id: threadId });
+  if (error) throw error;
+}
+
 /** Pesan pada satu thread, urut waktu. */
 export async function fetchMessages(threadId: string): Promise<ChatMessage[]> {
   const viewerId = await getViewerId();
