@@ -58,29 +58,37 @@ function mapMessage(row: MsgRow, viewerId: string | null): ChatMessage {
   };
 }
 
-/** Daftar percakapan viewer + preview pesan terakhir. */
+/** Daftar percakapan viewer + preview pesan terakhir (dua arah: viewer bisa a ATAU b). */
 export async function fetchThreads(): Promise<ChatThreadSummary[]> {
   const viewerId = await getViewerId();
   if (!viewerId) return [];
   const { data, error } = await supabase
     .from('threads')
-    .select('id, created_at, partner:companies!company_b_id(slug), messages ( original_text, created_at )')
-    .eq('company_a_id', viewerId)
+    .select(
+      'id, created_at, company_a_id, a:companies!company_a_id(slug), b:companies!company_b_id(slug), messages ( original_text, created_at )'
+    )
+    .or(`company_a_id.eq.${viewerId},company_b_id.eq.${viewerId}`)
     .order('created_at', { ascending: true });
   if (error) throw error;
 
-  return ((data as unknown as { id: string; partner: { slug: string } | null; messages: { original_text: string; created_at: string }[] }[]) ?? []).map(
-    (t) => {
-      const msgs = [...(t.messages ?? [])].sort((a, b) => (a.created_at < b.created_at ? -1 : 1));
-      const last = msgs[msgs.length - 1];
-      return {
-        id: t.id,
-        companyId: t.partner?.slug ?? '',
-        lastOriginal: last?.original_text ?? '',
-        lastTime: last ? fmtTime(last.created_at) : ''
-      };
-    }
-  );
+  interface ThreadRow {
+    id: string;
+    company_a_id: string;
+    a: { slug: string } | null;
+    b: { slug: string } | null;
+    messages: { original_text: string; created_at: string }[];
+  }
+  return ((data as unknown as ThreadRow[]) ?? []).map((t) => {
+    const msgs = [...(t.messages ?? [])].sort((a, b) => (a.created_at < b.created_at ? -1 : 1));
+    const last = msgs[msgs.length - 1];
+    return {
+      id: t.id,
+      // Mitra = sisi lawan dari viewer.
+      companyId: (t.company_a_id === viewerId ? t.b?.slug : t.a?.slug) ?? '',
+      lastOriginal: last?.original_text ?? '',
+      lastTime: last ? fmtTime(last.created_at) : ''
+    };
+  });
 }
 
 /** Pesan pada satu thread, urut waktu. */

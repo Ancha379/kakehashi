@@ -39,7 +39,9 @@ interface DealRow {
   last_update_ja: string | null;
   last_update_id: string | null;
   updated_at: string;
-  partner: { slug: string } | null;
+  company_a_id: string;
+  a: { slug: string } | null;
+  b: { slug: string } | null;
 }
 
 interface NotifRow {
@@ -79,17 +81,26 @@ export async function fetchDashboard(): Promise<DashboardData> {
   const viewerId = viewer?.id;
   if (!viewerId) return EMPTY;
 
-  const [reqRes, dealRes, notifRes, statsRes] = await Promise.all([
+  // Awal bulan berjalan (UTC) — untuk statistik "match baru bulan ini".
+  const monthStart = new Date();
+  monthStart.setUTCDate(1);
+  monthStart.setUTCHours(0, 0, 0, 0);
+
+  const [reqRes, dealRes, notifRes, statsRes, matchCountRes] = await Promise.all([
     supabase
       .from('match_requests')
       .select('id, message_ja, message_id, created_at, from:companies!from_company_id(slug)')
       .eq('to_company_id', viewerId)
       .eq('status', 'pending')
       .order('created_at', { ascending: false }),
+    // Dua arah: viewer bisa jadi company_a ATAU company_b (penerima 商談
+    // selalu jadi company_a saat deal dibuat — pengaju ada di sisi b).
     supabase
       .from('deals')
-      .select('id, stage, last_update_ja, last_update_id, updated_at, partner:companies!company_b_id(slug)')
-      .eq('company_a_id', viewerId)
+      .select(
+        'id, stage, last_update_ja, last_update_id, updated_at, company_a_id, a:companies!company_a_id(slug), b:companies!company_b_id(slug)'
+      )
+      .or(`company_a_id.eq.${viewerId},company_b_id.eq.${viewerId}`)
       .order('updated_at', { ascending: false }),
     supabase
       .from('notifications')
@@ -100,7 +111,14 @@ export async function fetchDashboard(): Promise<DashboardData> {
       .from('company_stats')
       .select('profile_views, new_matches, unread_messages, profile_completion')
       .eq('company_id', viewerId)
-      .maybeSingle()
+      .maybeSingle(),
+    // Match nyata: permintaan 商談 yang di-accept bulan ini, dua arah.
+    supabase
+      .from('match_requests')
+      .select('id', { count: 'exact', head: true })
+      .or(`from_company_id.eq.${viewerId},to_company_id.eq.${viewerId}`)
+      .eq('status', 'accepted')
+      .gte('created_at', monthStart.toISOString())
   ]);
 
   for (const res of [reqRes, dealRes, notifRes, statsRes]) {
@@ -116,7 +134,8 @@ export async function fetchDashboard(): Promise<DashboardData> {
 
   const deals: ActiveDeal[] = ((dealRes.data as unknown as DealRow[]) ?? []).map((d) => ({
     id: d.id,
-    companyId: d.partner?.slug ?? '',
+    // Mitra = sisi lawan dari viewer.
+    companyId: (d.company_a_id === viewerId ? d.b?.slug : d.a?.slug) ?? '',
     stage: d.stage,
     lastUpdate: { ja: d.last_update_ja ?? '', id: d.last_update_id ?? '' },
     date: dateOnly(d.updated_at)
@@ -131,8 +150,10 @@ export async function fetchDashboard(): Promise<DashboardData> {
 
   const s = statsRes.data as StatsRow | null;
   const stats: DashboardStats = {
+    // Belum ada pelacakan view sungguhan — angka seed hanya contoh; akun baru 0.
     profileViews: s?.profile_views ?? 0,
-    newMatches: s?.new_matches ?? 0,
+    // Match baru dihitung nyata (accepted bulan ini); fallback angka seed.
+    newMatches: matchCountRes.count ?? s?.new_matches ?? 0,
     unreadMessages: s?.unread_messages ?? 0,
     // 商談 aktif dihitung nyata dari jumlah deal.
     activeMeetings: deals.length
