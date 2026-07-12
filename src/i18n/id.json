@@ -416,7 +416,12 @@
     "reject": "Tolak",
     "approved": "Perusahaan disetujui & masuk direktori.",
     "rejected": "Perusahaan ditolak.",
-    "actionError": "Terjadi kesalahan. Silakan coba lagi."
+    "actionError": "Terjadi kesalahan. Silakan coba lagi.",
+    "requestsTitle": "Permintaan 商談 (Business Meeting)",
+    "requestsSubtitle": "Pantau & fasilitasi permintaan meeting antar-perusahaan. Menerima akan membuka chat + memulai 商談 atas nama penerima.",
+    "requestsEmpty": "Belum ada permintaan 商談.",
+    "reqAccepted": "商談 difasilitasi! Chat kedua perusahaan dibuka.",
+    "reqDeclined": "Permintaan ditolak atas nama penerima."
   },
   "profile": {
     "title": "Edit Profil Perusahaan",

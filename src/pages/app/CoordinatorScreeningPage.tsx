@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ShieldCheck, Check, X, Globe } from 'lucide-react';
-import { fetchPendingCompanies, setVerificationStatus } from '../../data/screeningApi';
-import type { PendingCompany } from '../../data/screeningApi';
+import { ShieldCheck, Check, X, Globe, Handshake, ArrowRight, Clock } from 'lucide-react';
+import {
+  fetchAllMatchRequests,
+  fetchPendingCompanies,
+  setVerificationStatus
+} from '../../data/screeningApi';
+import type { PendingCompany, StaffMatchRequest } from '../../data/screeningApi';
+import { respondMatchRequest } from '../../data/matchingApi';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import Badge from '../../components/ui/Badge';
@@ -21,15 +26,20 @@ export default function CoordinatorScreeningPage() {
   const { showToast } = useToast();
   const { reload } = useCompanies();
   const [pending, setPending] = useState<PendingCompany[]>([]);
+  const [requests, setRequests] = useState<StaffMatchRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!viewer.isStaff) return;
     let active = true;
-    fetchPendingCompanies()
-      .then((d) => active && setPending(d))
-      .catch(() => {})
+    Promise.all([fetchPendingCompanies(), fetchAllMatchRequests()])
+      .then(([companies, reqs]) => {
+        if (!active) return;
+        setPending(companies);
+        setRequests(reqs);
+      })
+      .catch((e) => console.error('Muat data screening gagal:', e))
       .finally(() => active && setLoading(false));
     return () => {
       active = false;
@@ -54,8 +64,39 @@ export default function CoordinatorScreeningPage() {
     }
   };
 
+  // Fasilitasi 商談: staf merespons atas nama perusahaan penerima.
+  const facilitate = async (id: string, accept: boolean) => {
+    setBusyId(id);
+    try {
+      await respondMatchRequest(id, accept);
+      setRequests((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, status: accept ? 'accepted' : 'declined' } : r))
+      );
+      showToast(t(accept ? 'screening.reqAccepted' : 'screening.reqDeclined'));
+    } catch (e) {
+      console.error('respond_match_request (fasilitasi) gagal:', e);
+      showToast(t('screening.actionError'));
+    } finally {
+      setBusyId(null);
+    }
+  };
+
   const name = (c: PendingCompany) => (lang === 'ja' ? c.name_ja : c.name_id);
   const summary = (c: PendingCompany) => (lang === 'ja' ? c.summary_ja : c.summary_id);
+  const reqName = (c: StaffMatchRequest['from']) =>
+    c ? (lang === 'ja' ? c.name_ja : c.name_id) : '—';
+
+  const reqBadge = (status: StaffMatchRequest['status']) =>
+    status === 'pending' ? (
+      <Badge tone="accent">
+        <Clock className="h-3 w-3" />
+        {t('dashboard.waitingReply')}
+      </Badge>
+    ) : status === 'accepted' ? (
+      <Badge tone="success">{t('dashboard.requestAccepted')}</Badge>
+    ) : (
+      <Badge tone="neutral">{t('dashboard.requestDeclined')}</Badge>
+    );
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -172,6 +213,80 @@ export default function CoordinatorScreeningPage() {
               </div>
             </Card>
           ))}
+        </div>
+      )}
+
+      {/* Panel fasilitasi 商談 — koordinator memantau & merespons atas nama penerima */}
+      {!loading && (
+        <div className="mt-10">
+          <div className="mb-4">
+            <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900">
+              <Handshake className="h-5 w-5 text-primary-600" />
+              {t('screening.requestsTitle')}
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">{t('screening.requestsSubtitle')}</p>
+          </div>
+          {requests.length === 0 ? (
+            <Card className="py-8 text-center text-sm text-slate-500">
+              {t('screening.requestsEmpty')}
+            </Card>
+          ) : (
+            <div className="space-y-3">
+              {requests.map((req) => (
+                <Card key={req.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center">
+                  <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2 text-sm">
+                    {req.from ? (
+                      <Link
+                        to={`/app/companies/${req.from.slug}`}
+                        className="font-bold text-slate-900 hover:text-primary-700"
+                      >
+                        {reqName(req.from)}
+                      </Link>
+                    ) : (
+                      <span className="text-slate-400">—</span>
+                    )}
+                    <ArrowRight className="h-3.5 w-3.5 shrink-0 text-slate-400" aria-hidden />
+                    {req.to ? (
+                      <Link
+                        to={`/app/companies/${req.to.slug}`}
+                        className="font-bold text-slate-900 hover:text-primary-700"
+                      >
+                        {reqName(req.to)}
+                      </Link>
+                    ) : (
+                      <span className="text-slate-400">—</span>
+                    )}
+                    <span className="text-xs text-slate-400">{req.createdAt.slice(0, 10)}</span>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-2">
+                    {reqBadge(req.status)}
+                    {req.status === 'pending' && (
+                      <>
+                        <Button
+                          variant="accent"
+                          size="sm"
+                          disabled={busyId === req.id}
+                          onClick={() => facilitate(req.id, true)}
+                        >
+                          <Check className="h-4 w-4" />
+                          {t('dashboard.accept')}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          disabled={busyId === req.id}
+                          onClick={() => facilitate(req.id, false)}
+                        >
+                          <X className="h-4 w-4" />
+                          {t('dashboard.decline')}
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

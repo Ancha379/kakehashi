@@ -76,3 +76,38 @@ export async function setVerificationStatus(id: string, status: 'verified' | 're
   const { error } = await supabase.from('companies').update({ verification_status: status }).eq('id', id);
   if (error) throw error;
 }
+
+// ---- Pemantauan 商談 (fasilitasi oleh staf) ----
+
+export interface StaffMatchRequest {
+  id: string;
+  status: 'pending' | 'accepted' | 'declined';
+  createdAt: string;
+  from: { slug: string; name_ja: string; name_id: string } | null;
+  to: { slug: string; name_ja: string; name_id: string } | null;
+}
+
+/** Semua permintaan 商談 lintas-perusahaan — panel fasilitasi koordinator. */
+export async function fetchAllMatchRequests(): Promise<StaffMatchRequest[]> {
+  const { data, error } = await supabase
+    .from('match_requests')
+    .select(
+      'id, status, created_at, from:companies!from_company_id(slug, name_ja, name_id), to:companies!to_company_id(slug, name_ja, name_id)'
+    )
+    .order('created_at', { ascending: false });
+  if (error) throw error;
+  interface Row {
+    id: string;
+    status: 'pending' | 'accepted' | 'declined';
+    created_at: string;
+    from: StaffMatchRequest['from'];
+    to: StaffMatchRequest['to'];
+  }
+  return ((data as unknown as Row[]) ?? []).map((r) => ({
+    id: r.id,
+    status: r.status,
+    createdAt: r.created_at,
+    from: r.from,
+    to: r.to
+  }));
+}
