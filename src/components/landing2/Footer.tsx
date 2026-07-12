@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import Logo from '../landing/Logo';
 
 export default function Footer() {
@@ -11,14 +12,13 @@ export default function Footer() {
     { label: t('lp.nav.pricing'), href: '#harga' }
   ];
   const companyLinks = [
-    { label: t('lp.footer.linkAbout'), href: '#' },
-    { label: t('lp.footer.linkCareer'), href: '#' },
+    { label: t('lp.footer.linkAbout'), href: '/about' },
     { label: t('lp.nav.faq'), href: '#faq' },
     { label: t('lp.footer.linkContact'), href: '#' }
   ];
   const legalLinks = [
-    { label: t('lp.footer.linkPrivacy'), href: '#' },
-    { label: t('lp.footer.linkTerms'), href: '#' }
+    { label: t('lp.footer.linkPrivacy'), href: '/privacy' },
+    { label: t('lp.footer.linkTerms'), href: '/terms' }
   ];
 
   return (
@@ -36,9 +36,8 @@ export default function Footer() {
           <FooterCol title={t('lp.footer.colLegal')} links={legalLinks} />
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-[#6b7391] sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 border-t border-white/10 pt-6 text-xs text-[#6b7391]">
           <p>{t('lp.footer.copyright')}</p>
-          <p>{t('lp.footer.cities')}</p>
         </div>
       </div>
     </footer>
@@ -52,9 +51,15 @@ function FooterCol({ title, links }: { title: string; links: { label: string; hr
       <ul className="mt-4 space-y-2.5 text-sm">
         {links.map((link) => (
           <li key={link.label}>
-            <a href={link.href} className="transition-colors hover:text-white">
-              {link.label}
-            </a>
+            {link.href.startsWith('/') ? (
+              <Link to={link.href} className="transition-colors hover:text-white">
+                {link.label}
+              </Link>
+            ) : (
+              <a href={link.href} className="transition-colors hover:text-white">
+                {link.label}
+              </a>
+            )}
           </li>
         ))}
       </ul>

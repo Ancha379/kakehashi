@@ -6,6 +6,8 @@ import { DemoModeProvider } from './lib/DemoModeProvider';
 import { ViewerProvider } from './lib/ViewerProvider';
 import ScrollToTop from './components/ScrollToTop';
 import LandingPage from './pages/LandingPage';
+import StaticContentPage from './pages/StaticContentPage';
+import { aboutDoc, privacyDoc, termsDoc } from './data/legalContent';
 import LoginPage from './pages/auth/LoginPage';
 import SignupPage from './pages/auth/SignupPage';
 import AppLayout from './layouts/AppLayout';
@@ -32,6 +34,9 @@ export default function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/about" element={<StaticContentPage doc={aboutDoc} />} />
+          <Route path="/privacy" element={<StaticContentPage doc={privacyDoc} />} />
+          <Route path="/terms" element={<StaticContentPage doc={termsDoc} />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/app" element={<AppLayout />}>
