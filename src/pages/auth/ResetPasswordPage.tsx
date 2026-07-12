@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, CheckCircle2, KeyRound, Mail } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Eye, EyeOff, KeyRound, Mail } from 'lucide-react';
 import Logo from '../../components/landing/Logo';
 import LanguageToggle from '../../components/LanguageToggle';
 import Button from '../../components/ui/Button';
@@ -20,6 +20,8 @@ export default function ResetPasswordPage() {
   const [mode, setMode] = useState<'request' | 'update'>('request');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [showPwd, setShowPwd] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
@@ -49,6 +51,10 @@ export default function ResetPasswordPage() {
     setError(null);
     if (password.length < 8) {
       setError(t('auth.field.passwordHint'));
+      return;
+    }
+    if (password !== confirm) {
+      setError(t('auth.reset.mismatch'));
       return;
     }
     setLoading(true);
@@ -109,15 +115,38 @@ export default function ResetPasswordPage() {
                 <span className="mb-1.5 block text-sm font-semibold text-slate-700">
                   {t('auth.reset.newPassword')}
                 </span>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder={t('auth.field.passwordPlaceholder')}
-                  className={inputClass}
-                  autoFocus
-                />
+                <div className="relative">
+                  <input
+                    type={showPwd ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder={t('auth.field.passwordPlaceholder')}
+                    className={`${inputClass} pr-11`}
+                    autoFocus
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPwd((v) => !v)}
+                    aria-label={t(showPwd ? 'auth.field.hidePassword' : 'auth.field.showPassword')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  >
+                    {showPwd ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
                 <span className="mt-1 block text-xs text-slate-400">{t('auth.field.passwordHint')}</span>
+              </label>
+
+              <label className="mt-4 block">
+                <span className="mb-1.5 block text-sm font-semibold text-slate-700">
+                  {t('auth.reset.confirmPassword')}
+                </span>
+                <input
+                  type={showPwd ? 'text' : 'password'}
+                  value={confirm}
+                  onChange={(e) => setConfirm(e.target.value)}
+                  placeholder={t('auth.reset.confirmPlaceholder')}
+                  className={inputClass}
+                />
               </label>
 
               {error && (
