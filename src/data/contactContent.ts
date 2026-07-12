@@ -9,26 +9,25 @@ export interface ContactOrg {
   email: string;
 }
 
-// PLACEHOLDER — ganti dengan data asli. Nilai '—' berarti belum diisi.
 export const contactOrgs: ContactOrg[] = [
   {
     name: { ja: '株式会社ANCジャパン', id: 'ANC Japan (株式会社ANCジャパン)' },
     forWho: { ja: '日本企業のお問い合わせ窓口', id: 'Untuk perusahaan Jepang' },
     address: {
-      ja: '愛知県名古屋市（詳細は準備中）',
-      id: 'Nagoya, Aichi, Jepang (detail akan diperbarui)'
+      ja: '〒460-0008 名古屋市中区栄4-14-31 栄オークリッジ9F',
+      id: '〒460-0008 Sakae Oak Ridge 9F, 4-14-31 Sakae, Naka-ku, Nagoya, Aichi, Jepang'
     },
-    phone: '—',
-    email: '—'
+    phone: '052-243-2328',
+    email: 'info@anc-japan.com'
   },
   {
     name: { ja: 'PT Kebun Teknologi Indonesia', id: 'PT Kebun Teknologi Indonesia' },
     forWho: { ja: 'インドネシア企業のお問い合わせ窓口', id: 'Untuk perusahaan Indonesia' },
     address: {
-      ja: 'インドネシア（詳細は準備中）',
-      id: 'Indonesia (detail akan diperbarui)'
+      ja: 'Bekasi Town Square blok I10-I11, Jl. Cut Mutia, RT.003/RW.009, Margahayu, Bekasi Timur, Kota Bekasi, Jawa Barat 17113, Indonesia',
+      id: 'Bekasi Town Square blok I10-I11, Jl. Cut Mutia, RT.003/RW.009, Margahayu, Bekasi Timur, Kota Bekasi, Jawa Barat 17113, Indonesia'
     },
-    phone: '—',
-    email: '—'
+    phone: '087783084446',
+    email: 'business@kebun.tech'
   }
 ];
