@@ -451,7 +451,7 @@
     "notFound": "Perusahaan tidak ditemukan.",
     "back": "Kembali ke direktori",
     "about": "Tentang perusahaan",
-    "original": "原文 (Bahasa asli)",
+    "original": "Teks asli",
     "translated": "Terjemahan",
     "aiTranslated": "Diterjemahkan otomatis oleh AI",
     "offering": "Yang ditawarkan",
@@ -481,7 +481,7 @@
   "chat": {
     "title": "Chat",
     "showTranslation": "Tampilkan terjemahan",
-    "aiBadge": "AI翻訳",
+    "aiBadge": "Terjemahan AI",
     "inputPlaceholder": "Tulis pesan dalam bahasa Anda…",
     "loginToSend": "Masuk untuk mengirim pesan (mode demo hanya-baca).",
     "send": "Kirim",
