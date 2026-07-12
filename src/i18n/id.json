@@ -385,6 +385,10 @@
       "demoHint": "Menjelajah dengan data contoh (perusahaan PT Nusantara). Tanpa akun."
     }
   },
+  "contact": {
+    "title": "Kontak",
+    "subtitle": "Perusahaan Jepang menghubungi ANC Japan; perusahaan Indonesia menghubungi PT Kebun Teknologi Indonesia."
+  },
   "screening": {
     "title": "Screening Perusahaan",
     "subtitle": "Verifikasi perusahaan baru sebelum tampil di direktori publik.",

@@ -7,6 +7,7 @@ import { ViewerProvider } from './lib/ViewerProvider';
 import ScrollToTop from './components/ScrollToTop';
 import LandingPage from './pages/LandingPage';
 import StaticContentPage from './pages/StaticContentPage';
+import ContactPage from './pages/ContactPage';
 import { aboutDoc, privacyDoc, termsDoc } from './data/legalContent';
 import LoginPage from './pages/auth/LoginPage';
 import SignupPage from './pages/auth/SignupPage';
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/about" element={<StaticContentPage doc={aboutDoc} />} />
           <Route path="/privacy" element={<StaticContentPage doc={privacyDoc} />} />
           <Route path="/terms" element={<StaticContentPage doc={termsDoc} />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/app" element={<AppLayout />}>

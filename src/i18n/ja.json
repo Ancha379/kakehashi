@@ -385,6 +385,10 @@
       "demoHint": "サンプルデータ（PT Nusantara社）で閲覧します。アカウント不要。"
     }
   },
+  "contact": {
+    "title": "お問い合わせ",
+    "subtitle": "日本企業は ANCジャパン、インドネシア企業は PT Kebun Teknologi Indonesia までお問い合わせください。"
+  },
   "screening": {
     "title": "企業審査",
     "subtitle": "新規企業を公開ディレクトリに掲載する前に審査します。",

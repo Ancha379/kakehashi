@@ -14,7 +14,7 @@ export default function Footer() {
   const companyLinks = [
     { label: t('lp.footer.linkAbout'), href: '/about' },
     { label: t('lp.nav.faq'), href: '#faq' },
-    { label: t('lp.footer.linkContact'), href: '#' }
+    { label: t('lp.footer.linkContact'), href: '/contact' }
   ];
   const legalLinks = [
     { label: t('lp.footer.linkPrivacy'), href: '/privacy' },
