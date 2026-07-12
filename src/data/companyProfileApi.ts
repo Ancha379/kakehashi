@@ -2,6 +2,31 @@ import { supabase } from '../lib/supabase';
 import { getViewerSlug } from '../lib/viewer';
 import type { Company, CompanySize, Industry, Purpose } from './types';
 
+export interface CompanyContact {
+  pic_name: string;
+  pic_title_ja: string;
+  pic_title_id: string;
+  pic_email: string;
+}
+
+/**
+ * Ambil kontak PIC lewat RPC ber-gate `company_contact` (hanya pemilik, staf,
+ * atau mitra yang punya deal). Mengembalikan null bila pemanggil tak berhak
+ * (mis. anon/demo atau perusahaan lain) — kolom pic_* tak bisa dibaca langsung.
+ */
+export async function fetchCompanyContact(slug: string): Promise<CompanyContact | null> {
+  const { data, error } = await supabase.rpc('company_contact', { p_slug: slug });
+  if (error) throw error;
+  const row = Array.isArray(data) ? data[0] : data;
+  if (!row) return null;
+  return {
+    pic_name: row.pic_name ?? '',
+    pic_title_ja: row.pic_title_ja ?? '',
+    pic_title_id: row.pic_title_id ?? '',
+    pic_email: row.pic_email ?? ''
+  };
+}
+
 export interface ProfileEditPayload {
   name: string;
   industry: Industry;

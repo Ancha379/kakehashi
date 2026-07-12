@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ShieldCheck, Check, X, Globe, Mail, MapPin } from 'lucide-react';
+import { ShieldCheck, Check, X, Globe } from 'lucide-react';
 import { fetchPendingCompanies, setVerificationStatus } from '../../data/screeningApi';
 import type { PendingCompany } from '../../data/screeningApi';
 import Card from '../../components/ui/Card';
@@ -134,18 +134,6 @@ export default function CoordinatorScreeningPage() {
                   )}
 
                   <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
-                    {c.picName && (
-                      <span className="inline-flex items-center gap-1">
-                        <MapPin className="h-3 w-3" />
-                        {c.picName}
-                      </span>
-                    )}
-                    {c.picEmail && (
-                      <span className="inline-flex items-center gap-1">
-                        <Mail className="h-3 w-3" />
-                        {c.picEmail}
-                      </span>
-                    )}
                     {c.website && (
                       <a
                         href={c.website}

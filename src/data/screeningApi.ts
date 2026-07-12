@@ -12,8 +12,6 @@ export interface PendingCompany {
   summary_id: string;
   summary_ja: string;
   website: string | null;
-  picName: string | null;
-  picEmail: string | null;
   purposes: Purpose[];
   offering: string[];
   seeking: string[];
@@ -31,8 +29,6 @@ interface PendingRow {
   summary_id: string;
   summary_ja: string;
   website: string | null;
-  pic_name: string | null;
-  pic_email: string | null;
   purposes: Purpose[] | null;
   created_at: string;
   company_items: { kind: 'offering' | 'seeking'; text_id: string; position: number }[] | null;
@@ -51,8 +47,6 @@ function mapPending(r: PendingRow): PendingCompany {
     summary_id: r.summary_id,
     summary_ja: r.summary_ja,
     website: r.website,
-    picName: r.pic_name,
-    picEmail: r.pic_email,
     purposes: r.purposes ?? [],
     offering: items.filter((i) => i.kind === 'offering').map((i) => i.text_id),
     seeking: items.filter((i) => i.kind === 'seeking').map((i) => i.text_id),
@@ -60,12 +54,16 @@ function mapPending(r: PendingRow): PendingCompany {
   };
 }
 
-/** Perusahaan menunggu verifikasi (RLS: hanya staf yang bisa lihat pending). */
+/**
+ * Perusahaan menunggu verifikasi (RLS: hanya staf yang bisa lihat pending).
+ * Kontak PIC tidak diambil di sini (kolom privat) — staf melihatnya di halaman
+ * detail perusahaan via RPC company_contact.
+ */
 export async function fetchPendingCompanies(): Promise<PendingCompany[]> {
   const { data, error } = await supabase
     .from('companies')
     .select(
-      'id, slug, name_id, name_ja, country, industry, size, summary_id, summary_ja, website, pic_name, pic_email, purposes, created_at, company_items(kind, text_id, position)'
+      'id, slug, name_id, name_ja, country, industry, size, summary_id, summary_ja, website, purposes, created_at, company_items(kind, text_id, position)'
     )
     .eq('verification_status', 'pending')
     .order('created_at', { ascending: true });
