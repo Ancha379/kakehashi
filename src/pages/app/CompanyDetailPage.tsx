@@ -10,11 +10,13 @@ import {
   Handshake,
   Languages,
   MapPin,
+  Pencil,
   Search,
   Sparkles,
   Users
 } from 'lucide-react';
 import { useCompanies } from '../../lib/CompaniesProvider';
+import { useViewer } from '../../lib/ViewerProvider';
 import { useLang } from '../../lib/localized';
 import CompanyLogo from '../../components/CompanyLogo';
 import Badge from '../../components/ui/Badge';
@@ -31,7 +33,9 @@ export default function CompanyDetailPage() {
   const lang = useLang();
   const { showToast } = useToast();
   const { getCompany, loading } = useCompanies();
+  const viewer = useViewer();
   const company = id ? getCompany(id) : undefined;
+  const isOwn = !!company && viewer.slug === company.id;
 
   // 'translated' = bahasa UI aktif, 'original' = bahasa asli perusahaan
   const [textMode, setTextMode] = useState<'translated' | 'original'>('translated');
@@ -92,17 +96,28 @@ export default function CompanyDetailPage() {
                   <BadgeCheck className="h-3 w-3" />
                   {t('companies.verified')}
                 </Badge>
-                <Badge tone="accent">
-                  <Sparkles className="h-3 w-3" />
-                  {t('companies.aiMatch')} {company.matchScore}%
-                </Badge>
+                {isOwn ? (
+                  <Badge tone="neutral">{t('company.yourCompany')}</Badge>
+                ) : (
+                  <Badge tone="accent">
+                    <Sparkles className="h-3 w-3" />
+                    {t('companies.aiMatch')} {company.matchScore}%
+                  </Badge>
+                )}
               </div>
             </div>
           </div>
-          <Button size="lg" onClick={() => showToast(t('company.meetingToast'))}>
-            <Handshake className="h-4 w-4" />
-            {t('company.proposeMeeting')}
-          </Button>
+          {isOwn ? (
+            <Button to="/app/profile" size="lg" variant="outline">
+              <Pencil className="h-4 w-4" />
+              {t('company.editProfile')}
+            </Button>
+          ) : (
+            <Button size="lg" onClick={() => showToast(t('company.meetingToast'))}>
+              <Handshake className="h-4 w-4" />
+              {t('company.proposeMeeting')}
+            </Button>
+          )}
         </div>
       </Card>
 

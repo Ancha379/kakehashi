@@ -354,7 +354,9 @@ export default function RegisterPage() {
                 rows={3}
                 value={form.seeking}
                 onChange={(e) => set('seeking', e.target.value)}
-                placeholder={t('register.seekingPlaceholder')}
+                placeholder={t('register.seekingPlaceholder', {
+                  country: t(`meta.countries.${form.country === 'JP' ? 'ID' : 'JP'}`)
+                })}
                 className={inputClass}
               />
             </Field>
