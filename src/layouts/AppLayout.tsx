@@ -24,24 +24,32 @@ import { useLocalized } from '../lib/localized';
 import AppGate from '../pages/app/AppGate';
 import { cn } from '../lib/cn';
 
-const navItems = [
+const baseNavItems = [
   { to: '/app/dashboard', key: 'app.dashboard', icon: LayoutDashboard },
   { to: '/app/companies', key: 'app.companies', icon: Building2 },
   { to: '/app/matching', key: 'app.matching', icon: Sparkles },
-  { to: '/app/chat', key: 'app.chat', icon: MessageSquare },
-  { to: '/app/register', key: 'app.register', icon: UserPlus }
+  { to: '/app/chat', key: 'app.chat', icon: MessageSquare }
 ];
-
+// Onboarding — hanya relevan bagi yang belum punya perusahaan.
+const registerNavItem = { to: '/app/register', key: 'app.register', icon: UserPlus };
 // Item khusus staf ANC (coordinator/admin).
 const staffNavItem = { to: '/app/screening', key: 'app.screening', icon: ShieldCheck };
-const allNavItems = [...navItems, staffNavItem];
+// Untuk deteksi judul topbar (semua kemungkinan rute).
+const allNavItems = [...baseNavItems, registerNavItem, staffNavItem];
 
 function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { session, signOut } = useAuth();
-  const { isStaff } = useViewer();
-  const items = isStaff ? allNavItems : navItems;
+  const { hasCompany, isStaff } = useViewer();
+  // "Registrasi" hanya untuk yang perlu onboarding (belum punya perusahaan &
+  // bukan staf). Demo (tanpa sesi) tetap melihatnya sebagai showcase alur.
+  const showRegister = !session || (!hasCompany && !isStaff);
+  const items = [
+    ...baseNavItems,
+    ...(showRegister ? [registerNavItem] : []),
+    ...(isStaff ? [staffNavItem] : [])
+  ];
 
   const handleSignOut = async () => {
     await signOut();
